@@ -1,0 +1,40 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "Design.cshtml";
+}
+@* homepage has no breadcrumb - so a blank section removes it*@
+@section Breadcrumb { }
+
+@section PageHeader {
+    <div class="aub__page-header aub__homepage-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1>@Umbraco.Field("title")</h1>
+                    <span class="aub__tag-line">
+                        @Umbraco.Field("content")
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@Html.Partial("Nav/GatewayLinks", Model.Content,
+    new ViewDataDictionary()
+    {
+        { "itemCount", Model.Content.GetPropertyValue<int>("itemCount", 30) }
+    })
+
+<div class="aub__news_block">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>News</h2>
+            @Html.Partial("Page/NewsBlock")
+        </div>
+        <div class="col-sm-4">
+            <h2>Events</h2>
+            @Html.Partial("Page/EventBlock")
+        </div>
+    </div>
+</div>

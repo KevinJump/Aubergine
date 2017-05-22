@@ -1,0 +1,110 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using ClientDependency.Core.Mvc
+@{
+	Layout = "SiteMaster.cshtml";
+
+    Html.RequiresCss("~/css/aubergine.css");
+    Html.RequiresCss("https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,700");
+    Html.RequiresJs("~/scripts/aubergine.js");
+}
+@Html.Partial("Components/CookieNotice")
+
+<nav class="navbar navbar-default aub__navbar">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
+                    data-target="#aub-main-navbar-collapse" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">@Umbraco.GetDictionaryValue("menu.icon-toggle", "Toggle navigation")</span>
+                <span class="aub__navbar-icon-text">
+                    @Umbraco.GetDictionaryValue("menu.icon-text", "menu")
+                </span>
+            </button>
+            <a class="navbar-brand" href="/">@Umbraco.Field("siteName", recursive: true)</a>
+        </div>
+        <div id="#aub-main-navbar-collapse" class="navbar-collapse collapse">
+            @Html.Partial("/Nav/SiteNav")
+            <div class="navbar-right">
+                @Html.Partial("Auth/Status")
+            </div>
+
+            <form class="navbar-form navbar-right" role="search" method="get" action="/search">
+                <div class="input-group">
+                    <label class="sr-only" for="q">Search</label>
+                    <input type="search" class="form-control" placeholder="search" name="q" />
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default">
+                            <span class="sr-only">Search</span>
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<header @Html.Partial("Component/HeroImage")>
+    @if (IsSectionDefined("PageHeader"))
+    {
+        @RenderSection("PageHeader", required: false)
+    }
+    else
+    {
+        <div class="aub__page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h1>@Umbraco.Field("title")</h1>
+                        <span class="aub__tag-line">
+                            @Umbraco.Field("abstract")
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</header>
+
+@Html.Partial("Components/SiteAlerts")
+
+@if (IsSectionDefined("Breadcrumb"))
+{
+    @RenderSection("Breadcrumb", required: false)
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.Partial("Nav/Breadcrumb")
+            </div>
+        </div>
+    </div>
+}
+
+<main id="page_content" class="aub__page-content">
+    <div class="container">
+        @RenderBody()
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            @RenderSection("Footer", required: false)
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.Partial("Nav/FooterLinks")
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="aub__site-credit">
+                    Aubergine starterkit is an open source thingy-me-bob by <a href="http://jumoo.uk">jumoo</a> 2017 &rarr; &infin;
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
