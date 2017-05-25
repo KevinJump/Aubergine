@@ -1,0 +1,20 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@{ 
+    var cookieName = "aubergine.cookie";
+    var cookieDays = 90;
+
+    var cookie = Request.Cookies.Get(cookieName);
+    if (cookie == null)
+    {
+        <div class="aub__cookie-notice">
+            @Html.Raw(
+                Umbraco.GetDictionaryValue("Cookie.Notice",
+                 "We use cookies to make this website better, find out how in our cookie policy"))
+        </div>
+
+        Response.SetCookie(new HttpCookie(cookieName, "viewed")
+        {
+            Expires = DateTime.Now.AddDays(cookieDays)
+        });
+    }
+}

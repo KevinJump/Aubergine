@@ -1,0 +1,21 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@{ 
+    var alerts = Model.GetPropertyValue<IEnumerable<IPublishedContent>>("alerts");
+
+    if (alerts != null && alerts.Any())
+    {
+        foreach(var alert in alerts)
+        {
+            <div class="alert alert-@alert.GetPropertyValue("alertType", "info")">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h2>@alert.GetPropertyValue("title", alert.Name)</h2>
+                            @alert.GetPropertyValue("content")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}

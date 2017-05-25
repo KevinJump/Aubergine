@@ -19,10 +19,10 @@
                     @Umbraco.GetDictionaryValue("menu.icon-text", "menu")
                 </span>
             </button>
-            <a class="navbar-brand" href="/">@Umbraco.Field("siteName", recursive: true)</a>
+            <a class="navbar-brand" href="/">@Umbraco.Field("siteTitle", recursive: true)</a>
         </div>
         <div id="#aub-main-navbar-collapse" class="navbar-collapse collapse">
-            @Html.Partial("/Nav/SiteNav")
+            @Html.Partial("Nav/SiteNav")
             <div class="navbar-right">
                 @Html.Partial("Auth/Status")
             </div>
@@ -43,7 +43,7 @@
     </div>
 </nav>
 
-<header @Html.Partial("Component/HeroImage")>
+<header @Html.Partial("Components/HeroImage")>
     @if (IsSectionDefined("PageHeader"))
     {
         @RenderSection("PageHeader", required: false)
@@ -56,7 +56,7 @@
                     <div class="col-xs-12">
                         <h1>@Umbraco.Field("title")</h1>
                         <span class="aub__tag-line">
-                            @Umbraco.Field("abstract")
+                            @Umbraco.Field("tagLine")
                         </span>
                     </div>
                 </div>

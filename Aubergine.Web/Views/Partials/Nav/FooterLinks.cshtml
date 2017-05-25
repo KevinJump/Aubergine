@@ -1,0 +1,16 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@{ 
+    var links = Model.GetPropertyValue<IEnumerable<IPublishedContent>>("footerLinks", true);
+
+    if (links != null && links.Any())
+    {
+        <ul class="list-unstyled">
+            @foreach(var link in links)
+            {
+                <li>
+                    <a href="@link.Url">@link.GetPropertyValue("title", link.Name)</a>
+                </li>
+            }
+        </ul>
+    }
+}

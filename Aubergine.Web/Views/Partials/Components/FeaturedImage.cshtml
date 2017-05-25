@@ -1,0 +1,19 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@if( Model.HasProperty("featuredImage") && Model.HasValue("featuredImage") )
+{
+    var img = Model.GetPropertyValue<IPublishedContent>("featuredImage");
+
+    if (img != null)
+    {
+        var imageCrop = img.GetCropUrl("Featured");
+
+
+        <div class="aub__featured-image"
+             style="background-image: url('@imageCrop');">
+            <h2>
+                <span>@Model.GetPropertyValue("title", Model.Name)</span>
+            </h2>
+        </div>
+    }
+}
+

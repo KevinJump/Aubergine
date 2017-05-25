@@ -1,0 +1,15 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "SideNavPages.cshtml";
+}
+
+@Html.Partial("Components/FeaturedImage")
+
+
+<div class="aub__article-date">
+    @Umbraco.Field("publicationDate", altFieldAlias: "createdDate", formatAsDateWithTime: true, formatAsDateWithTimeSeparator: " ")
+</div>
+
+<div class="aub__article-body">
+    @Umbraco.Field("content")
+</div>

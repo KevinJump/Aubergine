@@ -1,0 +1,64 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@{ 
+
+    var selection = Model.Children()
+        .Where(x => x.IsVisible() && !x.HasProperty("isComponent"))
+        .ToList();
+
+    var sectionCount = Model.GetPropertyValue<int>("mainCount", 6);
+
+}
+
+@if (selection != null && selection.Any())
+{
+    <div class="aub__gateway-links">
+        <div class="row">
+            @foreach(var item in selection.Take(sectionCount))
+            {
+                if (!item.IsFirst())
+                {
+                    if (item.IsModZero(2))
+                    {
+                        <div class="clearfix visible-sm-block"></div>
+                    }
+
+                    if (item.IsModZero(3))
+                    {
+                        <div class="clearfix visible-md-block"></div>
+                    }
+                }
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="aub__gateway-item">
+                        <h3>
+                            <a href="@item.Url">
+                                @item.GetPropertyValue("title", item.Name)
+                            </a>
+                        </h3>
+                        <span>
+                            @item.GetPropertyValue("summary")
+                        </span>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (selection.Count > sectionCount)
+        {
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul class="nav nav-pills aub__gateway-more">
+                        @foreach(var item in selection.Skip(sectionCount))
+                        {
+                            <li>
+                                <a href="@item.Url">
+                                    @item.GetPropertyValue("title", item.Name)
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+}

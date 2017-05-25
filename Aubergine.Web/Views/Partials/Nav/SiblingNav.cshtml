@@ -1,0 +1,55 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@{ 
+    bool showChildren = true;
+
+    var parent = Model.Parent;
+    var siblings = Model.Siblings()
+        .Where(x => x.IsVisible() && !x.HasProperty("isComponent"))
+        .ToList();
+}
+
+@if (parent != null && siblings.Any())
+{
+    <div class="aub__sibling-page-nav">
+        <h2>
+            <a href="@parent.Url">
+                @parent.GetPropertyValue("title", parent.Name)
+            </a>
+        </h2>
+
+        <ul class="nav nav-stacked nav-pills">
+            @foreach(var sibling in siblings)
+            {
+                <li class="@Umbraco.If(Model.Id == sibling.Id, "active")">
+                    <a hrfef="@sibling.Url">
+                        @sibling.GetPropertyValue("title", sibling.Name)
+                        @if (showChildren)
+                        {
+                            @ListChildren(sibling)
+                        }
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+@helper ListChildren(IPublishedContent item)
+{
+    var children = item.Children()
+        .Where(x => x.IsVisible() && !x.HasProperty("isComponent"));
+
+    if (children.Any())
+    {
+        <ul class="nav nav-stacked nav-pills">
+            @foreach(var child in children)
+            {
+                <li>
+                    <a href="@child.Url">
+                        @child.GetPropertyValue("title", child.Name)
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+}

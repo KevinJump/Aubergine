@@ -1,0 +1,42 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@{
+    // if you article list will be large (+100s) you should
+    // consider using examine to get you the articles or
+    // this will slow your site down.
+
+    // or you can use xpath to get the decendends of the node
+
+    // at the very least you should call this partial cached.
+    // using Html.CachedPartial
+
+    var selection = Model.Descendants()
+        .Where(x => x.IsVisible() && !x.HasProperty("isComponent"));
+}
+
+@if (selection.Any())
+{
+    <div class="aub__article-listing">
+        @foreach (var item in selection)
+        {
+            var publicationDate = item.GetPropertyValue<DateTime>("publicationDate", item.CreateDate)
+                .ToString("dddd dd MMM yyyy");
+
+            <div class="aub__listing">
+                <div class="aub__listing-header">
+                    <h3>
+                        <a href="@item.Url">
+                            @item.GetPropertyValue("title", item.Name)
+                        </a>
+                        <small>
+                            @publicationDate
+                        </small>
+                    </h3>
+                </div>
+                <span>
+                    @item.GetPropertyValue("summary")
+                </span>
+            </div>
+        }
+    </div>
+}
+

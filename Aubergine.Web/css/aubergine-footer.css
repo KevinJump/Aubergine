@@ -1,0 +1,21 @@
+﻿footer {
+    margin-top: 2em;
+    padding: 1em 0;
+}
+
+    footer .aub__site-credit {
+        font-size: 75%;
+    }
+
+footer {
+    background-color: #5E2750;
+    color: #BDBDBD;
+}
+
+footer a {
+    color: #ddd;
+}
+
+footer a:hover, footer a:active, footer a:focus {
+    color: #aaa;
+}

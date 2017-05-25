@@ -1,0 +1,28 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@{ 
+    // prints out the letters - sets one to active if it's on the query string
+
+    var atozPath = Umbraco.TypedContentAtXPath("//atoz").FirstOrDefault();
+    if (atozPath == null)
+    {
+        return;
+    }
+
+    var activeLetter = ' ';
+    var queryLetter = Request.QueryString["letter"];
+    if (!string.IsNullOrWhiteSpace(queryLetter))
+    {
+        activeLetter = queryLetter[0];
+    }
+}
+
+<div class="aub__atoz-block">
+    <ul class="list-inline list-atoz">
+        @for(char letter='A'; letter <= 'Z'; letter++)
+        {
+            <li class="@Umbraco.If(letter == activeLetter, "active")">
+                <a href="@atozPath.Url?letter=@letter">@letter</a>
+            </li>
+        }
+    </ul>
+</div>

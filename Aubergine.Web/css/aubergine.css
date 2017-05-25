@@ -1,0 +1,16 @@
+﻿/* 
+    This sheet is the only one included in the design template. 
+    
+    it imports all the stylesheets and Client Dependency 
+    merges and minifies them, so we can seperate things out
+    nicely and not have to worry about performance. 
+*/
+
+@import url('aubergine-core.css');
+@import url('aubergine-navbar.css');
+@import url('aubergine-header.css');
+@import url('aubergine-breadcrumb.css');
+@import url('aubergine-footer.css');
+
+@import url('aubergine-gateway.css');
+@import url('aubergine-content.css');

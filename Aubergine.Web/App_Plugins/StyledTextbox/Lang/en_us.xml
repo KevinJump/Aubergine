@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="en" intName="English (US)" localName="English (US)" lcid="" culture="en-US">
+  <area alias="styledtext">
+    <key alias="limit">you have reached the limit of {{limit}} characters</key>
+    <key alias="advice">you have gone over the advised length by {{over}} characters</key>
+    <key alias="remaining">{{remain}} characters left</key>
+  </area>
+</language>

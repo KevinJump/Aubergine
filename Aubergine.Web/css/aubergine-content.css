@@ -1,0 +1,38 @@
+﻿.aub__content h2 {
+    font-size: 34pt;
+}
+
+.aub__featured-image {
+    max-width: 100%;
+    padding: 0.3em 0;
+    background-size: cover;
+    height: 240px;
+}
+
+.aub__article-date {
+    margin-bottom: 2em;
+}
+
+.aub__featured-image h2 {
+    margin: 0.2em;
+    font-size: 34pt;
+    display: inline-block;
+}
+
+    .aub__featured-image h2 > span {
+        background-color: rgba(0,0,0,0.5);
+        color: #fff;
+        display: inline;
+        padding: 0.4rem;
+        line-height: 1.45em;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+    }
+
+.aub__article-date {
+    text-align: right;
+    font-style: italic;
+}
+
+.aub_article-body {
+}

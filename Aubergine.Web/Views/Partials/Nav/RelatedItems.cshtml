@@ -1,0 +1,23 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@using Umbraco.Web.Models
+@{
+    var relatedLinks = Model.GetPropertyValue<RelatedLinks>("relatedLinks");
+
+    if (relatedLinks != null && relatedLinks.Any())
+    {
+        <div class="aub__related-links">
+            <h2>@Umbraco.GetDictionaryValue("Page.Related", "Releated Items")</h2>
+            <ul class="nav nav-stacked nav-pills">
+                @foreach (var item in relatedLinks)
+                {
+                    <li>
+                        <a href="@item.Link"
+                           target="@Umbraco.If(item.NewWindow, "_blank")">
+                            @item.Caption
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+}

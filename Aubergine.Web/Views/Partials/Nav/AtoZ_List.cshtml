@@ -1,0 +1,32 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@using Aubergine.Helpers
+@{ 
+    var queryLetter = Request.QueryString["letter"];
+    if (queryLetter.IsNullOrWhiteSpace())
+    {
+        return;
+    }
+
+    var letter = queryLetter.Substring(0, 1);
+
+    var entries = Umbraco.GetAtoZEntries(letter);
+}
+<h2>@letter</h2>
+@if (entries != null && entries.Any())
+{
+    <ul class="aub__atoz-entries">
+        @foreach(var entry in entries)
+        {
+            <li>
+                <a href="@entry.Url">@entry.Title</a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <div class="alert alert-warning">
+        @Umbraco.GetDictionaryValue("AtoZ.Empty",
+             "No entries for " + letter);
+    </div>
+}

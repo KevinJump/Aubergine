@@ -12,7 +12,7 @@
                 <div class="col-xs-12">
                     <h1>@Umbraco.Field("title")</h1>
                     <span class="aub__tag-line">
-                        @Umbraco.Field("content")
+                        @Umbraco.Field("tagLine")
                     </span>
                 </div>
             </div>
@@ -26,6 +26,7 @@
         { "itemCount", Model.Content.GetPropertyValue<int>("itemCount", 30) }
     })
 
+<!--
 <div class="aub__news_block">
     <div class="row">
         <div class="col-sm-8">
@@ -38,3 +39,4 @@
         </div>
     </div>
 </div>
+-->

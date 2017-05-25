@@ -1,0 +1,25 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@{
+    var selection = Model.Ancestors();
+
+    if (selection.Any())
+    {
+        <ul class="breadcrumb">
+            @foreach (var item in selection.OrderBy(x => x.Level))
+            {
+                if (item.IsVisible() && !item.HasProperty("isComponent"))
+                {
+                    <li>
+                        <a href="@item.Url">@item.GetPropertyValue("title", item.Name)</a>
+                    </li>
+                }
+            }
+
+            <li class="active">
+                @Model.GetPropertyValue("title", Model.Name)
+            </li>
+        </ul>
+    }
+}
+
+

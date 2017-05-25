@@ -1,0 +1,10 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@{ 
+    var image = Model.GetPropertyValue<IPublishedContent>("heroImage", true);
+
+    if (image != null)
+    {
+        var croppedUrl = image.GetCropUrl("Hero");
+        @Html.Raw(string.Format("style=\"background-image: url('{0}');\"", croppedUrl))
+    }
+}

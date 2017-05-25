@@ -1,0 +1,33 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@{ 
+    var levels = 8;
+    var root = Model.Site();
+}
+
+<div class="aub__sitemap">
+    @Traverse(root, levels)
+</div>
+
+
+@helper Traverse(IPublishedContent node, int maxLevel)
+{ 
+    var selection = node.Children()
+            .Where(x => x.IsVisible() && !x.HasProperty("isComponent") && x.Level <= maxLevel);
+
+    if (selection.Any())
+    {
+        <ul>
+            @foreach (var item in selection)
+            {
+                <li class="level-@item.Level">
+                    <a href="@item.Url">
+                        @item.GetPropertyValue("title", item.Name)
+                    </a>
+
+                    @Traverse(item, maxLevel)
+                </li>
+            }
+        </ul>
+    }
+
+}

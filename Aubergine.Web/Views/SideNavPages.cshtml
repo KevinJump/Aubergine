@@ -1,0 +1,35 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "Design.cshtml";
+}
+
+
+@section PageHeader 
+{
+    <div class="aub__page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1>@Model.Content.Parent.GetPropertyValue("title")</h1>
+                    <span class="aub__tag-line">
+                        @Model.Content.Parent.GetPropertyValue("tagLine")
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8">
+        <div class="aub__content">
+            @RenderBody()
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-4">
+        @Html.Partial("Nav/SiblingNav")
+        @Html.Partial("Nav/RelatedItems")
+        @RenderSection("SideNav", required: false)
+    </div>
+</div>

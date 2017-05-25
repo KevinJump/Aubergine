@@ -87,6 +87,9 @@
     <Reference Include="interfaces, Version=1.0.6337.40630, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UmbracoCms.Core.7.6.1\lib\net45\interfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Jumoo.StyledTextbox, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jumoo.StyledTextbox.1.4\lib\Jumoo.StyledTextbox.dll</HintPath>
+    </Reference>
     <Reference Include="Jumoo.uSync.BackOffice, Version=3.3.4.740, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\uSync.3.3.4.740\lib\net45\Jumoo.uSync.BackOffice.dll</HintPath>
     </Reference>
@@ -263,6 +266,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Plugins\StyledTextbox\css\styledText.css" />
+    <Content Include="App_Plugins\StyledTextbox\html\styledText.html" />
+    <Content Include="App_Plugins\StyledTextbox\js\styledTextController.js" />
+    <Content Include="App_Plugins\StyledTextbox\Lang\en_us.xml" />
+    <Content Include="css\aubergine-content.css" />
+    <Content Include="css\aubergine-core.css" />
+    <Content Include="css\aubergine.css" />
+    <Content Include="css\aubergine-footer.css" />
+    <Content Include="css\aubergine-gateway.css" />
+    <Content Include="css\aubergine-header.css" />
+    <Content Include="css\aubergine-navbar.css" />
+    <Content Include="css\editor.css" />
     <Content Include="packages.config" />
     <Content Include="config\imageprocessor\security.config" />
     <Content Include="config\imageprocessor\processing.config" />
@@ -297,6 +312,35 @@
     <Content Include="config\applications.config" />
     <Content Include="config\404handlers.config" />
     <Content Include="Scripts\jquery-1.12.4.min.map" />
+    <Content Include="Views\Partials\Nav\SiteNav.cshtml" />
+    <Content Include="Views\Partials\Nav\Breadcrumb.cshtml" />
+    <Content Include="Views\Partials\Components\CookieNotice.cshtml" />
+    <Content Include="Views\Partials\Components\HeroImage.cshtml" />
+    <Content Include="Views\Partials\Components\SiteAlerts.cshtml" />
+    <Content Include="Views\Partials\Nav\FooterLinks.cshtml" />
+    <Content Include="Views\Partials\Nav\GatewayLinks.cshtml" />
+    <Content Include="Views\Partials\Nav\SiblingNav.cshtml" />
+    <Content Include="Views\Article.cshtml" />
+    <Content Include="Views\AToZPage.cshtml" />
+    <Content Include="Views\ContentPage.cshtml" />
+    <Content Include="Views\GatewayPage.cshtml" />
+    <Content Include="Views\SearchResults.cshtml" />
+    <Content Include="Views\SideNavPages.cshtml" />
+    <Content Include="Views\Sitemap.cshtml" />
+    <Content Include="Views\SystemPages.cshtml" />
+    <Content Include="Views\Partials\Nav\RelatedItems.cshtml" />
+    <Content Include="Views\Partials\Search\Results.cshtml" />
+    <Content Include="Views\Partials\Nav\Sitemap.cshtml" />
+    <Content Include="Views\Partials\Nav\AtoZ_Entries.cshtml" />
+    <Content Include="Views\Partials\Nav\AtoZ_List.cshtml" />
+    <Content Include="App_Plugins\StyledTextbox\package.manifest" />
+    <Content Include="Views\Partials\Page\NewsBlock.cshtml" />
+    <Content Include="Views\Partials\Page\EventBlock.cshtml" />
+    <Content Include="Views\Partials\Auth\Status.cshtml" />
+    <Content Include="css\aubergine-breadcrumb.css" />
+    <Content Include="Views\ListingsPage.cshtml" />
+    <Content Include="Views\Partials\Listings\LatestArticles.cshtml" />
+    <Content Include="Views\Partials\Components\FeaturedImage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -368,6 +412,15 @@
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\MacroPartials\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aubergine.Helpers\Aubergine.Helpers.csproj">
+      <Project>{df9f811f-a422-4814-b72b-ebc5d1217787}</Project>
+      <Name>Aubergine.Helpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

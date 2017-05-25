@@ -1,0 +1,35 @@
+﻿header {
+    background-size: cover;
+    background-color: #532750;
+}
+
+header h1 {
+    font-size: 40pt;
+    position: relative;
+    color: #fff;
+    z-index: 2;
+}
+
+.aub__page-header {
+    padding: 4em 0 6em 0;
+    background-color: rgba(94, 39, 80, 0.7);
+    color: #fff;
+}
+
+.aub__page-header .aub_tag-line {
+    font-size: 14pt;
+}
+
+.aub__homepage-header {
+    text-align: center;
+    padding: 4em 0;
+}
+
+.aub__homepage-header h1 {
+    font-size: 60pt;
+    padding: 0.2em 0;
+}
+
+.aub__page-header a {
+    color: #eee;
+}

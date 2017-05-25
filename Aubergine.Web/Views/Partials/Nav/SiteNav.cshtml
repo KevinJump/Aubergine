@@ -1,0 +1,21 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@{ 
+    bool showHome = false; // change this if you want to see the root. 
+
+    var siteRoot = Model.Site();
+    var selection = siteRoot.Children().Where(x => x.IsVisible() && !x.HasProperty("isComponent"));
+}
+<ul class="nav navbar-nav aub__site-nav">
+    @if (showHome)
+    {
+        <li><a href="@siteRoot.Url">@siteRoot.GetPropertyValue("title", siteRoot.Name)</a></li>
+    }
+
+    @foreach(var item in selection)
+    {
+        <li class="@Umbraco.If(@Model.IsDescendantOrSelf(item), "active")">
+            <a href="@item.Url">@item.GetPropertyValue("title", item.Name)</a>
+        </li>
+    }
+</ul>
+ 
