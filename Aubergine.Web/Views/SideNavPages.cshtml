@@ -28,8 +28,10 @@
     </div>
 
     <div class="col-xs-12 col-sm-4">
-        @Html.Partial("Nav/SiblingNav")
-        @Html.Partial("Nav/RelatedItems")
-        @RenderSection("SideNav", required: false)
+        <div class="aub__sidenav">
+            @Html.Partial("Nav/SiblingNav")
+            @Html.Partial("Nav/RelatedItems")
+            @RenderSection("SideNav", required: false)
+        </div>
     </div>
 </div>

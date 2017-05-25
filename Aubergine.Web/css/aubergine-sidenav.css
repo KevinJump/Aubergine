@@ -1,0 +1,14 @@
+﻿.aub__sidenav h2 {
+    margin: 0.5em 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5em;
+}
+
+.aub__sidenav h2 > a {
+    color: #333;
+}
+
+
+.aub__child-nav {
+    border-left: 5px solid #eee;
+}

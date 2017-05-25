@@ -11,20 +11,22 @@
 
 @if (selection != null && selection.Any())
 {
+    var pos = 0;
+
     <div class="aub__gateway-links">
         <div class="row">
             @foreach(var item in selection.Take(sectionCount))
             {
-                if (!item.IsFirst())
+                if (pos > 0)
                 {
-                    if (item.IsModZero(2))
+                    if (pos % 2 == 0)
                     {
                         <div class="clearfix visible-sm-block"></div>
                     }
-
-                    if (item.IsModZero(3))
+                    
+                    if (pos % 3 == 0)
                     {
-                        <div class="clearfix visible-md-block"></div>
+                        <div class="clearfix visible-md-block visible-lg-block"></div>
                     }
                 }
 
@@ -40,6 +42,7 @@
                         </span>
                     </div>
                 </div>
+                pos++;
             }
         </div>
 

@@ -21,13 +21,13 @@
             @foreach(var sibling in siblings)
             {
                 <li class="@Umbraco.If(Model.Id == sibling.Id, "active")">
-                    <a hrfef="@sibling.Url">
+                    <a href="@sibling.Url">
                         @sibling.GetPropertyValue("title", sibling.Name)
-                        @if (showChildren)
-                        {
-                            @ListChildren(sibling)
-                        }
                     </a>
+                    @if (showChildren)
+                    {
+                        @ListChildren(sibling)
+                    }
                 </li>
             }
         </ul>
@@ -41,7 +41,7 @@
 
     if (children.Any())
     {
-        <ul class="nav nav-stacked nav-pills">
+        <ul class="nav nav-stacked nav-pills aub__child-nav">
             @foreach(var child in children)
             {
                 <li>

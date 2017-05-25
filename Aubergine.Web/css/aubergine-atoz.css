@@ -1,0 +1,27 @@
+﻿.list-atoz 
+{
+    text-align: center;
+}
+    .list-atoz li {
+        padding: 0;
+    }
+
+    .list-atoz li.active {
+        background-color: #444;
+    }
+
+    .list-atoz li.active a {
+        color: #fff;
+    }
+
+        .list-atoz li a {
+            border: 1px solid #eee;
+            display: block;
+            padding: 0.75em 0;
+            width: 2em;
+        }
+
+    .list-atoz li a:hover {
+        background-color: #ddd;
+        text-decoration:none;
+    }

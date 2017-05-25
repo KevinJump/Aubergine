@@ -1,0 +1,94 @@
+.switcher {
+  background: #d8d7d9;
+  border: 1px solid #d8d7d9;
+  position: relative;
+  display: inline-block;
+  box-sizing: content-box;
+  overflow: visible;
+  width: 56px;
+  height: 34px;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: rgb(223, 223, 223) 0px 0px 0px 0px inset;
+  -webkit-transition: 0.3s ease-out all;
+  transition: 0.3s ease-out all;
+  top: 0px;
+}
+
+.switch-show-icons .switcher:before,
+.switch-show-icons .switcher:after {
+  font-family: 'icomoon';
+  font-size: 16px;
+  height: 100%; 
+  line-height: 34px;
+  color: #fff;
+  display: inline-block;
+  position: absolute;
+}
+.switch-show-icons .switcher.checked:before {
+  content: '\e165';
+  left: 6px;
+}
+.switch-show-icons .switcher:not(.checked):after {
+  content: '\e1a4';
+  right: 6px;
+}
+
+.switcher small {
+  background: #fff;
+  border-radius: 50%;
+  /*box-shadow: 0 1px 3px rgba(0,0,0,0.4);*/
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  margin: 2px 0px 0px 2px;
+  -webkit-transition: 0.3s ease-out all;
+  transition: 0.3s ease-out all;
+}
+.switcher.checked {
+  background: rgb(53, 199, 134);
+  border-color: rgb(53, 199, 134);
+}
+.switcher.checked small {
+  -webkit-transform: translateX(22px);
+  -moz-transform: translateX(22px);
+  -ms-transform: translateX(22px);
+  -o-transform: translateX(22px);
+  transform: translateX(22px);
+}
+.switcher-status {
+  display: inline-block;
+  vertical-align: top;
+  padding: 7px;
+  color: #d8d7d9;
+  -webkit-transition: color .3s ease-in-out;
+  transition: color .3s ease-in-out;
+}
+.switcher-status.active {
+  color: #817f85;
+}
+
+.switcher.blue.checked {
+  background: rgb(54, 180, 246);
+  border-color: rgb(54, 180, 246);
+}
+.switcher.green.checked {
+  background: rgb(53, 199, 134);
+  border-color: rgb(53, 199, 134);
+}
+.switcher.purple.checked {
+  background: rgb(103, 94, 122);
+  border-color: rgb(103, 94, 122);
+}
+.switcher.red.checked {
+  background: rgb(254, 62, 57);
+  border-color: rgb(254, 62, 57);
+}
+.switcher.turquoise.checked {
+  background: rgb(0, 174, 162);
+  border-color: rgb(0, 174, 162);
+}

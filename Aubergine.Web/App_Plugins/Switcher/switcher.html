@@ -1,0 +1,5 @@
+<div ng-controller="Our.Umbraco.Switcher.Controller" ng-class="{ 'switch-show-icons': showIcons, 'switch-hide-icons': !showIcons }">
+    <span class="switcher-status" ng-show="showLabel && statusLeftRight" ng-class="{ active: !enabled }">{{model.textLeft}}</span>
+	<switch name="enabled" ng-model="enabled" id="{{model.alias}}" class="{{switchStyle}}"></switch>
+    <span class="switcher-status" ng-show="showLabel" ng-class="{ active: enabled || (statusLeftRight && enabled) }">{{model.textRight}}</span>
+</div>

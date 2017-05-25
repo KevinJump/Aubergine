@@ -1,0 +1,26 @@
+﻿.aub__search-results {
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+
+.aub__search-results .search-result {
+    margin: 1em 0;
+}
+
+.aub__search-results .result-head {
+    margin: 0;
+}
+
+.aub__search-results .result-meta {
+}
+
+.aub__search-results .result-meta a {
+    color: #42752c;
+    font-size: 85%;
+}
+
+
+.aub__search-results .result-summary {
+   padding: 0.5em 0 0.75em ;
+}

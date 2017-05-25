@@ -1,3 +1,41 @@
 /*
 	editor stylesheet adds the elements to the drop downs for the editors
 */
+@import url('/content/bootstrap.min.css');
+
+.mce-content-body {
+    padding: 0.4em 1em;
+}
+
+.mce-content-body .alert {
+    display: block;
+}
+
+
+/**umb_name:Heading*/
+h3 {
+}
+
+/**umb_name:Sub Heading*/
+h4{}
+
+/**umb_name:Quote*/
+blockquote{}
+
+/**umb_name:Alert - Info*/
+.alert alert-info{}
+
+/**umb_name:Alert - Warning*/
+.alert alert-warning{}
+
+/**umb_name:Alert - Danger*/
+.alert alert-danger{}
+
+/**umb_name:Button - Info*/
+.btn btn-lg btn-info{}
+
+/**umb_name:Button - Warning*/
+.btn btn-lg btn-warning{}
+
+/**umb_name:Button - Danger*/
+.btn btn-lg btn-danger{}

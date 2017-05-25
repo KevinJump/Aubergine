@@ -1,5 +1,8 @@
-﻿.aub__content h2 {
-    font-size: 34pt;
+﻿
+.aub__content-header h2 {
+    margin: 0.5em 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5em;
 }
 
 .aub__featured-image {
@@ -19,15 +22,15 @@
     display: inline-block;
 }
 
-    .aub__featured-image h2 > span {
-        background-color: rgba(0,0,0,0.5);
-        color: #fff;
-        display: inline;
-        padding: 0.4rem;
-        line-height: 1.45em;
-        -webkit-box-decoration-break: clone;
-        box-decoration-break: clone;
-    }
+.aub__featured-image h2 > span {
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+    display: inline;
+    padding: 0.4rem;
+    line-height: 1.45em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
 
 .aub__article-date {
     text-align: right;

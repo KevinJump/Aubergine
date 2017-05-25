@@ -1,0 +1,64 @@
+{
+    propertyEditors: [
+    {
+        alias: "Our.Umbraco.Switcher",
+        name: "Switcher",
+        editor:{
+            view: "~/App_Plugins/Switcher/switcher.html",
+            valueType: "INT"
+        },
+        prevalues: {
+            fields:[
+                {
+                   label: "Hide On/Off label",
+                   description: "Hiding the On/Off label",
+                   key: "hideLabel",
+                   view: "boolean"
+                },
+                {
+                   label: "Turn switch On",
+                   description: "Turn switch On as default",
+                   key: "switchOn",
+                   view: "boolean"
+                },
+                {
+                   label: "Show icons",
+                   description: "Show on/off icons in toggle button",
+                   key: "showIcons",
+                   view: "boolean"
+                },
+                {
+                   label: "Use status text on left/right",
+                   description: "Show status text on the left and right to the switch-button",
+                   key: "statusLeftRight",
+                   view: "boolean"
+                },
+                {
+                   label: "On-label text",
+                   description: "The text of the label when the switch is enabled",
+                   key: "onLabelText",
+                   view: "textstring"
+                },
+                {
+                   label: "Off-label text",
+                   description: "The text of the label when the switch is disabled",
+                   key: "offLabelText",
+                   view: "textstring"
+                },
+                {
+                   label: "Switch class",
+                   description: "E.g. \"blue\", \"green\", \"purple\", \"red\" or \"turquoise\"",
+                   key: "switchClass",
+                   view: "textstring"
+                }  
+            ]
+        }
+  	}],
+  	javascript: [
+        "~/App_Plugins/Switcher/switch.js",
+    	"~/App_Plugins/Switcher/switcher.controller.js"
+	],
+    css: [
+        "~/App_Plugins/Switcher/switcher.css"
+    ]
+}

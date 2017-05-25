@@ -13,3 +13,7 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
 .nav-pills > li > a, .form-control {
     border-radius: 0;
 }
+
+.aub__page-content .alert {
+    display: block;
+}

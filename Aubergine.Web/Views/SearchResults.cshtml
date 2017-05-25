@@ -2,5 +2,17 @@
 @{
 	Layout = "SystemPages.cshtml";
 }
+<div class="aub__search-bar">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 col-md-offset-2">
+            @Html.Partial("Search/SearchForm")
+            <hr />
+        </div>
+    </div>
+</div>
 
-@Html.Partial("Search/Results")
+<div class="row">
+    <div class="col-xs-12 col-md-10 col-md-offset-1">
+        @Html.Partial("Search/Results")
+    </div>
+</div>

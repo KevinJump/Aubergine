@@ -1,1 +1,45 @@
 ﻿@inherits UmbracoViewPage<IPublishedContent>
+@using System.Text.RegularExpressions
+@{ 
+    var query = Request.QueryString["q"];
+    if (query.IsNullOrWhiteSpace())
+    {
+        return;
+    }
+
+    var results = Umbraco.TypedSearch(query);
+}
+
+@if(results != null && results.Any())
+{
+    <div>
+        <small>Found @results.Count() results for <strong>@query</strong></small>
+    </div>
+
+    <ul class="aub__search-results">
+        @foreach(var result in results)
+        {
+            <li class="search-result">
+                <h3 class="result-head">
+                    <a href="@result.Url">
+                        @result.GetPropertyValue("title", result.Name)
+                    </a>
+                </h3>
+                <div class="result-meta">
+                    <a href="@result.Url">@result.Url</a>
+                </div>
+                <div class="result-summary">
+                    @result.GetPropertyValue("summary")
+                </div>
+            </li>
+        }
+    </ul>
+}
+else {
+    <div class="">
+        <h3>No Results</h3>
+        <p>
+            We couldn't find any results for <strong>@query</strong>
+        </p>
+    </div>
+}
