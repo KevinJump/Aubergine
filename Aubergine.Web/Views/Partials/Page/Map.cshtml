@@ -1,0 +1,33 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@using Terratype
+@using System.Text;
+@{ 
+    var popup = new StringBuilder();
+    if (Model.HasProperty("venueName"))
+    {
+        popup.AppendFormat("<h4>{0}</h4>", Model.GetPropertyValue<string>("venueName", Model.Name));
+    }
+
+    if (Model.HasProperty("address") && Model.HasValue("address"))
+    {
+        popup.AppendFormat("<p>{0}</p>", Umbraco.ReplaceLineBreaksForHtml(Model.GetPropertyValue<string>("address", "")));
+    }
+
+    if (Model.HasProperty("phoneNumber") && Model.HasValue("phoneNumber"))
+    {
+        popup.AppendFormat("Tel: {0}<br/>", Model.GetPropertyValue<string>("phoneNumber"));
+    }
+
+    if (Model.HasProperty("emailAddress") && Model.HasValue("emailAddress"))
+    {
+        popup.AppendFormat("<a href=\"mailto:{0}\">{0}</a><br/>", Model.GetPropertyValue<string>("emailAddress"));
+    }
+}
+
+<div class="aub-venue-map">
+    @Html.Terratype(Model.GetPropertyValue<Terratype.Models.Model>("location"),
+        @<text>
+            @Html.Raw(popup.ToString())
+        </text>)
+</div>
+

@@ -240,6 +240,9 @@
     <Reference Include="Terratype.GoogleMapsV3, Version=1.0.13.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Terratype.GoogleMapsV3.1.0.13\lib\net45\Terratype.GoogleMapsV3.dll</HintPath>
     </Reference>
+    <Reference Include="Terratype.LeafletV1, Version=1.0.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Terratype.LeafletV1.1.0.13\lib\net45\Terratype.LeafletV1.dll</HintPath>
+    </Reference>
     <Reference Include="TidyNet, Version=1.0.0.0, Culture=neutral">
       <HintPath>..\packages\UmbracoCms.Core.7.6.1\lib\net45\TidyNet.dll</HintPath>
     </Reference>
@@ -298,6 +301,30 @@
     <Content Include="App_Plugins\Terratype.GoogleMapsV3\Views\config.search.html" />
     <Content Include="App_Plugins\Terratype.GoogleMapsV3\Views\editor.appearance.html" />
     <Content Include="App_Plugins\Terratype.GoogleMapsV3\Views\grid.appearance.html" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Css\leaflet.css" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Css\MarkerCluster.css" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Css\MarkerCluster.Default.css" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Images\Example.png" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Images\layers-2x.png" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Images\layers.png" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Images\Logo.png" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Images\marker-icon-2x.png" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Images\marker-icon.png" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Images\marker-shadow.png" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Lang\en-us.xml" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Scripts\leaflet-providers.js" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Scripts\leaflet-src.js" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Scripts\leaflet.js" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Scripts\leaflet.markercluster-src.js" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Scripts\leaflet.markercluster.js" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Scripts\Terratype.LeafletV1.js" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Scripts\Terratype.LeafletV1.Renderer.js" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Scripts\tileservers.js" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Views\config.appearance.html" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Views\config.definition.html" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Views\config.search.html" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Views\editor.appearance.html" />
+    <Content Include="App_Plugins\Terratype.LeafletV1\Views\grid.appearance.html" />
     <Content Include="App_Plugins\Terratype\Css\label.standard.css" />
     <Content Include="App_Plugins\Terratype\Images\Terratype.png" />
     <Content Include="App_Plugins\Terratype\Lang\en-us.xml" />
@@ -386,6 +413,8 @@
     <Content Include="App_Plugins\Switcher\package.manifest" />
     <Content Include="App_Plugins\Terratype\Views\grid.cshtml" />
     <Content Include="App_Plugins\Terratype\package.manifest" />
+    <Content Include="Views\VenuePage.cshtml" />
+    <Content Include="Views\Partials\Page\Map.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
