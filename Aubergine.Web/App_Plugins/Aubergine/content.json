@@ -1,0 +1,12 @@
+﻿[
+  {
+    "name": "Example Content",
+    "description": "Basic content that shows all the features of the starter kit",
+    "nuget": "Aubergine.Content.Example"
+  },
+  {
+    "name": "Local Gov Content",
+    "description": "Install the structure of the LGSN (LocalGov Standard Navigation List) onto the site",
+    "nuget": "Aubergine.Content.LocalGov"
+  }
+]

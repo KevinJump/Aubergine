@@ -1,0 +1,34 @@
+﻿[
+  {
+    "Id": "1",
+    "Name": "Blogs",
+    "Description": "Add mutiple blogs, anywhere on your site",
+    "Depends": "comments",
+    "Nuget": "Aubergine.Blogs"
+  },
+  {
+    "Id": "2",
+    "Name": "Forums",
+    "Description": "Let people have a discussion about things",
+    "Nuget": "Aubergine.Forums"
+  },
+  {
+    "Id": "3",
+    "Name": "Comments",
+    "Description": "Let people comment on pages, or pictures or anything",
+    "Nuget": "Aubergine.Comments"
+  },
+  {
+    "Id": "4",
+    "Name": "Authentication",
+    "Description": "Basic Authentication using Umbraco's membership database",
+    "Nuget": "Aubergine.Auth"
+  },
+  {
+    "Id": "5",
+    "Name": "Complete",
+    "Description": "<p>Install all the aubergine features in one big hit</p><p>you will get all the features of aubergine plus some standard content",
+    "Nuget": "Aubergine.Compleate",
+    "Depends": "blogs, comments, forums, authentication, sample content"
+  }
+]

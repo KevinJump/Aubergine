@@ -1,0 +1,32 @@
+﻿.aub-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.aub-half {
+    padding: 10px;
+    box-sizing: border-box;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    flex-basis: 50%;
+    max-width: 50%;
+}
+
+.aub-feature {
+    padding: 10px;
+    box-sizing: border-box;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+
+    flex-basis: 50%;
+    max-width: 50%;
+}
+
+.aub-nuget-cmd {
+    background-color: black;
+    color: white;
+    width: auto;
+    display: inline-block;
+    font-size: 110%;
+    padding: 1em;
+}

@@ -213,6 +213,8 @@
     <Compile Include="AtoZ\AtoZInfo.cs" />
     <Compile Include="AtoZ\UmbracoAtoZExtensions.cs" />
     <Compile Include="Contact\ContactFormSurfaceController.cs" />
+    <Compile Include="Dashboard\AubergineDashboardApiController.cs" />
+    <Compile Include="Dashboard\AubergineItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>

@@ -275,6 +275,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Plugins\Aubergine\aubergine.css" />
+    <Content Include="App_Plugins\Aubergine\AubergineDashboard.html" />
+    <Content Include="App_Plugins\Aubergine\AubergineDashboardController.js" />
+    <Content Include="App_Plugins\Aubergine\AubergineServices.js" />
     <Content Include="App_Plugins\StyledTextbox\css\styledText.css" />
     <Content Include="App_Plugins\StyledTextbox\html\styledText.html" />
     <Content Include="App_Plugins\StyledTextbox\js\styledTextController.js" />
@@ -441,6 +445,9 @@
     <Content Include="config\applications.config" />
     <Content Include="config\404handlers.config" />
     <Content Include="Views\Redirect.cshtml" />
+    <Content Include="App_Plugins\Aubergine\package.manifest" />
+    <Content Include="App_Plugins\Aubergine\features.json" />
+    <Content Include="App_Plugins\Aubergine\content.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
