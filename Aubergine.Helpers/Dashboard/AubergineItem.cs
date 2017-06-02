@@ -18,4 +18,10 @@ namespace Aubergine.Helpers.Dashboard
         public bool Enabled { get; set; }
         public bool Installed { get; set; }
     }
+
+    public class InstalledItem
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+    }
 }

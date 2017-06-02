@@ -503,8 +503,12 @@
     <Folder Include="Views\MacroPartials\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Aubergine.Auth\Aubergine.Auth.csproj">
+      <Project>{02c1d1c4-b124-41bf-aa3e-ad9d20501cbf}</Project>
+      <Name>Aubergine.Auth</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Aubergine.Core\Aubergine.Core.csproj">
-      <Project>{b8eb9fd1-1e6b-45fb-ac0d-b8dd62f19617}</Project>
+      <Project>{f4768132-f117-407b-be01-7813039dc9ac}</Project>
       <Name>Aubergine.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Aubergine.Helpers\Aubergine.Helpers.csproj">
