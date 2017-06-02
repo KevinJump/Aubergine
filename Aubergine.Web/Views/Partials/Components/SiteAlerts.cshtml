@@ -6,7 +6,9 @@
     {
         foreach(var alert in alerts)
         {
-            <div class="alert alert-@alert.GetPropertyValue("alertType", "info")">
+            var alertType = alert.GetPropertyValue<string>("alertType", "info").ToLower();
+
+            <div class="alert alert-@alertType">
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12">
