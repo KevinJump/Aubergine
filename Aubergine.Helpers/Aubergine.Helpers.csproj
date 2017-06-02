@@ -214,6 +214,7 @@
     <Compile Include="AtoZ\UmbracoAtoZExtensions.cs" />
     <Compile Include="Contact\ContactFormSurfaceController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
