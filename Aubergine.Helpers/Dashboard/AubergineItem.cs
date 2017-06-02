@@ -14,5 +14,8 @@ namespace Aubergine.Helpers.Dashboard
         public string Depends { get; set; }
         public string Nuget { get; set; }
         public string Package { get; set; }
+
+        public bool Enabled { get; set; }
+        public bool Installed { get; set; }
     }
 }

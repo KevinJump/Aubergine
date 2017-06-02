@@ -30,3 +30,8 @@
     font-size: 110%;
     padding: 1em;
 }
+
+.aub-installed {
+    background-color: aliceblue;
+    color: #aaa
+}

@@ -5,7 +5,12 @@
             <div class="span12">
                 <h2 class="page-header">Welcome to Aubergine &#x1F346</h2>
                 <p>
-                    Welcome to the Aubergine Starter Kit
+                    Welcome to the Aubergine Starter Kit and Module dashboard
+                </p>
+                <p>
+                    Alongside the basic starter kit - aubergine has a number of 
+                    additional modules that make it easy to exend the features of
+                    your site. 
                 </p>
             </div>
         </div>
@@ -33,9 +38,13 @@
                 </p>
                 <div class="umb-healthcheck">
                     <div class="aub-feature" ng-repeat="feature in vm.features">
-                        <div class="umb-healthcheck-group" ng-click="vm.viewDetails(feature, 'feature')">
-                            <div class="umb-healthcheck-title">
-                                {{feature.Name}}
+                        <div ng-show="feature.Enabled">
+                            <div class="umb-healthcheck-group" ng-click="vm.viewDetails(feature, 'feature')"
+                                 ng-class="{'aub-installed' : feature.Installed}">
+                                <div class="umb-healthcheck-title">
+                                    <i class="umb-healthcheck-status-icon icon-check color-green" ng-show="feature.Installed"></i>
+                                    {{feature.Name}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -63,6 +72,13 @@
                 <div class="umb-healthcheck-group__details-check-title">
                     <p ng-bind-html="vm.group.Description">
                     </p>
+
+                    <div ng-show="vm.group.Installed" class="alert alert-success">
+                        <i class="umb-healthcheck-status-icon icon-check color-orange"></i>
+                        <strong>
+                            This feature is already installed on this site
+                        </strong>
+                    </div>
 
                     <h3>Nuget</h3>
                     <p>Where possible we recommend you install this {{vm.detailType}} via nuget</p>
