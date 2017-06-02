@@ -1,0 +1,34 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@*
+    
+*@
+
+@DisplayContactForm("Email", "email")
+@DisplayContactMethod("Telephone", "phoneNumber")
+@DisplayContactMethod("Address", "address")
+
+@helper DisplayContactMethod(string title, string property)
+{ 
+    if (Model.HasProperty(property))
+    {
+        var displayTitle = Umbraco.GetDictionaryValue("Contact." + title, title);
+
+        var detail = Umbraco.ReplaceLineBreaksForHtml(Model.GetPropertyValue<string>(property));
+
+        <div class="aub__contact-item" id="@title">
+            <h3>@displayTitle</h3>
+            @Html.Raw(detail)
+        </div>
+    }
+}
+
+
+@helper DisplayContactForm(string title, string property)
+{ 
+    var email = Model.GetPropertyValue<string>(property);
+
+    @Html.Partial("Page/ContactForm", new Aubergine.Helpers.Contact.ContactViewModel
+                {
+                    ToAddress = email
+                });
+}

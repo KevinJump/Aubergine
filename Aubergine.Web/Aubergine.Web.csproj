@@ -415,6 +415,10 @@
     <Content Include="App_Plugins\Terratype\package.manifest" />
     <Content Include="Views\VenuePage.cshtml" />
     <Content Include="Views\Partials\Page\Map.cshtml" />
+    <Content Include="Views\Partials\Page\ListContactDetails.cshtml" />
+    <Content Include="Views\ContactPage.cshtml" />
+    <Content Include="Views\Partials\Page\ContactDetails.cshtml" />
+    <Content Include="Views\Partials\Page\ContactForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -491,6 +495,10 @@
     <Folder Include="Views\MacroPartials\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Aubergine.Core\Aubergine.Core.csproj">
+      <Project>{b8eb9fd1-1e6b-45fb-ac0d-b8dd62f19617}</Project>
+      <Name>Aubergine.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Aubergine.Helpers\Aubergine.Helpers.csproj">
       <Project>{df9f811f-a422-4814-b72b-ebc5d1217787}</Project>
       <Name>Aubergine.Helpers</Name>

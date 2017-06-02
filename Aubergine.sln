@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aubergine.Web", "Aubergine.Web\Aubergine.Web.csproj", "{C85616F6-E75D-4B87-BC93-403A70F87DBE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aubergine.Helpers", "Aubergine.Helpers\Aubergine.Helpers.csproj", "{DF9F811F-A422-4814-B72B-EBC5D1217787}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aubergine.Core", "Aubergine.Core\Aubergine.Core.csproj", "{B8EB9FD1-1E6B-45FB-AC0D-B8DD62F19617}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{DF9F811F-A422-4814-B72B-EBC5D1217787}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF9F811F-A422-4814-B72B-EBC5D1217787}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF9F811F-A422-4814-B72B-EBC5D1217787}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8EB9FD1-1E6B-45FB-AC0D-B8DD62F19617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8EB9FD1-1E6B-45FB-AC0D-B8DD62F19617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8EB9FD1-1E6B-45FB-AC0D-B8DD62F19617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8EB9FD1-1E6B-45FB-AC0D-B8DD62F19617}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

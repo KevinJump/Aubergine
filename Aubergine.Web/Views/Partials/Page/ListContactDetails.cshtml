@@ -1,0 +1,52 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@{
+    if (!Model.HasProperty("contactDetails"))
+    {
+        return;
+    }
+
+    var details = Model.GetPropertyValue<IPublishedContent>("contactDetails");
+    if (details == null)
+    {
+        return;
+    }
+}
+<div class="aub__content-links">
+    <h2>@Umbraco.GetDictionaryValue("Contact.Heading", "Contact Us")</h2>
+    <ul class="nav nav-stacked nav-pills">
+        @if (details.HasValue("phoneNumber"))
+        {
+            <li>
+                <a href="@details.Url#telephone">
+                    <i class="glyphicon glyphicon-earphone"></i>
+                    @Umbraco.GetDictionaryValue("Contact.Telephone", "Phone")
+                </a>
+            </li>
+        }
+
+        @if (details.HasValue("email"))
+        {
+            <li>
+                <a href="@details.Url#email">
+                    <i class="glyphicon glyphicon-envelope"></i>
+                    @Umbraco.GetDictionaryValue("Contact.Email", "Email")
+                </a>
+            </li>
+        }
+
+        @if (details.HasValue("address"))
+        {
+            <li>
+                <a href="@details.Url#address">
+                    <i class="glyphicon glyphicon-globe"></i>
+                    @Umbraco.GetDictionaryValue("Contact.Address", "Address")
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+
+
+
+
+

@@ -1,0 +1,12 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "SideNavPages.cshtml";
+}
+
+<div class="aub__content-header">
+    <h2>@Umbraco.Field("title")</h2>
+</div>
+
+@Umbraco.Field("Content")
+
+@Html.Partial("Page/ContactDetails")

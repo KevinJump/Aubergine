@@ -212,6 +212,7 @@
     <Compile Include="AtoZ\AtoZEventHandler.cs" />
     <Compile Include="AtoZ\AtoZInfo.cs" />
     <Compile Include="AtoZ\UmbracoAtoZExtensions.cs" />
+    <Compile Include="Contact\ContactFormSurfaceController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,39 @@
+﻿@inherits UmbracoViewPage<ContactViewModel>
+@using Aubergine.Helpers.Contact
+@{ 
+    var title = Umbraco.GetDictionaryValue("Contact.Email", "Online");
+}
+
+@using (Html.BeginUmbracoForm<ContactFormSurfaceController>(
+    "SendContactEmail", null, new { @class = "form" }))
+{
+    <fieldset>
+        <h3>@title</h3>
+
+        @Html.ValidationSummary()
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Name, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Email, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Email)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Message, new { @class = "control-label" })
+            @Html.TextAreaFor(x => x.Message, 10, 50, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Message)
+        </div>
+
+        @Html.HiddenFor(x => x.ToAddress)
+
+        <div class="col-sm-12">
+            <input type="submit" class="btn btn-lg btn-primary" value="send" />
+        </div>
+    </fieldset>
+}
