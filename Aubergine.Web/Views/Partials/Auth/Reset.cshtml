@@ -1,0 +1,44 @@
+﻿@inherits UmbracoViewPage<Aubergine.Auth.Models.AubPasswordResetModel>
+@using Aubergine.Auth
+
+@if (Request.HttpMethod == "POST" && ViewData.ModelState.IsValid)
+{
+    <h2>Your password has been reset</h2>
+    <p>
+        You can now <a href="@AuthUrls.Login">Login</a>
+    </p>
+    return;
+}
+
+@using (Html.BeginUmbracoForm<AuthenticationController>("ResetPassword", null))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Reset your password</legend>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.EmailAddress)
+            @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control"})
+            @Html.ValidationMessageFor(m => m.EmailAddress)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfimPassword)
+            @Html.PasswordFor(m => m.ConfimPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ConfimPassword)
+        </div>
+
+        <div>
+            <input type="submit" class="btn btn-lg btn-primary" value="Reset" />
+        </div>
+
+    </fieldset>
+}

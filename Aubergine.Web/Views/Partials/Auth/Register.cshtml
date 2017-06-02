@@ -1,0 +1,45 @@
+﻿@inherits UmbracoViewPage<Aubergine.Auth.Models.AubRegisterViewModel>
+@using Aubergine.Auth
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@using (Html.BeginUmbracoForm<AuthenticationController>("Register", null,
+    new { @class = "form aub__auth-form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Register</legend>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.EmailAddress)
+            @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.EmailAddress)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.PasswordConfirm)
+            @Html.PasswordFor(m => m.PasswordConfirm, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.PasswordConfirm)
+        </div>
+
+        <div>
+            <input type="submit" class="btn btn-lg btn-primary" value="Register" />
+        </div>
+    </fieldset>
+}

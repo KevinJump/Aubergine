@@ -1,5 +1,43 @@
 ﻿@inherits UmbracoViewPage<IPublishedContent>
-@* placeholder for auth in the templates, 
-    aubergine.auth should replace this file
-    with something usefull.
-*@
+@using Umbraco.Web.PublishedCache
+@using Aubergine.Auth
+
+<ul class="nav navbar-nav aub__auth-status">
+    @if (Members.IsLoggedIn())
+    {
+        <li class="dropdown">
+            <a href="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">
+                <span class="glyphicon glyphicon-user"></span>
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li class="aub__logged-in">
+                    <span class="navbar-text">@Members.CurrentUserName</span>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li><a href="@AuthUrls.Reset">Edit Profile</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="aub_logged-in">
+                    <a href="@AuthUrls.logout?returnUrl=@Model.Url">Sign out</a>
+                </li>
+            </ul>
+        </li>
+    }
+    else
+    {
+        <li class="dropdown">
+            <a href="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">
+                <span class="glyphicon glyphicon-user"></span>
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li class="aub__logged-out">
+                    <a href="@AuthUrls.Login">Sign in</a>
+                </li>
+                <li class="aub__logged-out">
+                    <a href="@AuthUrls.Register">Register</a>
+                </li>
+            </ul>
+        </li>
+    }
+</ul>

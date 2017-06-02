@@ -448,6 +448,16 @@
     <Content Include="App_Plugins\Aubergine\package.manifest" />
     <Content Include="App_Plugins\Aubergine\features.json" />
     <Content Include="App_Plugins\Aubergine\content.json" />
+    <Content Include="Views\Partials\Auth\Forgot.cshtml" />
+    <Content Include="Views\Partials\Auth\Login.cshtml" />
+    <Content Include="Views\Partials\Auth\Register.cshtml" />
+    <Content Include="Views\Partials\Auth\Reset.cshtml" />
+    <Content Include="Views\AuthForgotPassword.cshtml" />
+    <Content Include="Views\AuthLogin.cshtml" />
+    <Content Include="Views\AuthPages.cshtml" />
+    <Content Include="Views\AuthRegister.cshtml" />
+    <Content Include="Views\AuthReset.cshtml" />
+    <Content Include="Views\AuthVerify.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
