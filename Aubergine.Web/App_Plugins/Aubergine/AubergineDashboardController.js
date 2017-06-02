@@ -34,6 +34,34 @@
                 });
         }
 
+        vm.showDependencies = function (depends) {
+
+            var items = vm.features;
+            if (vm.detailType == 'content') {
+                items = vm.content;
+            }
+
+            if (depends === undefined)
+                return "";
+
+            var guids = depends.split(',');
+            var dependencies = [];
+
+            for (var i = 0; i < guids.length; i++) {
+                var packageId = guids[i].trim();
+                var packageName = '[unknown]'
+                for (var j = 0; j < items.length; j++) {
+                    if (items[j].Id == packageId) {
+                        console.log(items[j].Name);
+                        packageName = items[j].Name;
+                    }
+                }
+                dependencies.push(packageName);
+            }
+
+            return dependencies.join(', ');
+        }
+
         vm.loadFeatures();
         vm.loadContent();
 

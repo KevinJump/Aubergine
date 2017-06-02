@@ -3,7 +3,7 @@
     <div ng-show="vm.viewState == 'list'">
         <div class="row">
             <div class="span12">
-                <h2 class="page-header">Aubergine &#x1F346</h2>
+                <h2 class="page-header">Welcome to Aubergine &#x1F346</h2>
                 <p>
                     Welcome to the Aubergine Starter Kit
                 </p>
@@ -72,7 +72,7 @@
 
                     <h3>Dependencies</h3>
                     <div ng-show="vm.group.Depends">
-                        Adding this {{vm.detailType}} will also install the following: <strong><em>{{vm.group.Depends}}</em></strong>
+                        Adding this {{vm.detailType}} will also install the following: <strong><em>{{vm.showDependencies(vm.group.Depends)}}</em></strong>
                     </div>
                     <div ng-hide="vm.group.Depends">
                         No dependencies
