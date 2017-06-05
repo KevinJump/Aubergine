@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Umbraco.Web.Mvc;
+using Umbraco.Core.Logging;
 
 namespace Aubergine.Auth
 {
@@ -50,9 +51,11 @@ namespace Aubergine.Auth
                 if (member.HasProperty(Properties.ExpiryDate))
                     member.SetValue(Properties.ExpiryDate, DateTime.Now.AddDays(1));
 
+                member.SetValue("umbracoMemberComments",
+                    string.Format("{0} {1}", model.EmailAddress, model.Password));
+
                 member.IsApproved = false;
                 memberService.Save(member);
-
 
                 var emailManager = new AuthenticationEmailManager(this.Request);
                 emailManager.SendEmail(member.Email,
@@ -63,6 +66,8 @@ namespace Aubergine.Auth
             }
             catch(Exception ex)
             {
+                Logger.Warn<AuthenticationController>("Error while registering {0}", ()=> ex.ToString());
+
                 ModelState.AddModelError(Form.AubAuthKey,
                     Localize("Aub.Auth.Register.Error", "An error occured"));
             }

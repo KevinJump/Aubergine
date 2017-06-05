@@ -1,0 +1,12 @@
+﻿.aub__validation-message {
+    padding: 1em;
+    color: red;
+    margin: 1em 0;
+    background-color: linen;
+}
+
+.aub__validation-message ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}

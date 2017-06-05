@@ -361,6 +361,7 @@
     <Content Include="css\aubergine-atoz.css" />
     <Content Include="css\aubergine-content.css" />
     <Content Include="css\aubergine-core.css" />
+    <Content Include="css\aubergine-forms.css" />
     <Content Include="css\aubergine-search.css" />
     <Content Include="css\aubergine-sidenav.css" />
     <Content Include="css\aubergine.css" />

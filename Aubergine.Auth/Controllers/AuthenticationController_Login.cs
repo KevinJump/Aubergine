@@ -73,7 +73,7 @@ namespace Aubergine.Auth
             catch (Exception ex)
             {
                 ModelState.AddModelError(Form.AubAuthKey,
-                    Localize("Aub.Auth.Fail", "Login Failed"));
+                    Localize("Aub.Auth.Fail", "Login Failed " + ex.ToString()));
             }
 
             return CurrentUmbracoPage();

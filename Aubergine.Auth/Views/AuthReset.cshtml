@@ -1,0 +1,16 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "AuthPages.cshtml";
+}
+@{ 
+    var resetGuid = Request.QueryString["resetGUID"];
+
+    if (string.IsNullOrWhiteSpace(resetGuid))
+    {
+        @Html.Action("ForgotPassword", "Authentication", new { area = "Aubergine" })
+    }
+    else
+    {
+        @Html.Action("ResetPassword", "Authentication", new { area = "Aubergine" })
+    }
+}
