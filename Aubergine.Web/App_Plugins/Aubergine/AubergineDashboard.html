@@ -65,7 +65,8 @@
 
             <div class="umb-healthcheck-group__details-group-title">
                 <div class="umb-healthcheck-group__details-group-name">{{vm.group.Name}}</div>
-                <button class="umb-era-button -white -text-black" type="button" ng-click="vm.install(vm.group, vm.detailType);">Add {{vm.detailType}}</button>
+                <button class="umb-era-button -white -text-black" type="button" ng-click="vm.install(vm.group, vm.detailType);"
+                        ng-hide="vm.group.Installed">Add {{vm.detailType}}</button>
             </div>
 
             <div class="umb-healthcheck-group__details-checks">

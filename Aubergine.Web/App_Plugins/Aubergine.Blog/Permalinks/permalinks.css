@@ -1,0 +1,9 @@
+﻿.aub-editor-permalinks table {
+    width: 100%;
+}
+
+.aub-editor-permalinks table td {
+    line-height: 20px;
+    padding: 8px;
+    vertical-align:top; 
+}

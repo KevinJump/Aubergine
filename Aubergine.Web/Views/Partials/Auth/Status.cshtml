@@ -5,9 +5,11 @@
 <ul class="nav navbar-nav aub__auth-status">
     @if (Members.IsLoggedIn())
     {
+        var member = Members.GetCurrentMember() as MemberPublishedContent;
+
         <li class="dropdown">
             <a href="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">
-                <span class="glyphicon glyphicon-user"></span>
+                <img src="@member.GetUserImage()" class="aub__user-image" />
                 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">

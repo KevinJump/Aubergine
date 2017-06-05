@@ -275,6 +275,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Plugins\Aubergine.Blog\Permalinks\permalinks.controller.js" />
+    <Content Include="App_Plugins\Aubergine.Blog\Permalinks\permalinks.css" />
+    <Content Include="App_Plugins\Aubergine.Blog\Permalinks\permalinks.html" />
+    <Content Include="App_Plugins\Aubergine.Comments\commenteditor.html" />
+    <Content Include="App_Plugins\Aubergine.Comments\comments.css" />
+    <Content Include="App_Plugins\Aubergine.Comments\CommentsController.js" />
+    <Content Include="App_Plugins\Aubergine.Comments\CommentsService.js" />
     <Content Include="App_Plugins\Aubergine\aubergine.css" />
     <Content Include="App_Plugins\Aubergine\AubergineDashboard.html" />
     <Content Include="App_Plugins\Aubergine\AubergineDashboardController.js" />
@@ -359,6 +366,8 @@
     <Content Include="config\Lang\sv-SE.user.xml" />
     <Content Include="config\Lang\zh-CN.user.xml" />
     <Content Include="css\aubergine-atoz.css" />
+    <Content Include="css\aubergine-blog.css" />
+    <Content Include="css\aubergine-comments.css" />
     <Content Include="css\aubergine-content.css" />
     <Content Include="css\aubergine-core.css" />
     <Content Include="css\aubergine-forms.css" />
@@ -377,6 +386,7 @@
     <Content Include="config\imageprocessor\processing.config" />
     <Content Include="config\imageprocessor\cache.config" />
     <Content Include="App_Plugins\ModelsBuilder\package.manifest" />
+    <Content Include="Scripts\aubergine.js" />
     <Content Include="Views\Web.config" />
     <Content Include="config\Dashboard.config" />
     <Content Include="Scripts\jquery-1.12.4.min.map" />
@@ -459,6 +469,18 @@
     <Content Include="Views\AuthRegister.cshtml" />
     <Content Include="Views\AuthReset.cshtml" />
     <Content Include="Views\AuthVerify.cshtml" />
+    <Content Include="App_Plugins\Aubergine.Blog\package.manifest" />
+    <Content Include="App_Plugins\Aubergine.Comments\package.manifest" />
+    <Content Include="Views\Partials\Blog\BlogPosts.cshtml" />
+    <Content Include="Views\Partials\Blog\Header.cshtml" />
+    <Content Include="Views\Partials\Blog\Post.cshtml" />
+    <Content Include="Views\Blog.cshtml" />
+    <Content Include="Views\BlogCategories.cshtml" />
+    <Content Include="Views\BlogHome.cshtml" />
+    <Content Include="Views\BlogPost.cshtml" />
+    <Content Include="Views\BlogTags.cshtml" />
+    <Content Include="Views\Partials\Comments\CommentBox.cshtml" />
+    <Content Include="Views\Partials\Comments\ShowComments.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -518,13 +540,33 @@
       <Project>{02c1d1c4-b124-41bf-aa3e-ad9d20501cbf}</Project>
       <Name>Aubergine.Auth</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Aubergine.Blog\Aubergine.Blog.csproj">
+      <Project>{ce52efff-cd89-42d4-bc37-bd4738f244b6}</Project>
+      <Name>Aubergine.Blog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aubergine.Comments\Aubergine.Comments.csproj">
+      <Project>{b3aed4b6-ebbb-46ca-a7f7-f795c65ccd8a}</Project>
+      <Name>Aubergine.Comments</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aubergine.Complete\Aubergine.Complete.csproj">
+      <Project>{4d9ea4a1-a341-493e-89dc-4b06ec653b46}</Project>
+      <Name>Aubergine.Complete</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Aubergine.Core\Aubergine.Core.csproj">
       <Project>{f4768132-f117-407b-be01-7813039dc9ac}</Project>
       <Name>Aubergine.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Aubergine.Forums\Aubergine.Forums.csproj">
+      <Project>{7ea42e42-20c6-4b0c-b944-124b9b9090c1}</Project>
+      <Name>Aubergine.Forums</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Aubergine.Helpers\Aubergine.Helpers.csproj">
       <Project>{df9f811f-a422-4814-b72b-ebc5d1217787}</Project>
       <Name>Aubergine.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aubergine.UserContent\Aubergine.UserContent.csproj">
+      <Project>{1aa3e133-a05c-4bab-be74-069ff37cbdd7}</Project>
+      <Name>Aubergine.UserContent</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

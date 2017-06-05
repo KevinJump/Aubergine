@@ -1,0 +1,15 @@
+﻿.aub-comments-editor {
+
+}
+
+.aub-comments-editor .aub-comments-tools {
+    padding: 1em 0;
+    font-size: 90%;
+}
+
+.aub-table-striped tbody > tr:nth-child(odd) > td, .aub-table-striped tbody > tr:nth-child(odd) > th {
+    background-color: #f3f3f5;
+}
+
+
+

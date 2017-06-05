@@ -1,0 +1,11 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+@{ 
+    var home = Model.AncestorOrSelf("blog");
+    if (home != null)
+    {
+        <h1>
+            <a href="@home.Url">@home.GetPropertyValue("title", home.Name)</a>
+        </h1>
+        <span class="aub__tag-line">@home.GetPropertyValue("tagLine")</span>
+    }
+}

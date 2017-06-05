@@ -1,0 +1,29 @@
+﻿<div ng-controller="aubergine.permalinksController" class="aub-editor-permalinks">
+
+    <span>
+        Control the URLs of your posts - you can pick one of the pre-selected values or write your
+        own custom value.
+    </span>
+
+    <table>
+        <tr ng-repeat="choice in options">
+            <td>
+                <input type="radio" ng-model="model.value" ng-value="choice.value" /> {{choice.name}}
+            </td>
+            <td>
+                <small>{{choice.sample}}</small>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="radio" ng-model="model.value" value="-" /> Custom
+            </td>
+            <td>
+                <input type="text" ng-model="customPermalinkFormat" />
+            </td>
+        </tr>
+    </table>
+    <!--
+        Value : [<em>{{model.value}}</em>] [Custom: {{customPermalinkFormat}}] [Format: {{format}}]
+    -->
+</div>

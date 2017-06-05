@@ -1,0 +1,25 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using ClientDependency.Core.Mvc
+@{
+	Layout = "design.cshtml";
+    Html.RequiresCss("~/css/aubergine-blog.css");
+}
+
+@section PageHeader {
+    <div class="aub__page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    @Html.Partial("Blog/Header")
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="aub__blog">
+    @RenderBody()
+</div>
+
+@section Footer {
+}

@@ -1,0 +1,4 @@
+﻿// sitewide javascript 
+$(function () {
+
+});

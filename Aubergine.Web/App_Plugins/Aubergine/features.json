@@ -37,7 +37,7 @@
     "Name": "Complete",
     "Description": "<p>Install all the aubergine features in one big hit</p><p>you will get all the features of aubergine plus some standard content",
     "Nuget": "Aubergine.Complete",
-    "Depends": "{22310F65-948B-45AC-A2C3-4CA645F17B33}, {197635A4-EB21-47F6-893E-6DD7BD57724A},{7CD40983-07FC-48BE-B6F9-B9CF3C85DBAB},{BFAE4E4B-864F-474F-9AC6-6F910310C2D0}",
+    "Depends": "{22310F65-948B-45AC-A2C3-4CA645F17B33}, {197635A4-EB21-47F6-893E-6DD7BD57724A},{7CD40983-07FC-48BE-B6F9-B9CF3C85DBAB},{BFAE4E4B-864F-474F-9AC6-6F910310C2D0}, {BA785FF0-28C3-4BA0-A5D2-68D5D91C7CF1}",
     "Enabled": true
   },
   {

@@ -1,6 +1,6 @@
 ﻿@inherits UmbracoViewPage<IPublishedContent>
 @{ 
-    bool showChildren = true;
+    bool showChildren = false; // set to true to see children of the siblings in the menu
 
     var parent = Model.Parent;
     var siblings = Model.Siblings()

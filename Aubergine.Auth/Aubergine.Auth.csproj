@@ -221,6 +221,7 @@
     <Compile Include="Controllers\AuthenticationController_Login.cs" />
     <Compile Include="Controllers\AuthenticationController_Register.cs" />
     <Compile Include="Controllers\AuthenticationController_Reset.cs" />
+    <Compile Include="Extensions\AuthExtensions.cs" />
     <Compile Include="Migrations\TargetVersionOne\UpdateMemberProperties.cs" />
     <Compile Include="Migrations\TargetVersionOne\UpdateTemplates.cs" />
     <Compile Include="Models\AubLoginViewModel.cs" />
@@ -243,11 +244,9 @@
     <None Include="Views\AuthRegister.cshtml" />
     <None Include="Views\AuthReset.cshtml" />
     <None Include="Views\AuthVerify.cshtml" />
-    <None Include="Views\Partials\Auth\Forgot.cshtml" />
-    <None Include="Views\Partials\Auth\Login.cshtml" />
-    <None Include="Views\Partials\Auth\Register.cshtml" />
-    <None Include="Views\Partials\Auth\Reset.cshtml" />
-    <None Include="Views\Partials\Auth\Status.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Partials\Auth\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
