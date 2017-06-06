@@ -1,0 +1,25 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "Forums.cshtml";
+}
+
+@* the fun starts here *@
+
+@{ 
+    var key = HttpContext.Current.Items["postKey"];
+
+    @Html.Action("ShowThread", "Forum", new { area = "Aubergine",
+        postKey = key })
+}
+
+
+@if (Members.IsLoggedIn())
+{
+    @Html.Action("AddPost", "Forum",
+        new {
+            area = "Aubergine",
+            contentKey = Model.Content.GetKey(),
+            parentKey = key,
+            ShowTitle = false 
+        })
+}

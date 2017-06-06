@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Umbraco.Core;
+using Umbraco.Web.Routing;
 
 namespace Aubergine.Forums
 {
@@ -39,6 +40,9 @@ namespace Aubergine.Forums
 
         protected override void ApplicationStarting(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
+
+            ContentFinderResolver.Current.InsertTypeBefore<ContentFinderByNotFoundHandlers, ForumContentFinder>();
+
             // automapper some things from UserContentItem to a forum post, 
             // this is just some shorthand so we don't have to keep doing 'GetPropertyValue' 
             // 

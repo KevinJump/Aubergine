@@ -12,10 +12,10 @@
     "Id": "{BA785FF0-28C3-4BA0-A5D2-68D5D91C7CF1}",
     "Name": "Forums",
     "Description": "Let people have a discussion about things",
-    "Nuget": "Aubergine.Forums",
+    "Nuget": "Aubergine.Forums --pre",
     "Depends": "{BFAE4E4B-864F-474F-9AC6-6F910310C2D0}",
-    "Enabled": true,
-    "Installed":  true
+    "Enabled": false,
+    "Installed": true
   },
   {
     "Id": "{197635A4-EB21-47F6-893E-6DD7BD57724A}",
@@ -46,5 +46,12 @@
     "Description": "Manage user content in it's own tables, and away from the core umbraco content.<p>This feature is used by all the aubergine features that let your users enter content</p>",
     "Nuget": "Aubergine.UserContent",
     "Enabled": true
+  },
+  {
+    "Id": "{8CE3E027-9D80-42B2-8CAF-892AA8FCCDE1}",
+    "Name": "Test Feature",
+    "Description": "A test feature, to check that the feature install dialog is behaving...",
+    "Nuget": "Aubergine.Test --pre",
+    "Enabled": false
   }
 ]

@@ -10,12 +10,12 @@ using Umbraco.Core.Persistence.DatabaseAnnotations;
 namespace Aubergine.UserContent.Persistance
 {
     [TableName("UserContent")]
-    [PrimaryKey("id")]
+    [PrimaryKey("Id")]
     public class UserContentDTO : IUserContentDTO
     {
 
         [PrimaryKeyColumn(AutoIncrement = true)]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         public Guid Key { get; set; }
         public string UserContentType { get; set; }

@@ -13,6 +13,12 @@ namespace Aubergine.UserContent.Models
     public interface IUserContent
     {
         /// <summary>
+        /// The internal ID for an item - where possible we 
+        /// use the key to make things more portable
+        /// </summary>
+        int Id { get; set; }
+
+        /// <summary>
         /// unique ID for this piece of user content
         /// </summary>
         Guid Key { get; set; }

@@ -32,6 +32,8 @@ namespace Aubergine.UserContent
         }
 
 
+        public int Id { get; set; }
+
 
         public Guid Key { get; set; }
         public string UserContentType { get; set; }

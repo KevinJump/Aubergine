@@ -2,6 +2,34 @@
 
 }
 
+/* thread  */
+.aub__forum-thread {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* summary page */
+.aub__post-summary {
+    padding: 1em 0;
+    border-bottom: 1px solid #eee;
+}
+
+.aub__post-summary .post-topic-meta {
+    font-style: italic;
+}
+
+.aub__post-summary h3 {
+    padding: 0;
+    margin: 0.3em 0;
+}
+
+.aub__post-summary .post-replies {
+    text-align: right;
+    padding-top: 10px;
+}
+
+/* post formatting */
 .aub__forum .aub__forum-post {
     border: 1px solid #ddd;
     background-color: #eee;
@@ -15,13 +43,14 @@
 }
 
 .aub__forum-post .post-body {
-    padding: 10px;
+    padding: 1em 2em 3em;
 }
 
 .aub__forum-post .post-meta {
     padding: 10px 10px 0;
     font-size: 90%;
     display: flex;
+    font-weight: 700;
 }
 .aub__forum-post .post-author {
     flex: 50;
@@ -29,4 +58,9 @@
 
 .aub__forum-form {
     margin: 10px;
+}
+
+.aub__forum-form legend {
+    border: none;
+    font-weight: bold;
 }

@@ -23,6 +23,11 @@ namespace Aubergine.UserContent.Services
         IUserContent Get(Guid key);
 
         /// <summary>
+        ///  Get a single peice of user content
+        /// </summary>
+        IUserContent Get(int id);
+
+        /// <summary>
         /// Save user content to persistant storage 
         /// </summary>
         Attempt<IUserContent> Save(IUserContent content);

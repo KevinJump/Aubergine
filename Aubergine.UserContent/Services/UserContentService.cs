@@ -29,6 +29,11 @@ namespace Aubergine.UserContent.Services
             return _userRepo.Get(key);
         }
 
+        public IUserContent Get(int id)
+        {
+            return _userRepo.Get(id);
+        }
+
         public IEnumerable<IUserContent> GetByContentKey(Guid contentKey, bool getAll = false)
         {
             return GetByContentKey(contentKey, UserContentStatus.Approved, getAll);

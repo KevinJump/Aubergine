@@ -38,13 +38,11 @@
                 </p>
                 <div class="umb-healthcheck">
                     <div class="aub-feature" ng-repeat="feature in vm.features">
-                        <div ng-show="feature.Enabled">
-                            <div class="umb-healthcheck-group" ng-click="vm.viewDetails(feature, 'feature')"
-                                 ng-class="{'aub-installed' : feature.Installed}">
-                                <div class="umb-healthcheck-title">
-                                    <i class="umb-healthcheck-status-icon icon-check color-green" ng-show="feature.Installed"></i>
-                                    {{feature.Name}}
-                                </div>
+                        <div class="umb-healthcheck-group" ng-click="vm.viewDetails(feature, 'feature')"
+                                ng-class="{'aub-installed' : feature.Installed, 'aub-disabled' : !feature.Enabled}">
+                            <div class="umb-healthcheck-title">
+                                <i class="umb-healthcheck-status-icon icon-check color-green" ng-show="feature.Installed"></i>
+                                {{feature.Name}}
                             </div>
                         </div>
                     </div>
@@ -66,7 +64,7 @@
             <div class="umb-healthcheck-group__details-group-title">
                 <div class="umb-healthcheck-group__details-group-name">{{vm.group.Name}}</div>
                 <button class="umb-era-button -white -text-black" type="button" ng-click="vm.install(vm.group, vm.detailType);"
-                        ng-hide="vm.group.Installed">Add {{vm.detailType}}</button>
+                        ng-hide="vm.group.Installed || !vm.group.Enabled">Add {{vm.detailType}}</button>
             </div>
 
             <div class="umb-healthcheck-group__details-checks">
@@ -78,6 +76,15 @@
                         <i class="umb-healthcheck-status-icon icon-check color-orange"></i>
                         <strong>
                             This feature is already installed on this site
+                        </strong>
+                    </div>
+
+                    <div ng-show="!vm.group.Enabled" class="alert alert-warning">
+                        <i class="umb-healthcheck-status-icon icon-alert color-red"></i>
+                        <strong>
+                            This feature is currently disabled, it's probibly being tested or developed
+                            so isn't quite stable enough yet - you can install the pre-release via nuget
+                            but don't do that on a production website as its not finished.
                         </strong>
                     </div>
 

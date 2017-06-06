@@ -7,7 +7,7 @@ namespace Aubergine.UserContent.Persistance
         string Author { get; set; }
         string AuthorId { get; set; }
         DateTime CreatedDate { get; set; }
-        int id { get; set; }
+        int Id { get; set; }
         Guid Key { get; set; }
         string Name { get; set; }
         Guid? NodeKey { get; set; }

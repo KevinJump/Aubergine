@@ -9,6 +9,7 @@ namespace Aubergine.UserContent.Persistance
         IUserContent Create(IUserContent entity);
         void Delete(Guid key);
         IUserContent Get(Guid key);
+        IUserContent Get(int id);
 
         IEnumerable<IUserContent> GetByContentId(Guid contentKey, bool getAll = false);
         IEnumerable<IUserContent> GetByContentId(

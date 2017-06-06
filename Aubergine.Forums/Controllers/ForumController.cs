@@ -12,6 +12,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using Umbraco.Web;
 using Umbraco.Web.Mvc;
+using Umbraco.Core;
 
 namespace Aubergine.Forums
 {
@@ -29,17 +30,50 @@ namespace Aubergine.Forums
         {
             var items = _userContentService.GetByContentKey(contentKey, getAll: false);
 
-            var forumInfo = new ForumInfo();
-            forumInfo.Posts = Mapper.Map<IEnumerable<ForumPost>>(items);
+            var forumInfo = new ForumSummaryInfo();
+            var posts = Mapper.Map<IEnumerable<ForumPost>>(items.Where(x => x.ParentKey == Guid.Empty));
+            foreach (var post in posts)
+            {
+                forumInfo.Posts.Add(new PostSummaryInfo
+                {
+                    Name = post.Name,
+                    Author = post.Author,
+                    Id = post.Id,
+                    LastEditDate = post.UpdatedDate,
+                    Replies = _userContentService.GetChildren(post.Key, false).Count()
+                });
+            }
+
             forumInfo.Page = CurrentPage;
 
             return PartialView("forums/posts", forumInfo);
         }
 
+        [ChildActionOnly]
+        public ActionResult ShowThread(Guid postKey)
+        {
+            var items = new List<IUserContent>();
+            var item = _userContentService.Get(postKey);
+            if (item != null)
+            {
+                items.Add(item);
+                items.AddRange(_userContentService.GetChildren(item.Key, false));
+
+                var forumInfo = new ForumInfo
+                {
+                    Posts = Mapper.Map<IEnumerable<ForumPost>>(items),
+                    Page = CurrentPage
+                };
+                return PartialView("forums/thread", forumInfo);
+            }
+
+            return new HttpNotFoundResult();
+        }
+
 
         [MemberAuthorize]
         [ChildActionOnly]
-        public ActionResult AddPost(Guid contentKey)
+        public ActionResult AddPost(Guid contentKey, Guid? parentKey = null, bool showTitle = false)
         {
             var member = Members.GetCurrentMember();
 
@@ -47,7 +81,13 @@ namespace Aubergine.Forums
             {
                 ContentKey = contentKey, 
                 AuthorKey = member.GetKey(),
+                ShowTitle = showTitle
             };
+
+            if (parentKey != null)
+            {
+                model.ParentKey = parentKey.Value;
+            }
             return PartialView("forums/newpost", model);
         }
 
@@ -65,13 +105,18 @@ namespace Aubergine.Forums
             {
                 NodeKey = model.ContentKey,
                 Body = model.Body,
-                Name = model.Name,
+                Name = model.Name.IsNullOrWhiteSpace() ? "" : model.Name,
                 Status = UserContentStatus.Approved,
                 UserContentType = Product.UserContentTypeAlias,
                 Level = 1,
                 AuthorId = member.GetKey().ToString(),
                 Author = member.Name,
             };
+
+            if (model.ParentKey != null)
+            {
+                post.ParentKey = model.ParentKey;
+            }
 
             // var userContent = Mapper.Map<UserContentItem>(post);
             var attempt = _userContentService.Save(post);
@@ -80,7 +125,7 @@ namespace Aubergine.Forums
                 ModelState.AddModelError("", "Can't add post - some error ");
             }
 
-            return RedirectToCurrentUmbracoPage();
+            return RedirectToCurrentUmbracoUrl();
 
         }
 

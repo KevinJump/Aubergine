@@ -49,8 +49,28 @@ namespace Aubergine.UserContent.Persistance
                         .From(_tableName)
                         .Where("[Key] = @0", key);
 
-                var dbContent = db.Single<UserContentDTO>(sql);
-                return Mapper.Map<IUserContent>(dbContent);
+                var dbContent = db.SingleOrDefault<UserContentDTO>(sql);
+                if (dbContent != null )
+                    return Mapper.Map<UserContentItem>(dbContent);
+
+                return null;
+            }
+        }
+
+        public IUserContent Get(int id)
+        {
+            using(var db = GetDb())
+            {
+                var sql = new Sql()
+                    .Select("*")
+                    .From(_tableName)
+                    .Where("[id] = @0", id);
+
+                var dbContent = db.SingleOrDefault<UserContentDTO>(sql);
+                if (dbContent != null)
+                    return Mapper.Map<UserContentItem>(dbContent);
+
+                return null;
             }
         }
 
@@ -101,7 +121,7 @@ namespace Aubergine.UserContent.Persistance
                 var sql = new Sql()
                     .Select("*")
                     .From(_tableName)
-                    .Where("[Key] = @0", key);
+                    .Where("[ParentKey] = @0", key);
 
                 if (!contentType.IsNullOrWhiteSpace())
                     sql.Where("UserContentType = '@0'", contentType);

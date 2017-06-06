@@ -1,6 +1,10 @@
 ﻿@inherits UmbracoViewPage<Aubergine.Forums.Models.ForumPostViewModel>
 @using Aubergine.Forums
+@using ClientDependency.Core.Mvc;
 @{
+    Html.RequiresJs("~/scripts/tinymce/tinymce.min.js");
+    Html.RequiresJs("~/scripts/aubergine-forums.js");
+
     Html.EnableClientValidation(true);
     Html.EnableUnobtrusiveJavaScript(true);
 }
@@ -13,15 +17,17 @@
 
     <fieldset>
 
-        <legend>Post</legend>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Name)
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control"})
-            @Html.ValidationMessageFor(m => m.Name)
-        </div>
+        <legend>@Umbraco.If(Model.ShowTitle, "Post" , "Reply")</legend>
+        @if (Model.ShowTitle)
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+        }
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Body)
             @Html.TextAreaFor(m => m.Body, 10, 10, new { @class="form-control"})
             @Html.ValidationMessageFor(m => m.Body)
         </div>

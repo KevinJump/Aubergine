@@ -35,3 +35,12 @@
     background-color: aliceblue;
     color: #aaa
 }
+
+.aub-disabled {
+    background-color: #f9eaea;
+    color: #aaa;
+}
+
+.aub-disabled .umb-healthcheck-title{
+    font-weight:normal;
+}
