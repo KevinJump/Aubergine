@@ -12,7 +12,7 @@ namespace Aubergine.Complete.Migrations.TargetOneZero
 {
     namespace Aubergine.Forums.Migrations.TargetOnePointZero
     {
-        [Migration("1.0.0", 1, "Aubergine.Core")]
+        [Migration("1.0.0", 1, "Aubergine.Complete")]
         public class SetupUmbracoItems : MigrationBase
         {
             public SetupUmbracoItems(ISqlSyntaxProvider sqlSyntax, ILogger logger)
@@ -27,6 +27,8 @@ namespace Aubergine.Complete.Migrations.TargetOneZero
 
             public override void Up()
             {
+                Logger.Info<SetupUmbracoItems>("Installing Sample Content");
+
                 var usyncHelper = new uSyncMigrationHelper();
                 usyncHelper.ImportContent("~/App_Data/Aubergine/Complete/");
             }
