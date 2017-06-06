@@ -33,11 +33,11 @@ namespace Aubergine.Core.Migrations.Helpers
         {
             var contentHelper = new uSyncSerializerMigrationHelper<IContent>
                 (uSyncCoreContext.Instance.ContentSerializer);
-            contentHelper.Import(folder + "/Content/");
+            contentHelper.ImportTree(folder + "/Content/");
 
             var mediaHelper = new uSyncSerializerMigrationHelper<IMedia>
                 (uSyncCoreContext.Instance.MediaSerializer);
-            mediaHelper.Import(folder + "/Media/");
+            mediaHelper.ImportTree(folder + "/Media/");
         }
     }
 }
