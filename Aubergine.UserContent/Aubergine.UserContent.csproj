@@ -236,6 +236,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Aubergine.UserContent.nuspec" />
     <None Include="Config\UserContent.config" />
     <None Include="packages.config" />
   </ItemGroup>

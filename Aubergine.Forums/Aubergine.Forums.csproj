@@ -217,6 +217,7 @@
     <Compile Include="ForumContentFinder.cs" />
     <Compile Include="Mappers\ForumPostPropertyResolver.cs" />
     <Compile Include="Migrations\TargetOnePointZero\CreateForumTable.cs" />
+    <Compile Include="Migrations\TargetOnePointZero\SetupUmbracoSettings.cs" />
     <Compile Include="Models\ForumPost.cs" />
     <Compile Include="Models\ForumPostViewModel.cs" />
     <Compile Include="Models\ForumSummaryInfo.cs" />
@@ -224,6 +225,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <Content Include="install.ps1" />
+    <None Include="Aubergine.Forums.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

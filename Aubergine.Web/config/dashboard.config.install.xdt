@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dashBoard xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <section alias="Aubergine" xdt:Transform="Remove" xdt:Locator="Match(alias)" />
+
+  <!-- aubergine -->
+  <section alias="Aubergine"  xdt:Transform="Insert" xdt:Locator="Match(alias)">
+    <areas>
+      <area>settings</area>
+    </areas>
+    <tab caption="Aubergine">
+      <control>/App_Plugins/Aubergine/AubergineDashboard.html</control>
+    </tab>
+  </section>
+</dashBoard>

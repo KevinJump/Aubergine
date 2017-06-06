@@ -217,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Aubergine.Comments.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Umbraco.Core.Models;
 
 namespace Aubergine.Core.Migrations.Helpers
 {
@@ -26,6 +27,17 @@ namespace Aubergine.Core.Migrations.Helpers
 
             var contentTypeHelper = new ContentTypeMigrationHelper();
             contentTypeHelper.Import(folder + "/DocumentType/");
+        }
+
+        public void ImportContent(string folder)
+        {
+            var contentHelper = new uSyncSerializerMigrationHelper<IContent>
+                (uSyncCoreContext.Instance.ContentSerializer);
+            contentHelper.Import(folder + "/Content/");
+
+            var mediaHelper = new uSyncSerializerMigrationHelper<IMedia>
+                (uSyncCoreContext.Instance.MediaSerializer);
+            mediaHelper.Import(folder + "/Media/");
         }
     }
 }

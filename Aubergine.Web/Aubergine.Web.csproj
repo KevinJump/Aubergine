@@ -635,6 +635,7 @@
     <Content Include="Scripts\tinymce\langs\readme.md" />
     <Content Include="Aubergine.Web.nuspec" />
     <Content Include="install.ps1" />
+    <Content Include="config\dashboard.config.install.xdt" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -769,22 +770,35 @@
 XCOPY "$(ProjectDir)Views\Partials\Forums" "$(SolutionDir)\Aubergine.Forums\Views\Partials\Forums" /S /Y /I /Q
 XCOPY "$(ProjectDir)Views\Forum*.*" "$(SolutionDir)\Aubergine.Forums\Views\" /Y /I /Q
 XCOPY "$(ProjectDir)css\Aubergine-Forums.css" "$(SolutionDir)\Aubergine.Forums\css\" /Y /I /Q
+@ECHO ==== Forums uSync Files ====
+XCOPY "$(ProjectDir)uSync\Data\DocumentType\aubergine.forums\*.*" "$(SolutionDir)\Aubergine.Forums\uSync\Data\DocumentType\aubergine.forums\" /S /Y /I /Q
+XCOPY "$(ProjectDir)uSync\Data\Template\sitemaster\design\forums\*.*" "$(SolutionDir)\Aubergine.Forums\uSync\Data\Template\sitemaster\design\forums\" /S /Y /I /Q
 
 @ECHO ===== BlogFiles =====
 XCOPY "$(ProjectDir)Views\Partials\blog" "$(SolutionDir)\Aubergine.Blog\Views\Partials\blog" /S /Y /I /Q
 XCOPY "$(ProjectDir)App_Plugins\Aubergine.Blog" "$(SolutionDir)\Aubergine.Blog\App_Plugins\Aubergine.Blog" /S /Y /I /Q
 XCOPY "$(ProjectDir)Views\Blog*.*" "$(SolutionDir)\Aubergine.Blog\Views\" /Y /I /Q
 XCOPY "$(ProjectDir)css\Aubergine-Blog.css" "$(SolutionDir)\Aubergine.Blog\css\" /Y /I /Q
+@ECHO ==== Blog uSync Files ====
+XCOPY "$(ProjectDir)uSync\Data\DataType\blogs\*.*" "$(SolutionDir)\Aubergine.Blog\uSync\Data\DataType\blogs\" /S /Y /I /Q
+XCOPY "$(ProjectDir)uSync\Data\DocumentType\aubergine.blog\*.*" "$(SolutionDir)\Aubergine.Blog\uSync\Data\DocumentType\aubergine.blog\" /S /Y /I /Q
+XCOPY "$(ProjectDir)uSync\Data\Template\sitemaster\design\blog\*.*" "$(SolutionDir)\Aubergine.Blog\uSync\Data\Template\sitemaster\design\blog\" /S /Y /I /Q
+
 
 @ECHO ===== Auth Files =====
 XCOPY "$(ProjectDir)Views\Partials\Auth" "$(SolutionDir)\Aubergine.Auth\Views\Partials\Auth" /S /Y /I /Q
 XCOPY "$(ProjectDir)Views\Auth*.*" "$(SolutionDir)\Aubergine.Auth\Views\" /Y /I /Q
 
-
 @ECHO ===== Comments Files =====
 XCOPY "$(ProjectDir)Views\Partials\Comments" "$(SolutionDir)\Aubergine.Comments\Views\Partials\Comments" /S /Y /I /Q
 XCOPY "$(ProjectDir)App_Plugins\Aubergine.Comments" "$(SolutionDir)\Aubergine.Comments\App_Plugins\Aubergine.Comments" /S /Y /I /Q
 XCOPY "$(ProjectDir)css\Aubergine-Comments.css" "$(SolutionDir)\Aubergine.Comments\css\" /Y /I /Q
+
+@ECHO ===== COntent and Media to Complete =====
+XCOPY "$(ProjectDir)uSync\Data\Content\*.*" "$(SolutionDir)\Aubergine.Complete\uSync\Data\Content\" /S /Y /I /Q
+XCOPY "$(ProjectDir)uSync\Data\Media\*.*" "$(SolutionDir)\Aubergine.Complete\uSync\Data\Media\" /S /Y /I /Q
+XCOPY "$(ProjectDir)Media\*.*" "$(SolutionDir)\Aubergine.Complete\Media\" /S /Y /I /Q
+
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

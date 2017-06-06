@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+      <id>Aubergine.Auth</id>
+      <version>1.0.0-Beta1</version>
+      <title>Aubergine for Umbraco : Authentication</title>
+      <authors>Kevin Jump</authors>
+      <owners>Kevin Jump</owners>
+      <requireLicenseAcceptance>false</requireLicenseAcceptance>
+      <description>Basic Member Authentication</description>
+      <releaseNotes>Initial Release</releaseNotes>
+      <dependencies>
+        <dependency id="Aubergine.Core" version="1.0.0-Beta1" />
+      </dependencies>
+  </metadata>
+  <files>
+    <file src=".\bin\Release\Aubergine.Auth.dll" target="lib\Aubergine.Auth.dll" />
+    <file src=".\Views\**\*.*" target="content\Views\" />
+  </files>
+</package>

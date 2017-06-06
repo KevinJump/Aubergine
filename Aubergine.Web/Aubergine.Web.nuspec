@@ -34,6 +34,8 @@
 
     <file src=".\install.ps1" target="tools"/>
     <file src=".\Bin\Aubergine.Helpers.dll" target="lib\Aubergine.Helpers.dll" />
+
+    <file src=".\Config\*.xdt" target="content\Config" />
   </files>
 
 </package>
