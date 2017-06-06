@@ -8,18 +8,19 @@
 
 <div class="blog-post">
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <div class="post-meta">
                 <div class="post-date">
-                    @postDate.ToString("dd MMMM yyyy")
+                    @postDate.ToString("dddd")<br />
+                    @postDate.ToString("d MMMM yyyy")
                 </div>
-                <p class="post-author">by <a href="#">@post.WriterName</a>
             </div>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
             <a href="@post.Url" class="post-title">
                 <h2>@post.GetPropertyValue("title", post.Name)</h2>
-            </a>
+                <p class="post-author">by <a href="#">@post.WriterName</a>
+</a>
             <div class="post-body">
                 @post.GetPropertyValue("summary", post.GetPropertyValue("content", ""))
             </div>

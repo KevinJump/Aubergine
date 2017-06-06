@@ -28,8 +28,12 @@ namespace Aubergine.Forums
         public ActionResult ListPosts(Guid contentKey)
         {
             var items = _userContentService.GetByContentKey(contentKey, getAll: false);
-            var posts = Mapper.Map<IEnumerable<ForumPost>>(items);
-            return PartialView("forums/posts", posts);
+
+            var forumInfo = new ForumInfo();
+            forumInfo.Posts = Mapper.Map<IEnumerable<ForumPost>>(items);
+            forumInfo.Page = CurrentPage;
+
+            return PartialView("forums/posts", forumInfo);
         }
 
 
@@ -66,7 +70,7 @@ namespace Aubergine.Forums
                 UserContentType = Product.UserContentTypeAlias,
                 Level = 1,
                 AuthorId = member.GetKey().ToString(),
-                Author = member.Name
+                Author = member.Name,
             };
 
             // var userContent = Mapper.Map<UserContentItem>(post);

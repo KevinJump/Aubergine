@@ -1,0 +1,11 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "Forums.cshtml";
+}
+
+@Html.Action("ListPosts", "Forum", new { area = "Aubergine", contentKey = Model.Content.GetKey() })
+
+@if (Members.IsLoggedIn())
+{
+    @Html.Action("AddPost", "Forum", new { area = "Aubergine", contentKey = Model.Content.GetKey() })
+}

@@ -1,0 +1,27 @@
+﻿.aub__post {
+}
+
+.post-date {
+    display: block;
+    font-weight: 700;
+}
+
+.blog-post {
+    margin: 1em 0;
+    padding-bottom: 2em;
+    border-bottom: 1px solid #eee;
+}
+
+    .blog-post .post-title {
+        margin-bottom: 1em;
+    } 
+    .blog-post .post-title h2 {
+        margin: 0 0;
+    }
+
+.blog-post .post-body {
+}
+
+.blog-post .post-footer {
+}
+    

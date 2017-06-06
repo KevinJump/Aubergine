@@ -1,0 +1,38 @@
+﻿@inherits UmbracoViewPage<Aubergine.Forums.Models.ForumPostViewModel>
+@using Aubergine.Forums
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@using (Html.BeginUmbracoForm<ForumController>("AddPost", null,
+                new { @class = "form aub__forum-form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+
+        <legend>Post</legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control"})
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Body)
+            @Html.TextAreaFor(m => m.Body, 10, 10, new { @class="form-control"})
+            @Html.ValidationMessageFor(m => m.Body)
+        </div>
+
+        @Html.HiddenFor(m => m.ContentKey)
+        @Html.HiddenFor(m => m.ParentKey)
+        @Html.HiddenFor(m => m.Key)
+
+
+        <div class="text-center">
+            <input type="submit" class="btn btn-lg btn-primary" value="Post" />
+        </div>
+    </fieldset>
+}

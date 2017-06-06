@@ -371,6 +371,7 @@
     <Content Include="css\aubergine-content.css" />
     <Content Include="css\aubergine-core.css" />
     <Content Include="css\aubergine-forms.css" />
+    <Content Include="css\aubergine-forums.css" />
     <Content Include="css\aubergine-search.css" />
     <Content Include="css\aubergine-sidenav.css" />
     <Content Include="css\aubergine.css" />
@@ -481,6 +482,10 @@
     <Content Include="Views\BlogTags.cshtml" />
     <Content Include="Views\Partials\Comments\CommentBox.cshtml" />
     <Content Include="Views\Partials\Comments\ShowComments.cshtml" />
+    <Content Include="Views\ForumPage.cshtml" />
+    <Content Include="Views\Forums.cshtml" />
+    <Content Include="Views\Partials\Forums\newPost.cshtml" />
+    <Content Include="Views\Partials\Forums\posts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -608,6 +613,31 @@
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <Import Project="..\packages\uSync.3.3.4.740\build\uSync.targets" Condition="Exists('..\packages\uSync.3.3.4.740\build\uSync.targets')" />
   <Import Project="..\packages\UmbracoCms.7.6.3\build\UmbracoCms.targets" Condition="Exists('..\packages\UmbracoCms.7.6.3\build\UmbracoCms.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>@REM Puts the files from the web project into the right folders, this makes building / seperating them out much easier. 
+
+@ECHO ===== Forums Files =====
+XCOPY "$(ProjectDir)Views\Partials\Forums" "$(SolutionDir)\Aubergine.Forums\Views\Partials\Forums" /S /Y /I /Q
+XCOPY "$(ProjectDir)Views\Forum*.*" "$(SolutionDir)\Aubergine.Forums\Views\" /Y /I /Q
+XCOPY "$(ProjectDir)css\Aubergine-Forums.css" "$(SolutionDir)\Aubergine.Forums\css\" /Y /I /Q
+
+@ECHO ===== BlogFiles =====
+XCOPY "$(ProjectDir)Views\Partials\blog" "$(SolutionDir)\Aubergine.Blog\Views\Partials\blog" /S /Y /I /Q
+XCOPY "$(ProjectDir)App_Plugins\Aubergine.Blog" "$(SolutionDir)\Aubergine.Blog\App_Plugins\Aubergine.Blog" /S /Y /I /Q
+XCOPY "$(ProjectDir)Views\Blog*.*" "$(SolutionDir)\Aubergine.Blog\Views\" /Y /I /Q
+XCOPY "$(ProjectDir)css\Aubergine-Blog.css" "$(SolutionDir)\Aubergine.Blog\css\" /Y /I /Q
+
+@ECHO ===== Auth Files =====
+XCOPY "$(ProjectDir)Views\Partials\Auth" "$(SolutionDir)\Aubergine.Auth\Views\Partials\Auth" /S /Y /I /Q
+XCOPY "$(ProjectDir)Views\Auth*.*" "$(SolutionDir)\Aubergine.Auth\Views\" /Y /I /Q
+
+
+@ECHO ===== Comments Files =====
+XCOPY "$(ProjectDir)Views\Partials\Comments" "$(SolutionDir)\Aubergine.Comments\Views\Partials\Comments" /S /Y /I /Q
+XCOPY "$(ProjectDir)App_Plugins\Aubergine.Comments" "$(SolutionDir)\Aubergine.Comments\App_Plugins\Aubergine.Comments" /S /Y /I /Q
+XCOPY "$(ProjectDir)css\Aubergine-Comments.css" "$(SolutionDir)\Aubergine.Comments\css\" /Y /I /Q
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

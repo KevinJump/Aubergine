@@ -1,0 +1,30 @@
+﻿@inherits UmbracoViewPage<Aubergine.Forums.Models.ForumInfo>
+@using Aubergine.Forums
+@if (Model != null && Model.Posts.Any())
+{
+    <div class="aub__forum">
+        @foreach(var item in Model.Posts)
+        {
+            var permalink = Model.Page.Url + item.Key;
+
+            <div class="aub__forum-post">
+                <div class="post-meta">
+                    <div class="post-author">
+                        @item.Author
+                    </div>
+                    <div class="post-date">
+                        @item.CreatedDate
+                    </div>
+                </div>
+                <h3 class="post-title">
+                    <a href="@permalink">@item.Name</a></h3>
+                <div class="post-body">
+                    @if (!string.IsNullOrEmpty(item.Body))
+                    {
+                        @Html.Raw(Umbraco.ReplaceLineBreaksForHtml(item.Body))
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}

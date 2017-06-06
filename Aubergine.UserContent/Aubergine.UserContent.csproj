@@ -236,7 +236,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="App_Plugins\Aubergine.Comments\package.manifest" />
     <None Include="Config\UserContent.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -246,19 +245,11 @@
       <Name>Aubergine.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_Plugins\Aubergine.Comments\commenteditor.html" />
-    <Content Include="App_Plugins\Aubergine.Comments\comments.css" />
-    <Content Include="App_Plugins\Aubergine.Comments\CommentsController.js" />
-    <Content Include="App_Plugins\Aubergine.Comments\CommentsService.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Partials\Comments\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>XCOPY "$(ProjectDir)Views\*.*" "$(SolutionDir)Aubergine.Web\Views\" /S /E /Q /Y
-XCOPY "$(ProjectDir)App_Plugins\*.*" "$(SolutionDir)Aubergine.Web\App_Plugins\" /S /E /Q /Y</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

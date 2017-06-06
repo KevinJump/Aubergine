@@ -1,0 +1,32 @@
+﻿.aub__forum {
+
+}
+
+.aub__forum .aub__forum-post {
+    border: 1px solid #ddd;
+    background-color: #eee;
+    margin: 0.4em 0 1em;
+    border-radius: 2px;
+}
+
+.aub__forum-post h3 {
+    margin: 0;
+    padding: 10px;
+}
+
+.aub__forum-post .post-body {
+    padding: 10px;
+}
+
+.aub__forum-post .post-meta {
+    padding: 10px 10px 0;
+    font-size: 90%;
+    display: flex;
+}
+.aub__forum-post .post-author {
+    flex: 50;
+}
+
+.aub__forum-form {
+    margin: 10px;
+}

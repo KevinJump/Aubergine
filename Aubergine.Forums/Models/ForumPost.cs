@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Umbraco.Core.Models;
 
 namespace Aubergine.Forums.Models
 {
@@ -25,5 +26,11 @@ namespace Aubergine.Forums.Models
             get { return this.GetPropertyValue<string>("body", string.Empty); }
             set { this.SetProperty<string>("body", value); }
         }
+    }
+
+    public class ForumInfo
+    {
+        public IPublishedContent Page { get; set; }
+        public IEnumerable<ForumPost> Posts { get; set; }
     }
 }

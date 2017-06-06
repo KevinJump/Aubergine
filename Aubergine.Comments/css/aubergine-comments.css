@@ -1,0 +1,46 @@
+﻿.aub__comments {
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid #eee;
+}
+
+.aub__comment {
+    padding: 0 0.5em;
+    background-color: #fafafa;
+    border: 1px solid #eee;
+    margin: 0.4em;
+}
+
+.aub__comment h4 {
+    padding-top: 0.6em;
+}
+
+.aub__comment-body {
+    padding-left: 0.8em;
+}
+
+.aub__comment-meta {
+    margin: 0.5em 0;
+    padding: 0.5em 0;
+    font-size: 90%;
+    color: #aaa;
+    font-style:italic;
+    border-top: 1px solid #fff;
+}
+
+.aub__comment-meta a {
+    color: #aaa;
+}
+
+.aub__comment-meta a:hover {
+    color: #000;
+}
+
+.aub__comment-form {
+    margin-top: 1em;
+}
+
+.aub__comments-closed {
+    padding: 1em 0;
+    font-style: italic;
+}
