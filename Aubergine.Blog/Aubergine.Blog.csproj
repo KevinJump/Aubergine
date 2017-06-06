@@ -213,6 +213,7 @@
     <Compile Include="BlogContentFinder.cs" />
     <Compile Include="BlogUrlProvider.cs" />
     <Compile Include="Functions\Tags.cs" />
+    <Compile Include="Migrations\TargetOneZero\BlogContentTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

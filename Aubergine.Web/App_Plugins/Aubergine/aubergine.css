@@ -12,6 +12,25 @@
     max-width: 50%;
 }
 
+.aub-third {
+    padding: 10px;
+    box-sizing: border-box;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    flex-basis: 33%;
+    max-width: 33%;
+}
+
+.aub-twothirds {
+    padding: 10px;
+    box-sizing: border-box;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    flex-basis: 66%;
+    max-width: 66%;
+}
+
+
 .aub-feature {
     padding: 10px;
     box-sizing: border-box;
@@ -20,6 +39,11 @@
 
     flex-basis: 50%;
     max-width: 50%;
+}
+
+.aub-content {
+    flex-basis: 100%;
+    max-width: 100%;
 }
 
 .aub-nuget-cmd {

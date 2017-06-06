@@ -17,7 +17,7 @@ namespace Aubergine.Auth.Migrations.TargetVersionOne
 
         public override void Up()
         {
-            var templateHelper = new Aubergine.Core.Migrations.Helpers.MigrationTemplateHelper(Logger);
+            var templateHelper = new Aubergine.Core.Migrations.Helpers.TemplateMigrationHelper();
 
             templateHelper.AddTemplate("Auth.Pages", TemplateAliases.Pages, "design");
             templateHelper.AddTemplate("Auth.Login", TemplateAliases.Login, TemplateAliases.Pages);

@@ -72,6 +72,9 @@
     <Reference Include="interfaces, Version=1.0.6361.21149, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UmbracoCms.Core.7.6.3\lib\net45\interfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Jumoo.uSync.Core, Version=5.6.4.760, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\uSync.Core.5.6.4.760\lib\net45\Jumoo.uSync.Core.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\UmbracoCms.Core.7.6.3\lib\net45\log4net.dll</HintPath>
     </Reference>
@@ -210,15 +213,21 @@
   <ItemGroup>
     <Compile Include="Aubergine.cs" />
     <Compile Include="Interfaces\IAubergineExtension.cs" />
-    <Compile Include="Migrations\Helpers\ContentTypeBaseHelper.cs" />
-    <Compile Include="Migrations\Helpers\MigrationTemplateHelper.cs" />
+    <Compile Include="Migrations\Helpers\ContentTypeMigrationHelper.cs" />
+    <Compile Include="Migrations\Helpers\DataTypeMigrationHelper.cs" />
+    <Compile Include="Migrations\Helpers\TemplateMigrationHelper.cs" />
+    <Compile Include="Migrations\Helpers\uSyncMigrationHelper.cs" />
+    <Compile Include="Migrations\Helpers\uSyncSerializerMigrationHelper.cs" />
     <Compile Include="Migrations\MigrationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Aubergine.Core.nuspec" />
+    <None Include="config\uSyncCore.Config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
 </Project>

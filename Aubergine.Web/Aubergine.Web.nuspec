@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+      <id>Aubergine.Web</id>
+      <version>1.0.0-Beta1</version>
+      <title>Aubergine Starter Kit</title>
+      <authors>Kevin Jump</authors>
+      <owners>Kevin Jump</owners>
+      <requireLicenseAcceptance>false</requireLicenseAcceptance>
+      <description>Starter Kit For Umbraco</description>
+      <dependencies>
+          <dependency id="Terratype.LeafletV1" version="1.0.13" />
+          <dependency id="bootstrap" version="3.3.7" />
+          <dependency id="jQuery" version="3.1.1" />
+          <dependency id="Jumoo.StyledTextbox" version="1.4" />
+          <dependency id="Our.Umbraco.Switcher" version="1.0.3" />
+          <dependency id="Aubergine.Core" version="1.0.0-Beta1" />
+      </dependencies>
+  </metadata>
+  <files>
+    <file src=".\App_Plugins\Aubergine\**\*.*" target="content\App_Plugins\Aubergine" />
+    
+    <file src=".\css\*.css" target="content\css" 
+          exclude="**\aubergine-forums.css;**\aubergine-comments.css;**\aubergine-blog.css"/>
+    <file src=".\Views\**\*.cshtml" target="content\Views" 
+          exclude="**\Auth\**;**\Blog\**;**\Comments\**;**\Forums\**;**\Grid\**;**\Auth*.*;**\Blog*.*;**\Forum*.*"/>
+   
+    <file src=".\scripts\aubergine*.*" target="content\scripts" 
+          exclude="**\aubergine-forums.js"/>
+
+    <file src=".\uSync\Data\**\*.*" target="data\Web"
+          exclude="**\Data\Content\**;**\Data\Media\**;**\Blogs\**;**\blog\**;**\forums\**"/> 
+
+
+    <file src=".\install.ps1" target="tools"/>
+    <file src=".\Bin\Aubergine.Helpers.dll" target="lib\Aubergine.Helpers.dll" />
+  </files>
+
+</package>

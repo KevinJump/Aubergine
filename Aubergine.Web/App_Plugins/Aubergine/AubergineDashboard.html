@@ -16,22 +16,7 @@
         </div>
 
         <div class="aub-row">
-            <div class="aub-half">
-                <h3>Content</h3>
-                <p>
-                    Why not add some sample content ?
-                </p>
-                <div class="umb-healthcheck">
-                    <div class="aub-feature" ng-repeat="content in vm.content">
-                        <div class="umb-healthcheck-group" ng-click="vm.viewDetails(content, 'content');">
-                            <div class="umb-healthcheck-title">
-                                {{content.Name}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="aub-half">
+            <div class="aub-twothirds">
                 <h3>Extensions</h3>
                 <p>
                     Cool add ons to the starter kit.
@@ -48,6 +33,22 @@
                     </div>
                 </div>
             </div>
+            <div class="aub-third">
+                <h3>Content</h3>
+                <p>
+                    Why not add some sample content ?
+                </p>
+                <div class="umb-healthcheck">
+                    <div class="aub-feature aub-content" ng-repeat="content in vm.content">
+                        <div class="umb-healthcheck-group" ng-click="vm.viewDetails(content, 'content');">
+                            <div class="umb-healthcheck-title">
+                                {{content.Name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 

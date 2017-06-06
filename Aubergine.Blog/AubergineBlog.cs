@@ -41,6 +41,9 @@ namespace Aubergine.Blog
             if (blogPostContentType != null)
                 blogPostContentTypeId = blogPostContentType.Id;
 
+            var m = new Aubergine.Core.Migrations.MigrationManager(applicationContext);
+            m.ApplyMigration(Name, targetVersion);
+
         }
 
         private void ContentService_Published(Umbraco.Core.Publishing.IPublishingStrategy sender, Umbraco.Core.Events.PublishEventArgs<Umbraco.Core.Models.IContent> e)

@@ -8,6 +8,7 @@ using Umbraco.Core.Models;
 using Umbraco.Core.Services;
 using Umbraco.Web;
 using Umbraco.Core.Logging;
+using Semver;
 
 namespace Aubergine
 {
@@ -61,15 +62,19 @@ namespace Aubergine
 
     public class SiteSettingEventHandler : ApplicationEventHandler
     {
+        SemVersion targetVersion = new SemVersion(1, 0, 0);
+
         int settingsContentTypeId = -1;
         ILogger _logger; 
 
         protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
+            // run any migrations
+            var m = new global::Aubergine.Core.Migrations.MigrationManager(applicationContext);
+            m.ApplyMigration("Aubergine.Web", targetVersion);
+
             _logger = applicationContext.ProfilingLogger.Logger;
-
             Aubergine.LoadSettingsNode(false);
-
 
             ContentService.Published += ContentService_Published;
 
