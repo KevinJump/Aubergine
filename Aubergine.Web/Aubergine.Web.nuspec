@@ -23,7 +23,10 @@
     <file src=".\css\*.css" target="content\css" 
           exclude="**\aubergine-forums.css;**\aubergine-comments.css;**\aubergine-blog.css"/>
     <file src=".\Views\**\*.cshtml" target="content\Views" 
-          exclude="**\Auth\**;**\Blog\**;**\Comments\**;**\Forums\**;**\Grid\**;**\Auth*.*;**\Blog*.*;**\Forum*.*"/>
+          exclude="**\Auth\**;**\Blog\**;**\Comments\**;**\Forums\**;**\Grid\**;**\Auth*.*;**\Blog*.*;**\Forum*.*;**\Stubs\**"/>
+
+    <!-- for some things we have placeholders (auth status) so the templates work without -->
+    <file src=".\Views\Stubs\**\*.cshtml" target="content\Views\Partials"/>
    
     <file src=".\scripts\aubergine*.*" target="content\scripts" 
           exclude="**\aubergine-forums.js"/>

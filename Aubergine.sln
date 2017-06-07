@@ -21,6 +21,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aubergine.Forums", "Aubergi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aubergine.Complete", "Aubergine.Complete\Aubergine.Complete.csproj", "{4D9EA4A1-A341-493E-89DC-4B06EC653B46}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScripts", "{18A26795-8E97-4F68-80F7-7D74B289EBD1}"
+	ProjectSection(SolutionItems) = preProject
+		Build\packages.cmd = Build\packages.cmd
+		Build\releases.cmd = Build\releases.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

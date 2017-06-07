@@ -636,6 +636,7 @@
     <Content Include="Aubergine.Web.nuspec" />
     <Content Include="install.ps1" />
     <Content Include="config\dashboard.config.install.xdt" />
+    <Content Include="Views\Stubs\Auth\Status.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
