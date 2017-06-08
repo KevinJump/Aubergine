@@ -19,8 +19,8 @@ namespace Aubergine.Blog
             string before = "Tags: ", string sep = ",", string after = "")
         {
 
-            var tags = post.GetPropertyValue<string>(propertyAlias, "")
-                .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var tags = post.GetPropertyValue<string[]>(propertyAlias);
+                // .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (tags.Any())
             {
