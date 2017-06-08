@@ -23,8 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aubergine.Complete", "Auber
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScripts", "{18A26795-8E97-4F68-80F7-7D74B289EBD1}"
 	ProjectSection(SolutionItems) = preProject
-		Build\packages.cmd = Build\packages.cmd
-		Build\releases.cmd = Build\releases.cmd
+		PackageBuild\packages.cmd = PackageBuild\packages.cmd
+		PackageBuild\releases.cmd = PackageBuild\releases.cmd
 	EndProjectSection
 EndProject
 Global
