@@ -1,16 +1,23 @@
-﻿using Aubergine.UserContent;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Aubergine.UserContent;
 using Umbraco.Core;
 using Umbraco.Web;
 using Umbraco.Web.Routing;
 
 namespace Aubergine.Forums
 {
+    /// <summary>
+    ///  forum content finder. 
+    ///  
+    ///  allows us to have forums posts take the form 
+    ///  http://sitename/path/to/forum/{id}-title/ 
+    ///  
+    /// </summary>
     public class ForumContentFinder : IContentFinder
     {
         public bool TryFindContent(PublishedContentRequest contentRequest)
@@ -19,45 +26,45 @@ namespace Aubergine.Forums
                 return false;
 
             var url = contentRequest.Uri.GetAbsolutePathDecoded();
-            var parts = url.ToDelimitedList("/");
-            // the last part should be the forum post.
-            // the part before is the page/forum it's
+            var urlParts = url.ToDelimitedList("/");
 
-            if (parts.Count > 1)
+            if (urlParts.Count > 1)
             {
-                var forumName = parts[parts.Count - 2];
-                var rootNodes = contentRequest.RoutingContext.UmbracoContext.ContentCache.GetAtRoot();
+                var forumName = urlParts[urlParts.Count - 2];
+                var rootNodes = contentRequest.RoutingContext.UmbracoContext
+                    .ContentCache.GetAtRoot();
 
-                var forum = rootNodes.DescendantsOrSelf("forum")
-                    .Where(x => x.UrlName.Equals(forumName, StringComparison.InvariantCultureIgnoreCase))
+                // make this a cache thing (for speed!)
+                var forums = rootNodes.DescendantsOrSelf("forum");
+
+                var forumContent = forums.Where(x => x.UrlName.InvariantEquals(forumName))
                     .FirstOrDefault();
 
-                if (forum != null)
+                if (forumContent != null)
                 {
-                    // we have the parent forum, now we can get the post by the id
-                    var postParts = parts.Last().ToDelimitedList("-");
+                    var postParts = urlParts.Last().ToDelimitedList("-");
                     if (postParts.Count > 1)
                     {
                         var postId = postParts.First();
-                        int id;
-                        if (int.TryParse(postId, out id))
+                        if (int.TryParse(postId, out int id))
                         {
-                            var userContentService = UserContentContext.Current.Instances[Product.Instance].Service;
-                            var post = userContentService.Get(id);
-                            if (post == null)
-                                return false; 
+                            var service = UserContentContext.Current.Instances[AubergineForums.Instance]
+                                .Service;
 
-                            HttpContext.Current.Items["postKey"] = post.Key;
+                            var post = service.Get(id);
+                            if (post == null)
+                                return false;
+
+                            var context =
+                                contentRequest.RoutingContext.UmbracoContext.HttpContext.Items["postKey"] = post.Key;
                         }
                     }
 
-                    contentRequest.PublishedContent = forum;
+                    contentRequest.PublishedContent = forumContent;
                     contentRequest.TrySetTemplate("forumThread");
                 }
             }
-
             return contentRequest.PublishedContent != null;
-
         }
     }
 }

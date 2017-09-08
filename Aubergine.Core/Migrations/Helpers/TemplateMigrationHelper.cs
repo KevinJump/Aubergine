@@ -1,5 +1,4 @@
-﻿using Jumoo.uSync.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,14 +14,18 @@ namespace Aubergine.Core.Migrations.Helpers
     /// <summary>
     ///  adds a template into umbraco, based on the assumption that it exsits on disk.
     /// </summary>
-    public class TemplateMigrationHelper : uSyncSerializerMigrationHelper<ITemplate>
+    public class TemplateManagementHelper
     {
         private readonly IFileService _fileService;
 
-        public TemplateMigrationHelper()
-            : base (uSyncCoreContext.Instance.TemplateSerializer)
+        public TemplateManagementHelper()            
         {
             _fileService = ApplicationContext.Current.Services.FileService;
+        }
+
+        public bool TemplateExists(string alias)
+        {
+            return _fileService.GetTemplate(alias) != null;
         }
 
         public bool AddTemplate(string name, string alias, string parent)
@@ -38,7 +41,7 @@ namespace Aubergine.Core.Migrations.Helpers
                     {
                         // cannot find the master for this..
                         templatePath = string.Empty;
-                        LogHelper.Warn<TemplateMigrationHelper>("Cannot find underling template file, so we cannot create the template");
+                        LogHelper.Warn<TemplateManagementHelper>("Cannot find underling template file, so we cannot create the template");
                         return false;
                     }
                 }

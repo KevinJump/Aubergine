@@ -1,0 +1,121 @@
+﻿<div id="aubergineDashboard" ng-controller="aubergineDashboardController as vm">
+    <div ng-if="vm.viewState == 'list'">
+        <div class="row">
+            <div class="span12">
+                <h2 class="page-header">Welcome to Aubergine &#x1F346</h2>
+                <p>
+                    Welcome to the Aubergine Starter Kit and Module dashboard
+                </p>
+                <p>
+                    Alongside the basic starter kit - aubergine has a number of
+                    additional modules that make it easy to exend the features of
+                    your site.
+                </p>
+            </div>
+        </div>
+
+        <div class="aub__dashboard-row">
+            <div class="aub__dashboard-twothirds">
+                <h3>Extensions</h3>
+                <p>
+                    Things to add on to the starter kit
+                </p>
+                <div class="umb-healthcheck">
+                    <div class="aub__dashboard-feature"
+                         ng-repeat="feature in vm.features">
+                        <div class="umb-healthcheck-group"
+                             ng-click="vm.viewDetails(feature, 'feature')"
+                             ng-class="{'aub__dashboard-installed' : feature.Installed, 'aub__dashboard-disabled' : !feature.Enabled}">
+                            <div class="umb-healthcheck-title">
+                                <i class="umb-healthcheck-status-icon icon-check color-green"
+                                   ng-if="feature.Installed"></i>
+                                {{feature.Name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aub__dashboard-onethird">
+                <h3>Content</h3>
+                <p>
+                    Add some sample content
+                </p>
+                <div class="umb-healthcheck">
+                    <div class="aub__dashboard-feature"
+                         ng-repeat="content in vm.content">
+                        <div class="umb-healthcheck-group"
+                             ng-click="vm.viewDetails(content, 'content')">
+                            <div class="umb-healthcheck-title">
+                                {{content.Name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="vm.viewState == 'detail'">
+
+        <div class="umb-editor-sub-header"
+             umb-sticky-bar
+             scrollable-container=".umb-editor-container">
+            <div class="umb-editor-sub-header__content-left">
+                <a class="umb-healthcheck-back-link" href="" ng-click="vm.setViewState('list');">← Back to overview</a>
+            </div>
+        </div>
+
+        <div class="umb-healthcheck-group__details">
+            <div class="umb-healthcheck-group__details-group-title">
+                <div class="umb-healthcheck-group__details-group-name">{{vm.group.Name}}</div>
+                <button class="umb-era-button -white -text-black" type="button" ng-click="vm.install(vm.group, vm.detailType);"
+                        ng-hide="vm.group.Installed || !vm.group.Enabled">
+                    Add {{vm.detailType}}
+                </button>
+            </div>
+
+            <div class="umb-healthcheck-group__details-checks">
+                <div class="umb-healthcheck-group__details-check-title">
+                    <p ng-bind-html="vm.group.Description">
+                    </p>
+
+                    <div ng-show="vm.group.Installed" class="alert alert-success">
+                        <i class="umb-healthcheck-status-icon icon-check color-orange"></i>
+                        <strong>
+                            This feature is already installed on this site
+                        </strong>
+                    </div>
+
+                    <div ng-show="!vm.group.Enabled" class="alert alert-warning">
+                        <i class="umb-healthcheck-status-icon icon-alert color-red"></i>
+                        <strong>
+                            This feature is currently disabled, it's probibly being tested or developed
+                            so isn't quite stable enough yet - you can install the pre-release via nuget
+                            but don't do that on a production website as its not finished.
+                        </strong>
+                    </div>
+
+                    <h3>Nuget</h3>
+                    <p>Where possible we recommend you install this {{vm.detailType}} via nuget</p>
+                    <pre class="aub-nuget-cmd">
+                        PM> Install-Package {{vm.group.Nuget}}
+                    </pre>
+
+                    <div ng-if="vm.group.Link.length > 0">
+                        <h3>More Info</h3>
+                        Get <a href="{{vm.group.Link}}" target="_blank">more information</a> about this package.
+                    </div>
+
+                    <h3>Dependencies</h3>
+                    <div ng-show="vm.group.Depends">
+                        Adding this {{vm.detailType}} will also install the following: <strong><em>{{vm.showDependencies(vm.group.Depends)}}</em></strong>
+                    </div>
+                    <div ng-hide="vm.group.Depends">
+                        No dependencies
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

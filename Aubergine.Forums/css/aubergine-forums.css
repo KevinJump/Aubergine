@@ -1,5 +1,4 @@
 ﻿.aub__forum {
-
 }
 
 /* thread  */
@@ -51,7 +50,24 @@
     font-size: 90%;
     display: flex;
     font-weight: 700;
+    justify-content: flex-end;
 }
+
+.aub__forum-post .post-actions {
+    display: flex;
+    font-weight: 400;
+}
+
+    .aub__forum-post .post-actions > a {
+        color: #888;
+        display: block;
+        padding: 0 0.5em;
+        cursor:pointer;
+    }
+    .aub__forum-post .post-actions > a:hover {
+        color: #000;
+    }
+
 .aub__forum-post .post-author {
     flex: 50;
 }

@@ -1,26 +1,21 @@
-﻿{
+{
 	propertyEditors: [
 		{
-			alias: "ucCommentEditor",
+			alias: "aubergine.CommentEditor",
 			name: "Comments Editor",
 			icon: "icon-brush",
 			group: "common",
 			editor: {
-				valueType: "text",
-				view: "~/app_plugins/Aubergine.Comments/commenteditor.html"
-			},
-			prevalues: {
-				
-			},
-			defaultconfig: {
+				valueType: "int",
+				view: "~/App_Plugins/Aubergine.Comments/commentsEdit.html"
 			}
 		}
 	],
 	javascript: [
-		"~/App_Plugins/Aubergine.Comments/CommentsController.js",
-		"~/App_Plugins/Aubergine.Comments/CommentsService.js"
+		"~/App_Plugins/Aubergine.Comments/commentsService.js",
+		"~/App_Plugins/Aubergine.Comments/commentsController.js"
 	],
 	css: [
-		"~/App_Plugins/Aubergine.Comments/comments.css"
+		"~/App_Plugins/Aubergine.Comments/comments.css",
 	]
 }

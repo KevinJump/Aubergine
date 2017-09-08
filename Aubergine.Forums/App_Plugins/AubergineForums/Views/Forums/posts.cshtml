@@ -1,0 +1,29 @@
+﻿@inherits UmbracoViewPage<Aubergine.Forums.Models.ForumSummaryInfo>
+@using Aubergine.Forums
+@if (Model != null && Model.Posts.Any())
+{
+    <div class="aub__forum">
+        @foreach(var item in Model.Posts)
+        {
+            var permalink = string.Format("{0}{1}", Model.Page.Url, item.Url());
+
+            <div class="aub__post-summary">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8">
+                        <div class="post-topic">
+                            <h3><a href="@permalink">@item.Name</a></h3>
+                            <div class="post-topic-meta">
+                                @item.Author, @item.LastEditDate.ToString("dddd dd MMMM yyyy")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="post-replies">
+                            @item.Replies @Umbraco.If(item.Replies > 1, "replies", "reply")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

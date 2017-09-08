@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="en" intName="English (US)" localName="English (US)" lcid="" culture="en-US">
+  <creator>
+    <name>Kevin Jump</name>
+  </creator>
+  <area alias="aubComments">
+    <key alias="approve">Approve</key>
+    <key alias="unapprove">Unapprove</key>
+    <key alias="spam">Spam</key>
+    <key alias="trash">Trash</key>
+
+    <key alias="statusApproved">approved</key>
+    <key alias="statusSpam">spam</key>
+    <key alias="statusPending">pending</key>
+  </area>
+</language>

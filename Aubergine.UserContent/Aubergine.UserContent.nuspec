@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
       <id>Aubergine.UserContent</id>
-      <version>1.0.0-Beta1</version>
+      <version>1.0.0</version>
       <title>Aubergine - User Generated Content Core</title>
       <authors>Kevin Jump</authors>
       <owners>Kevin Jump</owners>
@@ -10,11 +10,10 @@
       <description>User Generated Content Services for Umbraco</description>
       <releaseNotes>Initial Release</releaseNotes>
       <dependencies>
-        <dependency id="Aubergine.Core" version="1.0.0-Beta1" />
+        <dependency id="Aubergine.Core" version="1.0.0" />
       </dependencies>
   </metadata>
   <files>
-    <file src=".\bin\Release\Aubergine.UserContent.dll" target="lib\Aubergine.UserContent.dll" />
-    <file src=".\Config\UserContent.config" target="content\config" />
+    <file src=".\bin\Release\Aubergine.UserContent.dll" target="lib\net45\" />
   </files>
 </package>

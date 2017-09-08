@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
       <id>Aubergine.Complete</id>
-      <version>1.0.0-Beta1</version>
+      <version>1.0.0</version>
       <title>Aubergine Umbraco Starter</title>
       <authors>Kevin Jump</authors>
       <owners>Kevin Jump</owners>
@@ -10,19 +10,19 @@
       <description>Aubergine Starter Kit</description>
       <releaseNotes>Initial Release</releaseNotes>
       <dependencies>
-        <dependency id="Aubergine.Core" version="1.0.0-Beta1" />
-        <dependency id="Aubergine.Web" version="1.0.0-Beta1" />
-        <dependency id="Aubergine.Auth" version="1.0.0-Beta1" />
-        <dependency id="Aubergine.Comments" version="1.0.0-Beta1" />
-        <dependency id="Aubergine.Blog" version="1.0.0-Beta1" />
-        <dependency id="Aubergine.Forums" version="1.0.0-Beta1" />
+        <dependency id="Aubergine.Core" version="1.0.0" />
+        <dependency id="Aubergine.Web" version="1.0.0" />
+        <dependency id="Aubergine.Auth" version="1.0.0" />
+        <dependency id="Aubergine.Comments" version="1.0.0" />
+        <dependency id="Aubergine.Blog" version="1.0.0" />
+        <dependency id="Aubergine.Forums" version="1.0.0" />
+        <dependency id="Aubergine.StyledTextbox" version="1.5.0" />
       </dependencies>
   </metadata>
   <files>
-    <file src=".\bin\Release\Aubergine.Complete.dll" target="lib\Aubergine.Complete.dll" />
+    <file src=".\bin\Release\Aubergine.Complete.dll" target="lib\net45\" />
     <file src=".\media\**\*.*" target="content\media" exclude="**\web.config" />
-
-    <file src=".\install.ps1" target="tools"/>
-    <file src=".\uSync\Data\**\*.*" target="data\complete" />
+    <file src="..\install.ps1" target="tools"/>
+    <file src=".\_data\**\*.*" target="data\complete" />
   </files>
 </package>

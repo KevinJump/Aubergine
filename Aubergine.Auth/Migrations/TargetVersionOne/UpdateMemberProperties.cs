@@ -24,7 +24,7 @@ namespace Aubergine.Auth.Migrations.TargetVersionOne
         {
             var memberTypeService = ApplicationContext.Current.Services.MemberTypeService;
             var defaultMemberType = memberTypeService.Get("Member");
-
+            
             var propertyHelper = new Aubergine.Core.Migrations.Helpers.ContentTypeMigrationHelper();
 
             propertyHelper.AddProperty(defaultMemberType, 

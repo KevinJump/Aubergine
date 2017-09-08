@@ -15,9 +15,17 @@ namespace Aubergine.Auth
         {
             var md5 = MD5.Create();
 
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(member.Email.Trim().ToLower());
-            var hash = BitConverter.ToString(md5.ComputeHash(inputBytes)).Replace("-", "").ToLower();
-            return "https://www.gravatar.com/avatar/" + hash;
+            // at the moment this only works when ModelsBuilder is off, because it 
+            // doesn't let you get to MemberPublishedContent from the GetCurrentMember call :(
+            //
+
+            if (member != null)
+            {
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(member.Email.Trim().ToLower());
+                var hash = BitConverter.ToString(md5.ComputeHash(inputBytes)).Replace("-", "").ToLower();
+                return "https://www.gravatar.com/avatar/" + hash;
+            }
+            return "https://www.gravatar.com/avatar/?d=mm";
         }
     }
 }

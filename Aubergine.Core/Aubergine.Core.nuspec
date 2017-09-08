@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
       <id>Aubergine.Core</id>
-      <version>1.0.0-Beta1</version>
+      <version>1.0.0</version>
       <title>Aubergine Umbraco Starter Kit Core Files</title>
       <authors>Kevin Jump</authors>
       <owners>Kevin Jump</owners>
@@ -14,6 +14,6 @@
       </dependencies>
   </metadata>
   <files>
-    <file src=".\bin\Release\Aubergine.Core.dll" target="lib\Aubergine.Core.dll" />
+    <file src=".\bin\Release\Aubergine.Core.dll" target="lib\net45\" />
   </files>
 </package>

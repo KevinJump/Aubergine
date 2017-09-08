@@ -251,3 +251,6 @@ ModelManifest.xml
 **/App_Data/NuGetBackup/
 **/App_Data/Umbraco.config
 **/App_Data/cache/
+
+# we don't include the data folders used for the package builds
+**/_data/

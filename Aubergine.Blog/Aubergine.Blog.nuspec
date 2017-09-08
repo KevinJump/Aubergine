@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-      <id>Aubergine.Blog</id>
-      <version>1.0.0-Beta1</version>
-      <title>Aubergine for Umbraco : Blogging</title>
-      <authors>Kevin Jump</authors>
-      <owners>Kevin Jump</owners>
-      <requireLicenseAcceptance>false</requireLicenseAcceptance>
-      <description>Basic Member Authentication</description>
-      <releaseNotes>Initial Release</releaseNotes>
-      <dependencies>
-        <dependency id="Aubergine.Comments" version="1.0.0-Beta1" />
-      </dependencies>
+    <id>Aubergine.Blog</id>
+    <version>1.0.0</version>
+    <title>Aubergine for Umbraco : Blogging</title>
+    <authors>Kevin Jump</authors>
+    <owners>Kevin Jump</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Basic Blogging</description>
+    <releaseNotes>Initial Release</releaseNotes>
+    <dependencies>
+      <dependency id="Aubergine.Comments" version="1.0.0" />
+    </dependencies>
   </metadata>
   <files>
-    <file src=".\bin\Release\Aubergine.Blog.dll" target="lib\Aubergine.Blog.dll" />
+    <file src=".\bin\release\Aubergine.blog.dll" target="lib\net45\"/>
     <file src=".\Views\**\*.*" target="content\Views\" />
     <file src=".\App_Plugins\**\*.*" target="content\App_Plugins\" />
     <file src=".\css\**\*.*" target="content\css\" />
-    <file src=".\install.ps1" target="tools"/>
-    <file src=".\uSync\Data\**\*.*" target="data\blog"/>
+    <file src="..\install.ps1" target="tools" />
+    <file src=".\_data\**\*.*" target="data\blog" />
   </files>
 </package>

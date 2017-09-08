@@ -1,147 +1,169 @@
-﻿using Aubergine.UserContent.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Umbraco.Core;
+using Aubergine.UserContent.Models;
 using Umbraco.Web;
 using Umbraco.Core.Cache;
 using System.Web.Caching;
 using Aubergine.UserContent.Cache;
+using Umbraco.Core;
 using Umbraco.Core.Models;
 
 namespace Aubergine.UserContent
 {
+    /// <summary>
+    ///  Extensions to the UmbracoHelper for getting/saving Cached IUserContent
+    /// </summary>
     public static class UserContentUmbracoExtensions
     {
+        // cache prefixes.
 
-        /// <summary>
-        /// Get user content based on the GUID key for the content.
-        /// </summary>
-        /// <param name="umbraco"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public static IUserContent UserContent(this UmbracoHelper umbraco, Guid key, string instance = "default")
+        // individual nodes
+        public const string UserContentPrefix = "uc";
+
+        // key pairs for children of nodes
+        public const string UserContentKeysPrefix = "uck";
+
+        // key pairs for chidlren of a IPublishedContent item
+        public const string IPublishedKeysPrefix = "ucpk";
+
+        internal static IUserContent GetCachedUserContent(Guid key, 
+            string cachePrefix, string instance)
         {
             if (!UserContentContext.Current.Instances.ContainsKey(instance))
                 return null;
 
             var _instance = UserContentContext.Current.Instances[instance];
 
-
-            var itemCacheKey = $"uc_{key.ToString()}";
-
-            var item = _instance.Cache.GetCacheItem<IUserContent>(itemCacheKey);
-            if (item != null)
-                return item;
-
-            // get the item from the db. 
-            item = _instance.Service.Get(key);
-            if (item != null)
-                _instance.Cache.InsertCacheItem<IUserContent>(itemCacheKey, () => item, priority: CacheItemPriority.Default);
-
-            return item; 
+            var cacheKey = $"{cachePrefix}_{key.ToString()}";
+            var item = _instance.Cache.GetCacheItem<IUserContent>(cacheKey);
+            if (item == null)
+            {
+                item = _instance.Service.Get(key);
+                if (item != null)
+                    _instance.Cache.InsertCacheItem<IUserContent>
+                        (cacheKey, () => item, priority: CacheItemPriority.Default);
+            }
+            return item;
         }
 
-        /// <summary>
-        ///  Get user list of user content associated with this umbraco node
-        /// </summary>
-        /// <param name="umbraco"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public static IEnumerable<IUserContent> UserContentByNode(this UmbracoHelper umbraco, Guid key, string instance = "default")
-        {
-            return GetContentByNode(key, instance);
-        }
-
-        /// <summary>
-        ///  get it by type - this function needs to be better at just getting the ones we care about 
-        /// </summary>
-        public static IEnumerable<IUserContent> UserContentByNode(this UmbracoHelper umbraco, Guid key, string type, string instance = "default")
-        {
-            return GetContentByNodeAndType(key, type, instance);
-        }
-
-
-        public static IEnumerable<IUserContent> GetUserContent(this IPublishedContent content, string instance = "default")
-        {
-            return GetContentByNode(content.GetKey(), instance);
-        }
-
-        public static IEnumerable<IUserContent> GetUserContent(this IPublishedContent content, string type, string instance = "default")
-        {
-            return GetContentByNodeAndType(content.GetKey(), type, instance);
-        }
-
-        private static IEnumerable<IUserContent> GetContentByNode(Guid key, string instance = "default")
+        internal static IEnumerable<IUserContent> GetCachedUserContentByNode(Guid key, 
+            string cachePrefix,
+            string userContentType,
+            string instance)
         {
             if (!UserContentContext.Current.Instances.ContainsKey(instance))
                 return null;
 
             var _instance = UserContentContext.Current.Instances[instance];
+            var cacheKey = $"{cachePrefix}_{key.ToString()}";
 
-
-            var cacheKey = $"ucp_{key.ToString()}";
+            if (userContentType != "")
+                cacheKey += $"_{userContentType}";
 
             var items = new List<IUserContent>();
-            var pair = _instance.Cache.GetCacheItem<UserContentParent>(cacheKey);
-            if (pair != null && pair.Keys.Any())
+            var pairs = _instance.Cache.GetCacheItemsByKeySearch<UserContentKeyItems>(cacheKey);
+            if (pairs != null && pairs.Any())
             {
-                foreach (var ikey in pair.Keys)
+                foreach (var pair in pairs)
                 {
-                    var itemCacheKey = $"uc_{ikey.ToString()}";
-
-                    items.Add(_instance.Cache.GetCacheItem<IUserContent>(itemCacheKey));
+                    foreach (var itemKey in pair.ItemKeys)
+                    {
+                        var item = GetCachedUserContent(itemKey, UserContentPrefix, instance);
+                        if (item != null)
+                            items.Add(item);
+                    }
                 }
 
                 return items;
             }
 
+            // else get it from the db
+            items = _instance.Service.GetApprovedUserContent(key)
+                .ToList();
 
-            items = _instance.Service.GetByContentKey(key, false).ToList();
             if (items.Any())
             {
-                // put things into the cache for next time. 
-                foreach (var item in items) {
-                    var itemCacheKey = $"uc_{item.Key.ToString()}";
-                    _instance.Cache
-                        .InsertCacheItem<IUserContent>(itemCacheKey, () => item, priority: CacheItemPriority.Default);
+                // put what we have found into the cache. 
+                foreach (var item in items)
+                {
+                    var itemCacheKey = $"{UserContentPrefix}_{key.ToString()}";
+                    if (!item.UserContentType.IsNullOrWhiteSpace())
+                        itemCacheKey += $"_{item.UserContentType}";
 
+                    _instance.Cache.InsertCacheItem<IUserContent>
+                        (itemCacheKey, () => item, priority: CacheItemPriority.Default);
                 }
-                _instance.Cache
-                    .InsertCacheItem<UserContentParent>(cacheKey, () => new UserContentParent
+
+                _instance.Cache.InsertCacheItem<UserContentKeyItems>
+                    (cacheKey, () => new UserContentKeyItems
                     {
-                        Keys = items.Select(x => x.Key).ToList<Guid>(),
-                        NodeKey = key
+                        Key = key,
+                        ItemKeys = items.Select(x => x.Key).ToList<Guid>()
                     }, priority: CacheItemPriority.Default);
             }
 
             return items;
+
         }
 
-        private static IEnumerable<IUserContent> GetContentByNodeAndType(Guid key, string type, string instance = "default")
+
+        /// <summary>
+        ///  Get any IUserContent associated with the IPublishedContent node with this id
+        /// </summary>
+        [Obsolete("Getting UserContent by Guid is recommented", false)]
+        public static IEnumerable<IUserContent> GetUserContent(this UmbracoHelper umbraco, int id, 
+            string userContentType = "",
+            string instance = Aubergine.UserContent.UserContent.DefaultInstance)
         {
-            var items = GetContentByNode(key, instance);
-            return items.Where(x => x.UserContentType == type);
+            var content = umbraco.TypedContent(id);
+            return GetCachedUserContentByNode(content.GetKey(), IPublishedKeysPrefix, userContentType, instance);
         }
 
         /// <summary>
-        ///  save user content back into user content storage.
+        ///  Get any IUserContent accociated with the IPublishedContent node with this Key
         /// </summary>
-        /// <param name="umbraco"></param>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public static Attempt<IUserContent> SaveUserContent(this UmbracoHelper umbraco, IUserContent item, string instance = "default")
+        public static IEnumerable<IUserContent> GetUserContent(this UmbracoHelper umbraco, Guid key,
+            string userContentType = "",
+            string instance = Aubergine.UserContent.UserContent.DefaultInstance)
         {
-            // The service busts the cache when you save. 
-            if (!UserContentContext.Current.Instances.ContainsKey(instance))
-                return Attempt.Fail<IUserContent>(item, new KeyNotFoundException());
-
-            return UserContentContext.Current.Instances[instance].Service.Save(item);
+            return GetCachedUserContentByNode(key, IPublishedKeysPrefix, userContentType, instance);
         }
 
-        public static int GetUserContentCount(this IPublishedContent content, string userContentType, string instance = "default")
+        /// <summary>
+        ///  Get any IUserContent associatied with this IPublishedContent page. 
+        /// </summary>
+        public static IEnumerable<IUserContent> GetUserContent(this IPublishedContent content, 
+            string userContentType = "",
+            string instance = Aubergine.UserContent.UserContent.DefaultInstance)
+        {
+            return GetCachedUserContentByNode(content.GetKey(), IPublishedKeysPrefix, userContentType, instance);
+        }
+
+        /// <summary>
+        ///  get a single piece of user content by it's ID
+        /// </summary>
+        public static IUserContent UserContent(this UmbracoHelper umbraco, Guid key, string instance = "default")
+        {
+            return GetCachedUserContent(key, UserContentKeysPrefix, instance);
+        }
+
+        /// <summary>
+        ///  Save a bit of UserContent back to the db.
+        /// </summary>
+        public static Attempt<IUserContent> SaveUserContent(this UmbracoHelper umbraco, 
+        IUserContent content, string instance = "default")
+        {
+            if (!UserContentContext.Current.Instances.ContainsKey(instance))
+                return Attempt.Fail<IUserContent>(content, new KeyNotFoundException());
+
+            return UserContentContext.Current.Instances[instance].Service.Save(content);
+        }
+
+        public static int GetUserContentCount(this IPublishedContent content, 
+            string userContentType, string instance = "default")
         {
             if (!UserContentContext.Current.Instances.ContainsKey(instance))
                 return -1;
@@ -149,20 +171,21 @@ namespace Aubergine.UserContent
             var _instance = UserContentContext.Current.Instances[instance];
 
             var countKey = $"uc_{content.GetKey()}_count";
-            var count = _instance.Cache.GetCacheItem<int?>(countKey);
+            var count = _instance.Cache.GetCacheItem<UserContentItemCount>(countKey);
             if (count != null)
-                return count.Value;
+                return count.Count;
 
-            // work it out 
-            var items = content.GetUserContent(userContentType, instance);
-            if (items != null)
-                count = items.Count();
-            else
-                count = 0;
-            
-            _instance.Cache.InsertCacheItem<int?>(countKey, () => count, priority: CacheItemPriority.Default);
-            return count.Value;
-
+            // not in cache go get it.
+            var dbCount = _instance.Service.GetContentCount(content.GetKey());
+            if (dbCount > 0)
+            {
+                _instance.Cache.InsertCacheItem<UserContentItemCount>
+                    (countKey, () => new UserContentItemCount
+                    {
+                        Count = dbCount
+                    }, priority: CacheItemPriority.Default);
+            }
+            return dbCount;
         }
     }
 }

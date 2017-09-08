@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Umbraco.Core.Models;
-
-namespace Aubergine.UserContent
+﻿namespace Aubergine.UserContent.Models
 {
-    /// <summary>
-    ///  a simple property element for user content, 
-    ///  can get or set - will be written back on save
-    /// </summary>
-    public class UserContentProperty 
+    public class UserContentProperty
     {
         public UserContentProperty() { }
-
         public UserContentProperty(string alias, object value)
         {
             PropertyAlias = alias;
@@ -22,21 +10,22 @@ namespace Aubergine.UserContent
         }
 
         public string PropertyAlias { get; set; }
-
         private object _value;
-
-        public bool HasValue
+        public object Value
         {
             get
             {
-                return _value != null;
+                return _value;
+            }
+            set
+            {
+                _value = value;
             }
         }
 
-        public object Value
+        public bool HasValue
         {
-            get { return _value; }
-            set { _value = value; }
+            get { return _value != null; }
         }
     }
 }

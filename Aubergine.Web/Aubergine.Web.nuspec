@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
       <id>Aubergine.Web</id>
-      <version>1.0.0-Beta1</version>
+      <version>1.0.0</version>
       <title>Aubergine Starter Kit</title>
       <authors>Kevin Jump</authors>
       <owners>Kevin Jump</owners>
@@ -12,16 +12,16 @@
           <dependency id="Terratype.LeafletV1" version="1.0.13" />
           <dependency id="bootstrap" version="3.3.7" />
           <dependency id="jQuery" version="3.1.1" />
-          <dependency id="Jumoo.StyledTextbox" version="1.4" />
+          <dependency id="Aubergine.StyledTextbox" version="1.5" />
           <dependency id="Our.Umbraco.Switcher" version="1.0.3" />
-          <dependency id="Aubergine.Core" version="1.0.0-Beta1" />
+          <dependency id="Aubergine.Core" version="1.0.0" />
       </dependencies>
   </metadata>
   <files>
     <file src=".\App_Plugins\Aubergine\**\*.*" target="content\App_Plugins\Aubergine" />
-    
     <file src=".\css\*.css" target="content\css" 
           exclude="**\aubergine-forums.css;**\aubergine-comments.css;**\aubergine-blog.css"/>
+
     <file src=".\Views\**\*.cshtml" target="content\Views" 
           exclude="**\Auth\**;**\Blog\**;**\Comments\**;**\Forums\**;**\Grid\**;**\Auth*.*;**\Blog*.*;**\Forum*.*;**\Stubs\**"/>
 
@@ -34,10 +34,8 @@
     <file src=".\uSync\Data\**\*.*" target="data\Web"
           exclude="**\Data\Content\**;**\Data\Media\**;**\Blogs\**;**\blog\**;**\forums\**"/> 
 
-
-    <file src=".\install.ps1" target="tools"/>
-    <file src=".\Bin\Aubergine.Helpers.dll" target="lib\Aubergine.Helpers.dll" />
-
+    <file src="..\install.ps1" target="tools"/>
+    <file src=".\Bin\Aubergine.Helpers.dll" target="lib\net45\" />
     <file src=".\Config\*.xdt" target="content\Config" />
   </files>
 

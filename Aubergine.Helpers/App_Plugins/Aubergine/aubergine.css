@@ -1,0 +1,68 @@
+﻿.aub__dashboard-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.aub__dashboard-half {
+    padding: 10px;
+    box-sizing: border-box;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    flex-basis: 50%;
+    max-width: 50%;
+}
+
+.aub__dashboard-onethird {
+    padding: 10px;
+    box-sizing: border-box;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    flex-basis: 33%;
+    max-width: 33%;
+}
+
+.aub__dashboard-twothirds {
+    padding: 10px;
+    box-sizing: border-box;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    flex-basis: 66%;
+    max-width: 66%;
+}
+
+.aub__dashboard-feature {
+    padding: 10px;
+    box-sizing: border-box;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    flex-basis: 50%;
+    max-width: 50%;
+}
+
+.aub-content {
+    flex-basis: 100%;
+    max-width: 100%;
+}
+
+.aub-nuget-cmd {
+    background-color: black;
+    color: white;
+    width: auto;
+    display: inline-block;
+    font-size: 110%;
+    padding: 1em;
+}
+
+.aub__dashboard-installed {
+    background-color: aliceblue;
+    color: #aaa
+}
+
+.aub__dashboard-disabled {
+    background-color: #f9eaea;
+    color: #aaa;
+}
+
+.aub__dashboard-disabled .umb-healthcheck-title {
+    font-weight: normal;
+}

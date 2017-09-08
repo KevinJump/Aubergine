@@ -1,0 +1,35 @@
+.aubergine-styledtext {
+    padding: 0;
+}
+
+.aubergine-styledtext input, .aubergine-styledtext textarea {
+    border: 0;
+    border-bottom: 1px solid #eee;
+    width: 98%;
+}
+
+.aubergine-styledtext input.styledText-input {
+    height: 1.5em;
+}
+
+.aubergine-styledtext textarea.styledText-textarea {
+    height: 5em;
+    line-height: 1.1em;
+}
+
+.aubergine-styledtext .styledText-warning {
+    text-align: right;
+    width: 98%;
+}
+
+.aubergine-styledtext .styledText-label {
+    font-weight: 700;
+}
+
+.aubergine-styledtext .styledText-full {
+    width: 98%;
+}
+
+.aubergine-styledtext .text-danger {
+    color: #fe6561
+}

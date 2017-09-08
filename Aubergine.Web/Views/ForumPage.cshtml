@@ -3,12 +3,12 @@
 	Layout = "Forums.cshtml";
 }
 
-@Html.Action("ListPosts", "Forum", new { area = "Aubergine", contentKey = Model.Content.GetKey() })
+@Html.Action("ListPosts", "Forums", new { area = "AubergineForums", contentKey = Model.Content.GetKey() })
 
 @if (Members.IsLoggedIn())
 {
-    @Html.Action("AddPost", "Forum", new {
-    area = "Aubergine",
+    @Html.Action("AddPost", "Forums", new {
+    area = "AubergineForums",
     contentKey = Model.Content.GetKey(),
     showTitle = true })
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,16 +6,14 @@ using System.Threading.Tasks;
 using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
-using System.Xml.Linq;
-using Jumoo.uSync.Core;
 
 namespace Aubergine.Core.Migrations.Helpers
 {
-    public class ContentTypeMigrationHelper : uSyncSerializerMigrationHelper<IContentType>
+    public class ContentTypeMigrationHelper
     {
-        public readonly IDataTypeService _dataTypeService; 
+        private readonly IDataTypeService _dataTypeService;
+
         public ContentTypeMigrationHelper()
-            : base (uSyncCoreContext.Instance.ContentTypeSerializer)
         {
             _dataTypeService = ApplicationContext.Current.Services.DataTypeService;
         }

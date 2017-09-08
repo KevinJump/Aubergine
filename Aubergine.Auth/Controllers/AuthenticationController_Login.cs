@@ -13,6 +13,12 @@ namespace Aubergine.Auth
     public partial class AuthenticationController : SurfaceController
     {
         [ChildActionOnly]
+        public ActionResult Status()
+        {
+            return PartialView(Views.Status, CurrentPage);
+        }
+
+        [ChildActionOnly]
         public ActionResult Login()
         {
             AubLoginViewModel loginModel = new AubLoginViewModel();

@@ -1,0 +1,25 @@
+﻿<div ng-controller="aubergine.styledTextController as vm"
+     class="aubergine-styledtext">
+
+    <div class="styledText-label" ng-if="model.hideLabel">{{model.label}}</div>
+
+    <input ng-if="vm.config.multiLine != '1'" type="text" 
+           class="umb-editor umb-textstring styledText-input {{vm.config.cssclass}}" 
+           style="{{vm.config.style}}"
+           placeholder="{{vm.config.placeholder}}"
+           ng-class="{'styledText-full' : model.hideLabel}"
+           ng-model="model.value"
+           ng-change="vm.change()" />
+
+    <textarea ng-if="vm.config.multiLine === '1'"
+           class="umb-editor umb-textstring styledText-textarea {{vm.config.cssclass}}" 
+           style="{{vm.config.style}}"
+           placeholder="{{vm.config.placeholder}}"
+           ng-class="{'styledText-full' : model.hideLabel}"
+           ng-model="model.value"
+           ng-change="vm.change()"></textarea>
+
+    <div class="styledText-warning umb-editor">
+        <span ng-bind="vm.message" class="{{vm.messageClass}}" ng-show="vm.limit > 0">
+    </div>              
+</div>

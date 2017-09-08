@@ -1,32 +1,37 @@
-﻿using Aubergine.UserContent.Cache;
-using Aubergine.UserContent.Models;
-using Aubergine.UserContent.Persistance;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Aubergine.UserContent.Models;
+using Aubergine.UserContent.Persistance;
+using Aubergine.UserContent.Persistance.Models;
+using umbraco.interfaces;
 using Umbraco.Core;
 using Umbraco.Core.Events;
 
 namespace Aubergine.UserContent.Services
 {
-    public class UserContentService : IUserContentService
+    public class UserContentService<TUserContent, TUserContentDTO> : IUserContentService
+        where TUserContentDTO : UserContentDTO
+        where TUserContent : IUserContent
     {
-        IUserContentRepository _userRepo;
-        UserContentCacheRefresher _cacheRefresher;
+        public static event TypedEventHandler<IUserContentService, SaveEventArgs<TUserContent>> Saving;
+        public static event TypedEventHandler<IUserContentService, SaveEventArgs<TUserContent>> Saved;
+
+        public static event TypedEventHandler<IUserContentService, DeleteEventArgs<TUserContent>> Deleting;
+        public static event TypedEventHandler<IUserContentService, DeleteEventArgs<TUserContent>> Deleted;
+
+
+        private readonly UserContentRepository<TUserContent,TUserContentDTO> _userRepo;
+        private readonly ICacheRefresher _cacheRefresher;
 
         public UserContentService(
-            IUserContentRepository userRepo,
-            UserContentCacheRefresher cacheRefresher)
+            UserContentRepository<TUserContent, TUserContentDTO> userContentRepository,
+            ICacheRefresher cacheRefresher)
         {
-            _userRepo = userRepo;
+            _userRepo = userContentRepository;
             _cacheRefresher = cacheRefresher;
-        }
-
-        public IUserContent Get(Guid key)
-        {
-            return _userRepo.Get(key);
         }
 
         public IUserContent Get(int id)
@@ -34,88 +39,110 @@ namespace Aubergine.UserContent.Services
             return _userRepo.Get(id);
         }
 
-        public IEnumerable<IUserContent> GetByContentKey(Guid contentKey, bool getAll = false)
+        public IUserContent Get(Guid key)
         {
-            return GetByContentKey(contentKey, UserContentStatus.Approved, getAll);
+            return _userRepo.Get(key);
         }
 
-        public IEnumerable<IUserContent> GetByContentKey(Guid contentKey, UserContentStatus status = UserContentStatus.Approved, bool getAll = false)
+        public IEnumerable<IUserContent> GetApprovedUserContent(Guid contentKey)
         {
-            return _userRepo.GetByContentId(contentKey, status, getAll);
+            return _userRepo.GetByContentKey(contentKey, UserContentStatus.Approved, false, string.Empty);
+        }
+
+        public IEnumerable<IUserContent> GetApprovedUserContent(Guid contentKey, string userContentType)
+        {
+            if (userContentType.IsNullOrWhiteSpace())
+                return GetApprovedUserContent(contentKey);
+
+            return _userRepo.GetByContentKey(contentKey, UserContentStatus.Approved, false, userContentType);
+        }
+
+        public IEnumerable<IUserContent> GetUserContent(Guid contentKey, bool getAll)
+        {
+            return _userRepo.GetByContentKey(contentKey, UserContentStatus.Approved, getAll, string.Empty);
+        }
+
+        public IEnumerable<IUserContent> GetUserContent(
+            Guid contentKey, UserContentStatus status, 
+            bool getAll, string userContentType = "")
+        {
+            return _userRepo.GetByContentKey(contentKey, status, getAll, userContentType);
+        }
+
+        public int GetContentCount(Guid key)
+        {
+            return _userRepo.GetContentCount(key);
+        }
+
+        public int GetChildCount(Guid key)
+        {
+            return _userRepo.GetChildCount(key);
         }
 
         public IEnumerable<IUserContent> GetChildren(Guid key, bool getAll = false)
         {
-            return GetChildren(key, UserContentStatus.Approved, getAll);
-        }
-        public IEnumerable<IUserContent> GetChildren(Guid key, UserContentStatus status = UserContentStatus.Approved, bool getAll = false)
-        {
-            return _userRepo.GetChildren(key, status, getAll);
+            return _userRepo.GetChildren(key, UserContentStatus.Approved, getAll, string.Empty);
         }
 
-        // return attempt. 
         public Attempt<IUserContent> Save(IUserContent content)
         {
-            if (Saving.IsRaisedEventCancelled(
-                new SaveEventArgs<IUserContent>(content, true), this))
-            {
-                return Attempt.Fail<IUserContent>(content, new Exception("Blocked by Event"));
-            }
+            if (Saving.IsRaisedEventCancelled(new SaveEventArgs<TUserContent>((TUserContent)content), this))
+                return Attempt.Fail<IUserContent>(content, new Exception("blocked by delegated event"));
 
             if (content.ParentKey == null)
                 content.ParentKey = Guid.Empty;
+
+            content.UpdatedDate = DateTime.Now;
 
             if (content.Key != null && content.Key != Guid.Empty)
             {
                 var existing = _userRepo.Get(content.Key);
                 if (existing != null)
                 {
-                    existing.UpdatedDate = DateTime.Now;
-                    var item = _userRepo.Update(content);
-                    return Attempt.Succeed<IUserContent>(item);
+                    var updatedItem = _userRepo.Update(content);
+                    return Attempt.Succeed<IUserContent>(updatedItem);
                 }
             }
 
             content.Key = Guid.NewGuid();
-            content.CreatedDate = content.UpdatedDate = DateTime.Now;
+            content.CreatedDate = DateTime.Now;
 
             var obj = _userRepo.Create(content);
 
             _cacheRefresher.RefreshAll();
 
-            Saved.RaiseEvent(new SaveEventArgs<IUserContent>(obj), this);
-
+            Saved.RaiseEvent(new SaveEventArgs<TUserContent>((TUserContent)obj), this);
             return Attempt.Succeed<IUserContent>(obj);
         }
 
         public Attempt<IUserContent> Delete(IUserContent content)
         {
-            if (Deleting.IsRaisedEventCancelled(new DeleteEventArgs<IUserContent>(content, true), this))
-            {
-                return Attempt.Fail<IUserContent>(content, new Exception("Blocked by event"));
-            }
+            if (Deleting.IsRaisedEventCancelled(new DeleteEventArgs<TUserContent>((TUserContent)content), this))
+                return Attempt.Fail<IUserContent>(content, new Exception("blocked by delegated event"));
 
             _userRepo.Delete(content.Key);
 
+            Deleted.RaiseEvent(new DeleteEventArgs<TUserContent>((TUserContent)content), this);
             _cacheRefresher.Refresh(content.Key);
-
-            Deleted.RaiseEvent(new DeleteEventArgs<IUserContent>(content), this);
 
             return Attempt.Succeed<IUserContent>(content);
         }
 
-        public bool SetStatus(Guid key, UserContentStatus status)
+        public Attempt<int> UpdateStatus(Guid key, UserContentStatus status)
         {
-            _cacheRefresher.RefreshAll();
-            return _userRepo.SetStatus(key, status);
+            var update = _userRepo.SetStatus(key, status);
+
+            _cacheRefresher.Refresh(key);
+
+            if (update > 0)
+                return Attempt.Succeed<int>(update);
+            else
+                return Attempt.Fail<int>(update, new Exception("No rows updated"));
         }
 
-
-        public static event TypedEventHandler<UserContentService, SaveEventArgs<IUserContent>> Saving;
-        public static event TypedEventHandler<UserContentService, SaveEventArgs<IUserContent>> Saved;
-
-        public static event TypedEventHandler<UserContentService, DeleteEventArgs<IUserContent>> Deleting;
-        public static event TypedEventHandler<UserContentService, DeleteEventArgs<IUserContent>> Deleted;
-
+        public void ClearCacheByPageKey(Guid key)
+        {
+            _cacheRefresher.Refresh(key);
+        }
     }
 }

@@ -14,7 +14,7 @@
       </dependencies>
   </metadata>
   <files>
-    <file src=".\bin\Release\Aubergine.Auth.dll" target="lib\Aubergine.Auth.dll" />
+    <file src=".\bin\Release\Aubergine.Auth.dll" target="lib\net45\Aubergine.Auth.dll" />
     <file src=".\Views\**\*.*" target="content\Views\" />
   </files>
 </package>

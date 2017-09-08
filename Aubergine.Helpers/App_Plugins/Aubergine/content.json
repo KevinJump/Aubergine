@@ -1,0 +1,14 @@
+﻿[
+  {
+    "id" :  "{3381119B-1A18-44D3-802E-95DC8C8B0D16}",
+    "name": "Example Content",
+    "description": "Basic content that shows all the features of the starter kit",
+    "nuget": "Aubergine.Content.Example"
+  },
+  {
+    "id" :  "{328B27E3-6BD2-4072-86EB-18EF3FCD79D5}",
+    "name": "Local Gov Content",
+    "description": "Install the structure of the LGSN (LocalGov Standard Navigation List) onto the site",
+    "nuget": "Aubergine.Content.LocalGov"
+  }
+]

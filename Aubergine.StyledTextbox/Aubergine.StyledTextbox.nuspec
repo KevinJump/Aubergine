@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Aubergine.StyledTextbox</id>
+    <version>1.5</version>
+    <title>Aubergine Styled Textbox for Umbraco</title>
+    <authors>Kevin Jump</authors>
+    <owners>Kevin Jump</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple Styled Textbox property editor for Umbraco.</description>
+    <releaseNotes>
+      <![CDATA[ Initial Release
+          1.2 added support for Textarea
+          1.3 added property value converter
+          1.4 I can haz spelling
+          1.5 Namespace update / angular tidy up
+          ]]>
+    </releaseNotes>
+  </metadata>
+  <files>
+    <file src=".\App_Plugins\StyledTextbox\**\*.*"
+          target="content\App_Plugins\StyledTextbox" />
+    <file src=".\bin\release\aubergine.styledtextbox.dll"
+          target="lib\net45\" />
+  </files>
+</package>

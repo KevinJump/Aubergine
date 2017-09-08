@@ -1,0 +1,45 @@
+@inherits UmbracoViewPage<Aubergine.Comments.Models.PageCommentsViewModel>
+@using ClientDependency.Core.Mvc
+@using Aubergine.UserContent
+@using Aubergine.Comments;
+@using Umbraco.Core.Models.PublishedContent
+@{
+    Html.RequiresCss("~/css/aubergine-comments.css");
+
+    @Model.Comments.Count()
+    
+    if (Model.Comments != null && Model.Comments.Any()) { 
+        <div class="aub__comments">
+            <div class="comment-count">@Model.Comments.Count() comments</div>
+
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="aub__comment" id="comment_@comment.Key.ToString()">
+                    <h4>
+                        <a href="mailto:@comment.GetPropertyValue("Email", "")">
+                            @if (comment.HasProperty("Name"))
+                            {
+                                @comment.GetPropertyValue("Name", "")
+                            }
+                        </a>
+                    </h4>
+                    <div class="aub__comment-body">
+                        @Html.Raw(Umbraco.ReplaceLineBreaksForHtml(comment.GetPropertyValue<string>("Comment", "")))<br />
+                    </div>
+
+                    <div class="aub__comment-meta">@comment.CreatedDate 
+                        <a href="#comment_@comment.Key.ToString()" title="permalink to comment"><i class="glyphicon glyphicon-link"></i></a></div>
+                </div>
+            }
+        </div>
+    }
+}
+
+@if (Model.AllowComments)
+{
+    @Html.Action("Comment", "Comments", new { area = "AubergineComments" })
+}
+else
+{
+    <div class="aub__comments-closed">Comments are closed for this post</div>
+}

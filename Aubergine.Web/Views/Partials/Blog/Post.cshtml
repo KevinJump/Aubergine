@@ -3,7 +3,7 @@
 @{
     // the blog post
     var post = Model;
-    var postDate = post.GetPropertyValue<DateTime>(Properties.PublishDate, post.CreateDate);
+    var postDate = post.GetPropertyValue<DateTime>(BlogPresets.Properties.PublishDate, post.CreateDate);
 }
 
 <div class="blog-post">
@@ -27,12 +27,12 @@
 
             <div class="post-footer">
                 <span class="post-tags">
-                    @post.the_tags(Properties.Tags)
+                    @post.the_tags(BlogPresets.Properties.Tags)
                 </span>
             </div>
 
             <div class="post-comments">
-                @Html.Partial("Comments/ShowComments")
+                @Html.Action("ShowComments", "Comments", new { area = "AubergineComments" })
             </div>
         </div>
     </div>

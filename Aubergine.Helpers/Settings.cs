@@ -4,17 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Umbraco.Core;
+using Umbraco.Core.Logging;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
 using Umbraco.Web;
-using Umbraco.Core.Logging;
-using Semver;
 
 namespace Aubergine
 {
     /// <summary>
-    ///  a settings handler. will load (and refresh as needed) a link
-    ///  to the siteSettings node, this means you can just call
+    ///  A settings handler. will load (and refresh as needed) a link
+    ///  to the "siteSettings" node, this means you can just call
     ///  
     ///  Aubergine.SiteSettings<string>("someProperty","default"); 
     ///  
@@ -34,7 +33,7 @@ namespace Aubergine
 
         public static T SiteSettings<T>(string key, T defaultValue)
         {
-            if (GlobalSettings != null 
+            if (GlobalSettings != null
                 && GlobalSettings.HasProperty(key)
                 && GlobalSettings.HasValue(key))
             {
@@ -62,23 +61,17 @@ namespace Aubergine
 
     public class SiteSettingEventHandler : ApplicationEventHandler
     {
-        SemVersion targetVersion = new SemVersion(1, 0, 0);
-
         int settingsContentTypeId = -1;
-        ILogger _logger; 
+        ILogger _logger;
 
         protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
-            // run any migrations
-            var m = new global::Aubergine.Core.Migrations.MigrationManager(applicationContext);
-            m.ApplyMigration("Aubergine.Web", targetVersion);
-
             _logger = applicationContext.ProfilingLogger.Logger;
             Aubergine.LoadSettingsNode(false);
 
             ContentService.Published += ContentService_Published;
 
-            var contentType = 
+            var contentType =
                 applicationContext.Services.ContentTypeService.GetContentType("siteSettings");
             if (contentType != null)
                 settingsContentTypeId = contentType.Id;
@@ -91,7 +84,7 @@ namespace Aubergine
             {
                 if (settingsContentTypeId != -1)
                 {
-                    foreach(var item in e.PublishedEntities)
+                    foreach (var item in e.PublishedEntities)
                     {
                         if (item.ContentTypeId == settingsContentTypeId)
                         {
@@ -100,9 +93,9 @@ namespace Aubergine
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                _logger.Warn<SiteSettingEventHandler>("Failed to re-load settings: {0}", ()=> ex.ToString());
+                _logger.Warn<SiteSettingEventHandler>("Failed to re-load settings: {0}", () => ex.ToString());
             }
         }
     }

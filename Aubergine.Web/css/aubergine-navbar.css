@@ -40,3 +40,8 @@
     width: 25px;
     border-radius: 50%;
 }
+
+.aub__auth-status > li > a {
+    padding-top: 13px;
+    padding-bottom: 12px;
+}

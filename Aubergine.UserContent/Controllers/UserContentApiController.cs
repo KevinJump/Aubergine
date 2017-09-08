@@ -1,114 +1,83 @@
-﻿using Aubergine.UserContent.Models;
-using Aubergine.UserContent.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Mvc;
-using Umbraco.Core.Logging;
+using System.Web.Http;
+using Aubergine.UserContent.Models;
+using Aubergine.UserContent.Services;
+using Umbraco.Core;
 using Umbraco.Web;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
 
 namespace Aubergine.UserContent.Controllers
 {
-    /// <summary>
-    /// Back office controller, for managing User Content via dashboards and
-    /// propertyeditors.
-    /// </summary>
     [PluginController("Aubergine")]
     public class UserContentApiController : UmbracoAuthorizedApiController
     {
         [HttpGet]
-        public IEnumerable<UserContentItem> GetUserContent(int id, string type, string instance = "default")
+        public IEnumerable<IUserContent> GetUserContentByContentId(int id, string instance = UserContent.DefaultInstance)
         {
             if (!UserContentContext.Current.Instances.ContainsKey(instance))
-                return null;
+                return new List<IUserContent>();
 
             var _service = UserContentContext.Current.Instances[instance].Service;
 
             var items = new List<UserContentItem>();
-            var node = Umbraco.TypedContent(id);
-            if (node != null)
-            {
-                var content = _service.GetByContentKey(node.GetKey(), true)
-                    .Where(x => x.UserContentType == type)
-                    .ToList();
-                
-                items.AddRange(content.ConvertAll<UserContentItem>(o => (UserContentItem)o));
-            }
 
-            return items;
-        }
-
-        [HttpGet]
-        public IEnumerable<UserContentItem> GetUserContent(int id, string instance = "default")
-        {
-            if (!UserContentContext.Current.Instances.ContainsKey(instance))
-                return null;
-
-            var _service = UserContentContext.Current.Instances[instance].Service;
-
-            var items = new List<UserContentItem>();
-            var node = Umbraco.TypedContent(id);
-            if (node != null)
-            {
-                LogHelper.Info<UserContentApiController>("node: {0}", () => node.GetKey());
-                var content = _service.GetByContentKey(node.GetKey(), true).ToList();
-                items.AddRange(content.ConvertAll<UserContentItem>(o => (UserContentItem)o));
-            }
-
-            return items;
-
-        }
-
-        [HttpGet]
-        public IUserContent GetUserContent(Guid key, string instance = "default")
-        {
-            if (!UserContentContext.Current.Instances.ContainsKey(instance))
-                return null;
-
-            return UserContentContext.Current.Instances[instance].Service.Get(key);
-        }
-
-
-        [HttpGet]
-        public bool DeleteUserContent(Guid key, string instance = "default")
-        {
-            if (!UserContentContext.Current.Instances.ContainsKey(instance))
-                return false;
-
-            var _service = UserContentContext.Current.Instances[instance].Service;
-
-            var content = _service.Get(key);
+            var content = Umbraco.TypedContent(id);
             if (content != null)
             {
-                var attempt = _service.Delete(content);
-                return attempt.Success;
+                var userContent = _service.GetUserContent(content.GetKey(), true);
+                return userContent;
             }
 
-            return false;
+            return new List<IUserContent>();
         }
 
         [HttpPost]
-        public bool SaveUserContent(IUserContent content, string instance = "default")
+        public Attempt<IUserContent> SaveUserContent(IUserContent content, string instance = UserContent.DefaultInstance)
         {
             if (!UserContentContext.Current.Instances.ContainsKey(instance))
-                return false;
+                return Attempt.Fail<IUserContent>(content, new Exception("No Instance"));
 
-            return UserContentContext.Current.Instances[instance].Service.Save(content).Success;
+            var _service = UserContentContext.Current.Instances[instance].Service;
+
+            return _service.Save(content);
         }
 
+        [HttpPut]
+        public Attempt<int> SetStatus(Guid id, StatusData data)
+        {
+            if (!UserContentContext.Current.Instances.ContainsKey(data.Instance))
+                return Attempt.Fail<int>(0, new Exception("No Instance"));
 
-        [System.Web.Http.HttpGet]
-        public bool SetStatus(Guid id, UserContentStatus status, string instance = "default")
+            var attempt = UserContentContext.Current.Instances[data.Instance].Service.UpdateStatus(id, data.Status);
+            if (attempt.Success && data.PageId > 0)
+            {
+                var content = Services.ContentService.GetById(data.PageId);
+                if (content != null)
+                    UserContentContext.Current.Instances[data.Instance].Service.ClearCacheByPageKey(content.Key);
+            }
+            return attempt;
+        }
+
+        [HttpPut]
+        public Attempt<int> ClearPageCache(Guid id, string instance = UserContent.DefaultInstance)
         {
             if (!UserContentContext.Current.Instances.ContainsKey(instance))
-                return false;
+                return Attempt.Fail<int>(0, new Exception("No Instance"));
 
-            return UserContentContext.Current.Instances[instance].Service.SetStatus(id, status);
+            UserContentContext.Current.Instances[instance].Service.ClearCacheByPageKey(id);
+            return Attempt.Succeed<int>(1);
         }
-        
+
+        public class StatusData
+        {
+            public int PageId { get; set; }
+            public UserContentStatus Status { get; set; }
+            public string Instance { get; set; }
+        }
     }
 }

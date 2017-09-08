@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<language alias="en" intName="English (UK)" localName="English (UK)" lcid="" culture="en-GB">
+  <creator>
+    <name>Kevin Jump</name>
+  </creator>
+  <area alias="styledtext">
+    <key alias="limit">you have reached the limit of %limit% characters</key>
+    <key alias="advice">over by %over% charecters</key>
+    <key alias="remaining">%remain% characters left</key>
+  </area>
+</language>

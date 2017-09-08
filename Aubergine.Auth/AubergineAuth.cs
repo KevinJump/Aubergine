@@ -24,8 +24,8 @@ namespace Aubergine.Auth
         }
 
         protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
-        {
-            var migrationManager = new Aubergine.Core.Migrations.MigrationManager(applicationContext);
+        { 
+            var migrationManager = new Aubergine.Core.MigrationManager(applicationContext);
             migrationManager.ApplyMigration(Product.Name, targetVersion);
         }
     }
@@ -51,10 +51,11 @@ namespace Aubergine.Auth
 
     public static class Views
     {
-        public const string ForgotPwd = "Auth/Forgot";
-        public const string Reset = "Auth/Reset";
-        public const string Register = "Auth/Register";
-        public const string Login = "Auth/Login";
+        public const string ForgotPwd = "Forgot";
+        public const string Reset = "Reset";
+        public const string Register = "Register";
+        public const string Login = "Login";
+        public const string Status = "Status";
     }
 
     public static class Properties

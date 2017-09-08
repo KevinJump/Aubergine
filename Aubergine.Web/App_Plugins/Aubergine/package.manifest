@@ -1,9 +1,9 @@
-﻿{
+{
 	javascript: [
-		'~/App_Plugins/Aubergine/AubergineDashboardController.js',
-		'~/App_Plugins/Aubergine/AubergineServices.js'
+		"~/App_Plugins/Aubergine/dashboardController.js",
+		"~/App_Plugins/Aubergine/aubergineServices.js"
 	],
 	css: [
-		'~/App_Plugins/Aubergine/Aubergine.css'
+		"~/App_Plugins/Aubergine/aubergine.css"
 	]
 }

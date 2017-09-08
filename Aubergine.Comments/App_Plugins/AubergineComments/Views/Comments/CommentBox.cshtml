@@ -1,0 +1,45 @@
+﻿@inherits UmbracoViewPage<Aubergine.Comments.Models.CommentViewModel>
+@using Aubergine.UserContent
+@using Aubergine.Comments
+@{ 
+    if (Request.HttpMethod == "POST" && ViewData.ModelState.IsValid)
+    {
+        <h4>Posted</h4>
+    }
+}
+
+@using (Html.BeginUmbracoForm<CommentsController>("Comment", null, new { @class = "form aub__comment-form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary();
+
+    @Html.HiddenFor(m => m.Status)
+
+    <fieldset>
+        <legend>Comment</legend>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.EmailAddress)
+            @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.EmailAddress)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Comment)
+            @Html.TextAreaFor(m => m.Comment, 10, 20, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Comment)
+        </div>
+
+        <div>
+            <input type="submit" class="btn btn-lg btn-success" value="comment" />
+        </div>
+
+    </fieldset>
+}
+

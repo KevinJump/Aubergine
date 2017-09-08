@@ -1,20 +1,19 @@
-﻿{
-	propertyEditors: [
-		{
-			alias: "Aubergine.Blog.Permalinks",
-			name: "Aubergine Permialinks",
-			icon: "icon-brush",
-			group: "Aubergine",
+{
+	propertyEditors: [ 
+	{
+		alias: "Aubergine.Blog.Permalinks",
+		name: "Aubergine Permalinks",
+		icon: "icon-brush",
+		group: "Aubergine",
+		editor: {
+			view: "~/App_Plugins/Aubergine.Blog/permalinks/permalinks.html",
 			valueType: "text",
-			editor: {	                                        
-				view: "~/App_Plugins/Aubergine.Blog/permalinks/permalinks.html"
-			}  
 		}
-    ],
+	}],
 	javascript: [
-		"~/App_Plugins/Aubergine.Blog/permalinks/permalinks.controller.js"
+		"~/App_Plugins/Aubergine.Blog/permalinks/permalinksController.js"
 	],
-    css: [
+	css: [
 		"~/App_Plugins/Aubergine.Blog/permalinks/permalinks.css"
 	]
 }

@@ -1,0 +1,19 @@
+{
+	propertyEditors: [ 
+	{
+		alias: "Aubergine.Blog.Permalinks",
+		name: "Aubergine Permalinks",
+		icon: "icon-brush",
+		group: "Aubergine",
+		editor: {
+			view: "~/App_Plugins/AubergineBlog/permalinks/permalinks.html",
+			valueType: "text",
+		}
+	}],
+	javascript: [
+		"~/App_Plugins/AubergineBlog/permalinks/permalinksController.js"
+	],
+	css: [
+		"~/App_Plugins/AubergineBlog/permalinks/permalinks.css"
+	]
+}

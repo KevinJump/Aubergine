@@ -1,24 +1,35 @@
-﻿angular.module('umbraco.resources').factory('aubergineService',
-    function ($q, $http) {
+(function () {
+    'use strict';
 
+    function aubergineServices($http) {
 
         var serviceRoot = 'backoffice/Aubergine/AubergineDashboardApi/';
 
-        return {
+        var service = {
+            getFeatures: GetFeatures,
+            getContent: GetContent,
+            InstallItem: InstallItem
+        };
 
-            getFeatures : function() {
-                return $http.get(serviceRoot + 'GetFeatures');
-            },
+        return service;
 
-            getContent: function () {
-                return $http.get(serviceRoot + 'GetContent');
-            },
+        //////////////
 
-            installItem: function (id) {
-                return $http.get(serviceRoot + 'installItem/' + id);
-            }
-
-
+        function GetFeatures() {
+            return $http.get(serviceRoot + "GetFeatures");
         }
 
-    });
+        function GetContent() {
+            return $http.get(serviceRoot + "GetContent");
+        }
+
+        function InstallItem() {
+            return $http.get(serviceRoot + "InstallItem/" + id);
+        }
+
+    }
+
+    angular.module('umbraco.resources')
+        .factory('aubergineServices', aubergineServices);
+
+})();

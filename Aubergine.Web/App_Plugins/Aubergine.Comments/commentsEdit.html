@@ -1,0 +1,53 @@
+<div ng-controller="aubergineCommentsController as vm"
+     class="aub__comments-editor">
+
+    <div ng-if="vm.loaded">
+        <div class="aub__comments-empty" ng-if="vm.comments.length == 0">
+            No Comments
+        </div>
+
+        <table class="table aub__comments-table" ng-show="vm.comments.length > 0">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Author</th>
+                    <th width="60%">Comment</th>
+                    <th>Submitted On</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="comment in vm.comments" class="aub__comment-row">                    
+                    <td>
+                        <div ng-switch="comment.Status" class="aub__comment-status">
+                            <span ng-switch-when="10"><i class="icon icon-checkbox color-green"></i><small>approved</small></span>
+                            <span ng-switch-when="1"><i class="icon icon-wrong color-red"></i><small>spam</small></span>
+                            <span ng-switch-default><i class="icon icon-checkbox-empty"></i><small>pending</small></span>
+                        </div>
+                    </td>
+                    <td>
+                        {{vm.getProperty(comment, 'name')}}<br />
+                        <a href="{{vm.getProperty(comment, 'email')}}">{{vm.getProperty(comment, 'email')}}</a>
+                    </td>
+                    <td>
+                        <div ng-bind="vm.getProperty(comment, 'comment')"
+                             style="white-space: pre-wrap;"></div>
+                    </td>
+                    <td>
+                        {{comment.CreatedDate | date: "yyyy/MM/dd 'at' H:mm"}}
+                    </td>
+                    <td>
+                        <div class="aub__comment-tools">
+                            <umb-button-group 
+                                              default-button="comment.buttons.defaultButton"
+                                              sub-buttons="comment.buttons.subButtons"
+                                              direction="down"
+                                              float="right">
+                            </umb-button-group>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

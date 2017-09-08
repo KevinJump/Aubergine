@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
       <id>Aubergine.Forums</id>
-      <version>1.0.0-Beta1</version>
+      <version>1.0.0</version>
       <title>Aubergine for Umbraco : Blogging</title>
       <authors>Kevin Jump</authors>
       <owners>Kevin Jump</owners>
@@ -10,14 +10,14 @@
       <description>Basic Member Authentication</description>
       <releaseNotes>Initial Release</releaseNotes>
       <dependencies>
-        <dependency id="Aubergine.UserContent" version="1.0.0-Beta1" />
+        <dependency id="Aubergine.UserContent" version="1.0.0" />
       </dependencies>
   </metadata>
   <files>
-    <file src=".\bin\Release\Aubergine.Forums.dll" target="lib\Aubergine.Forums.dll" />
+    <file src=".\bin\Release\Aubergine.Forums.dll" target="lib\net45\" />
     <file src=".\Views\**\*.*" target="content\Views\" />
     <file src=".\css\**\*.*" target="content\css\" />
-    <file src=".\install.ps1" target="tools"/>
-    <file src=".\uSync\Data\**\*.*" target="data\forums"/>
+    <file src="..\install.ps1" target="tools"/>
+    <file src=".\_data\**\*.*" target="data\forums"/>
   </files>
 </package>

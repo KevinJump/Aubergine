@@ -1,37 +1,27 @@
-﻿using Aubergine.UserContent.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Aubergine.UserContent.Models;
+using Aubergine.UserContent.Persistance.Models;
+using AutoMapper;
 using Umbraco.Core;
 using Umbraco.Core.Persistence;
-using AutoMapper;
-using Umbraco.Core.Persistence.Querying;
-using Umbraco.Core.Logging;
-using Umbraco.Core.Persistence.Migrations.Syntax.Create;
 
 namespace Aubergine.UserContent.Persistance
 {
-    /// <summary>
-    ///  Default reposistory for user content, puts 
-    ///  everything into a UserComments table, and 
-    ///  serializes properties into / from xml
-    ///  <para>
-    ///     This repo doesn't use linq for building the queries (anymore)
-    ///     because we can't then use it for generic tables, as we might
-    ///     want. 
-    ///  </para>
-    /// </summary>
-    public class UserContentRepository : IUserContentRepository
+    public class UserContentRepository<TUserContent, TUserContentDTO> : IUserContentRepository
+        where TUserContentDTO : UserContentDTO 
+        where TUserContent : IUserContent
     {
         private readonly DatabaseContext _dbContext;
         private readonly string _tableName;
 
         public UserContentRepository(DatabaseContext dbContext)
         {
-            _tableName = "UserContent";
-            _dbContext = dbContext; 
+            _tableName = "Aubergine_UserContent";
+            _dbContext = dbContext;
         }
 
         public UserContentRepository(DatabaseContext dbContext, string tableName)
@@ -40,105 +30,123 @@ namespace Aubergine.UserContent.Persistance
             _dbContext = dbContext;
         }
 
-        public IUserContent Get(Guid key)
+        private Database getDb()
         {
-            using (var db = GetDb())
-            {
-                var sql = new Sql()
-                        .Select("*")
-                        .From(_tableName)
-                        .Where("[Key] = @0", key);
+            return _dbContext.Database;
+        }
 
-                var dbContent = db.SingleOrDefault<UserContentDTO>(sql);
-                if (dbContent != null )
-                    return Mapper.Map<UserContentItem>(dbContent);
-
-                return null;
-            }
+        private Sql getBaseSql()
+        {
+            return new Sql()
+                    .Select("*")
+                    .From(_tableName);
         }
 
         public IUserContent Get(int id)
         {
-            using(var db = GetDb())
+            using (var db = getDb())
             {
-                var sql = new Sql()
-                    .Select("*")
-                    .From(_tableName)
-                    .Where("[id] = @0", id);
+                var sql = getBaseSql()
+                    .Where("[Id] = @0", id);
 
-                var dbContent = db.SingleOrDefault<UserContentDTO>(sql);
-                if (dbContent != null)
-                    return Mapper.Map<UserContentItem>(dbContent);
+                var item = db.SingleOrDefault<TUserContentDTO>(sql);
+                if (item != null)
+                    return Mapper.Map<TUserContent>(item);
 
-                return null;
+                return default(TUserContent);
             }
         }
 
-        public IEnumerable<IUserContent> GetByContentId(Guid contentKey, bool getAll = false)
+        ////// gettters
+        public IUserContent Get(Guid key)
         {
-            return GetByContentId(contentKey, UserContentStatus.Approved, getAll);
-        }
-
-        public IEnumerable<IUserContent> GetByContentId(Guid contentKey,
-            UserContentStatus status = UserContentStatus.Approved,
-            bool getAll = false,
-            string contentType = ""
-            )
-        {
-            using (var db = GetDb())
+            using (var db = getDb())
             {
-                var sql = new Sql()
-                    .Select("*")
-                    .From(_tableName)
-                    .Where("NodeKey = @0", contentKey);
+                var sql = getBaseSql()
+                    .Where("[Key] = @0", key);
 
-                if (!string.IsNullOrWhiteSpace(contentType))
-                    sql.Where("UserContentType = '@0'", contentType);
+                var item = db.SingleOrDefault<TUserContentDTO>(sql);
+                if (item != null)
+                    return Mapper.Map<TUserContent>(item);
 
-                // only get things of the right status. 
-                if (!getAll)
-                    sql.Where("STATUS = @0", (int)status);
-
-                var results = db.Fetch<UserContentDTO>(sql);
-
-                return Mapper.Map<IEnumerable<UserContentItem>>(results);
+                return default(TUserContent);
             }
         }
 
-        public IEnumerable<IUserContent> GetChildren(Guid key, bool getAll = false)
-        {
-            return GetChildren(key, UserContentStatus.Approved, getAll);
-        }
-
-        public IEnumerable<IUserContent> GetChildren(
-            Guid key, 
-            UserContentStatus status = UserContentStatus.Approved, 
+        public IEnumerable<IUserContent> GetByContentKey(
+            Guid contentKey, UserContentStatus status = UserContentStatus.Approved,
             bool getAll = false,
             string contentType = "")
         {
-            using (var db = GetDb())
+            using(var db = getDb())
+            {
+                var sql = getBaseSql()
+                    .Where("[NodeKey] = @0", contentKey);
+
+                if (!contentType.IsNullOrWhiteSpace())
+                    sql.Where("[UserContentType] = @0", contentType);
+
+                if (!getAll)
+                    sql.Where("[Status] = @0", (int)status);
+
+                var results = db.Fetch<TUserContentDTO>(sql)
+                    .Select(x => Mapper.Map<TUserContent>(x));
+
+                return (IEnumerable<IUserContent>)results;
+            }
+        }
+
+        public int GetContentCount(Guid key)
+        {
+            using(var db = getDb())
             {
                 var sql = new Sql()
-                    .Select("*")
+                    .Select("COUNT(*)")
+                    .From(_tableName)
+                    .Where("[NodeKey] = @0", key);
+
+                return db.ExecuteScalar<int>(sql);
+            }
+        }
+
+        public int GetChildCount(Guid key)
+        {
+            using (var db = getDb())
+            {
+                var sql = new Sql()
+                    .Select("COUNT(*)")
                     .From(_tableName)
                     .Where("[ParentKey] = @0", key);
 
+                return db.ExecuteScalar<int>(sql);
+            }
+        }
+
+        public IEnumerable<IUserContent> GetChildren(
+            Guid key, UserContentStatus status = UserContentStatus.Approved,
+            bool getAll = false, string contentType = "")
+        {
+            using(var db = getDb())
+            {
+                var sql = getBaseSql()
+                    .Where("[ParentKey] = @0", key);
+
                 if (!contentType.IsNullOrWhiteSpace())
-                    sql.Where("UserContentType = '@0'", contentType);
+                    sql.Where("[UserContentType = @0", contentType);
 
                 if (!getAll)
                     sql.Where("Status = @0", (int)status);
 
-                var results = db.Fetch<UserContentDTO>(sql);
-                return Mapper.Map<IEnumerable<UserContentItem>>(results);
+                return db.Fetch<TUserContentDTO>(sql)
+                    .Select(x => (IUserContent)Mapper.Map<TUserContent>(x));
             }
         }
 
         public IUserContent Create(IUserContent entity)
         {
-            using (var db = GetDb())
+            using(var db = getDb())
             {
-                var dto = Mapper.Map<UserContentDTO>(entity);
+                var dto = Mapper.Map<TUserContentDTO>((TUserContent)entity);
                 if (dto.UserContentType.IsNullOrWhiteSpace())
                     dto.UserContentType = "default";
 
@@ -148,75 +156,55 @@ namespace Aubergine.UserContent.Persistance
                     transaction.Complete();
                 }
 
-                return Mapper.Map<UserContentItem>(dto);
+                return Mapper.Map<TUserContent>(dto);
             }
         }
 
         public IUserContent Update(IUserContent entity)
         {
-            using (var db = GetDb())
+            using (var db = getDb())
             {
-                var dto = Mapper.Map<UserContentDTO>(entity);
+                var dto = Mapper.Map<TUserContentDTO>((TUserContent)entity);
                 using (Transaction transaction = db.GetTransaction())
                 {
                     db.Update(_tableName, "Id", dto);
                     transaction.Complete();
                 }
-                return Mapper.Map<UserContentItem>(dto);
+
+                return Mapper.Map<TUserContent>(dto);
             }
         }
 
         public void Delete(Guid key)
         {
-            using (var db = GetDb())
+            using(var db = getDb())
             {
-                using (Transaction transaction = db.GetTransaction())
+                using(Transaction transaction = db.GetTransaction())
                 {
-                    var sql = new Sql()
-                        .Select("*")
-                        .From(_tableName)
+                    var sql = getBaseSql()
                         .Where("[Key] = @0", key);
-                        // .Where<UserContentDTO>(x => x.Key == key, _dbContext.SqlSyntax);
 
-                    db.Delete<UserContentDTO>(sql);
+                    db.Delete<TUserContentDTO>(sql);
                     transaction.Complete();
                 }
             }
         }
 
-        public bool SetStatus(Guid key, UserContentStatus status)
+        public int SetStatus(Guid key, UserContentStatus status)
         {
-            LogHelper.Info<IUserContentRepository>("Update: {0}", () => key);
-
-            using (var db = GetDb())
+            using(var db = getDb())
             {
                 using (Transaction transaction = db.GetTransaction())
                 {
-                    var sql = new Sql()
-                        .Select("*")
-                        .From(_tableName)
-                        .Where("[Key] = @0", key);
-                        // .Where<UserContentDTO>(x => x.Key == key, _dbContext.SqlSyntax);
+                    var statement = $"UPDATE [{_tableName}] SET STATUS = @status " +
+                        $"WHERE [Key] = @key";
 
-                    var item = db.Single<UserContentDTO>(sql);
+                    var rows = db.Execute(statement, new { status = (int)status, key = key });
+                    transaction.Complete();
 
-                    if (item != null)
-                    {
-                        LogHelper.Info<IUserContentRepository>("Updating and saving to db");
-                        item.Status = (int)status;
-                        db.Update(_tableName, "Id", item);
-                        transaction.Complete();
-                    }
-                    return true;
+                    return rows;
                 }
             }
-        }
-
-
-
-        private Database GetDb()
-        {
-            return _dbContext.Database;
         }
     }
 }

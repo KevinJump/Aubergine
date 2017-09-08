@@ -7,10 +7,10 @@
 
     if (string.IsNullOrWhiteSpace(resetGuid))
     {
-        @Html.Action("ForgotPassword", "Authentication", new { area = "Aubergine" })
+        @Html.Action("ForgotPassword", "Authentication", new { area = "AubergineAuth" })
     }
     else
     {
-        @Html.Action("ResetPassword", "Authentication", new { area = "Aubergine" })
+        @Html.Action("ResetPassword", "Authentication", new { area = "AubergineAuth" })
     }
 }

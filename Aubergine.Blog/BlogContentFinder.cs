@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Umbraco.Core;
-using Umbraco.Web.Routing;
-using Umbraco.Core.Cache;
 using System.Web.Caching;
+using Umbraco.Core.Cache;
+using Umbraco.Web.Routing;
 using Umbraco.Web;
 using Umbraco.Core.Models;
 
@@ -22,95 +22,88 @@ namespace Aubergine.Blog
             var url = contentRequest.Uri.AbsolutePath;
             var appCache = ApplicationContext.Current.ApplicationCache.RuntimeCache;
 
-            var blogUrls = appCache.GetCacheItem<Dictionary<string, AubBlogContentFinderItem>>("blogContentFinderCache");
-            if (blogUrls != null && blogUrls.ContainsKey(url))
-            {
-                var content = contentRequest.RoutingContext.UmbracoContext.ContentCache.GetById(
-                    blogUrls[url].contentId);
+            var cacheKey = $"ablog_{url}";
 
-                contentRequest.PublishedContent = content;
-                contentRequest.TrySetTemplate(blogUrls[url].templateAlias);
+            var postInfo = appCache.GetCacheItem<AubBlogContentFinderItem>(cacheKey);
+            if (postInfo != null)
+            {
+                var postContent = contentRequest.RoutingContext.UmbracoContext
+                    .ContentCache.GetById(postInfo.ContentId);
+
+                contentRequest.PublishedContent = postContent;
+                contentRequest.TrySetTemplate(postInfo.TemplateAlias);
+                return true; 
             }
 
-            if (blogUrls == null)
-                blogUrls = new Dictionary<string, AubBlogContentFinderItem>();
+            var rootNodes = contentRequest.RoutingContext.UmbracoContext
+                    .ContentCache.GetAtRoot();
 
-            var rootNodes = contentRequest.RoutingContext.UmbracoContext.ContentCache.GetAtRoot();
+            var path = contentRequest.Uri.GetAbsolutePathDecoded();
+            var parts = path.ToDelimitedList("/");
 
-            if (contentRequest.PublishedContent == null)
-            {
-                var path = contentRequest.Uri.GetAbsolutePathDecoded();
-                var parts = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-
-                var content = rootNodes.DescendantsOrSelf(DocTypes.BlogPost)
-                    .Where(x => x.UrlName.Equals(parts.Last(), StringComparison.InvariantCultureIgnoreCase)
-                            || x.Id.ToString() == parts.Last())
+            // get the content by the post-name or the id. 
+            var content = rootNodes.DescendantsOrSelf(BlogPresets.DocTypes.BlogPost)
+                    .Where(x => x.UrlName.InvariantEquals(parts.Last()) || x.Id.ToString() == parts.Last())
                     .FirstOrDefault();
 
-                if (content != null)
+            if (content != null)
+            {
+                var finderItem = new AubBlogContentFinderItem
                 {
-                    var finderItem = new AubBlogContentFinderItem()
-                    {
-                        contentId = content.Id,
-                        templateAlias = content.GetTemplateAlias()
-                    };
+                    ContentId = content.Id,
+                    TemplateAlias = content.GetTemplateAlias()
+                };
 
-                    blogUrls.Add(url, finderItem);
+                appCache.InsertCacheItem<AubBlogContentFinderItem>(
+                    cacheKey, () => finderItem, priority: CacheItemPriority.Default);
 
-                    appCache.InsertCacheItem<Dictionary<string, AubBlogContentFinderItem>>(
-                        "blogContentFinderCache", () => blogUrls, priority: CacheItemPriority.Default);
+                contentRequest.PublishedContent = content;
+                contentRequest.TrySetTemplate(finderItem.TemplateAlias);
+            }
+            else
+            {
+                // the slower way - we need to work out by blog root what the post
+                // is (using the post settings)
+                var blogRoot = rootNodes.DescendantsOrSelf(BlogPresets.DocTypes.BlogPosts)
+                    .Where(x => parts.InvariantContains(x.UrlName))
+                    .FirstOrDefault();
 
-                    contentRequest.PublishedContent = content;
-                    contentRequest.TrySetTemplate(finderItem.templateAlias);
-                }
-                else
+                if (blogRoot != null)
                 {
-                    var blogRoot = rootNodes.DescendantsOrSelf(DocTypes.Blog)
-                        .Where(x => parts.Contains(x.UrlName))
-                        .FirstOrDefault();
+                    var blogPlace = parts.IndexOf(blogRoot.UrlName);
+                    var blogUrl = $"/{string.Join("/", parts.Skip(blogPlace + 1))}/";
 
-                    if (blogRoot != null)
+                    // goes and gets the special (category or tag) route. 
+                    var item = GetSpecialRoute(blogRoot, blogUrl);
+                    if (item != null)
                     {
-                        // we have the blog root, we need to work out the remaining path, and see 
-                        // if it matches any of our settings...
-                        var blogPlace = parts.IndexOf(blogRoot.UrlName);
-                        var blogUrl = "/" + string.Join("/", parts.Skip(blogPlace + 1)) + "/";
+                        appCache.InsertCacheItem<AubBlogContentFinderItem>(
+                            cacheKey, () => item, priority: CacheItemPriority.Default);
 
-                        var item = GetSpecialRoutes(blogRoot, blogUrl);
-                        if (item != null)
-                        {
-                            blogUrls.Add(url, item);
-
-                            appCache.InsertCacheItem<Dictionary<string, AubBlogContentFinderItem>>(
-                                "blogContentFinderCache", () => blogUrls, priority: CacheItemPriority.Default);
-
-                            contentRequest.PublishedContent = blogRoot;
-                            contentRequest.TrySetTemplate(item.templateAlias);
-                        }
+                        contentRequest.PublishedContent = blogRoot;
+                        contentRequest.TrySetTemplate(item.TemplateAlias);
                     }
-
                 }
             }
 
             return contentRequest.PublishedContent != null;
         }
 
-
-        public AubBlogContentFinderItem GetSpecialRoutes(IPublishedContent blogRoot, string blogUrl)
+        private AubBlogContentFinderItem GetSpecialRoute(IPublishedContent blog, string blogUrl)
         {
-            Dictionary<string, string> blogRoutes = new Dictionary<string, string>();
+            Dictionary<string, string> routes = new Dictionary<string, string>();
 
-            blogRoutes.Add(blogRoot.GetPropertyValue<string>("categoryBase", "/categories/"), "blogCategories");
-            blogRoutes.Add(blogRoot.GetPropertyValue<string>("tagBase", "/tags/"), "blogTags");
+            routes.Add(blog.GetPropertyValue<string>("categoryBase", "/categories/"), "blogCategories");
+            routes.Add(blog.GetPropertyValue<string>("tagBase", "/tags/"), "blogTags");
 
-            foreach (var route in blogRoutes)
+            foreach(var route in routes)
             {
-                if (blogUrl.StartsWith(route.Key))
+                if (blogUrl.InvariantStartsWith(route.Key))
                 {
-                    var finder = new AubBlogContentFinderItem()
+                    var finder = new AubBlogContentFinderItem
                     {
-                        contentId = blogRoot.Id,
-                        templateAlias = route.Value
+                        ContentId = blog.Id,
+                        TemplateAlias = route.Value
                     };
 
                     return finder;
@@ -120,11 +113,12 @@ namespace Aubergine.Blog
             return null;
         }
 
-
-        public class AubBlogContentFinderItem
+        private class AubBlogContentFinderItem
         {
-            public int contentId { get; set; }
-            public string templateAlias { get; set; }
+            public int ContentId { get; set; }
+            public string TemplateAlias { get; set; }
+
         }
+
     }
 }

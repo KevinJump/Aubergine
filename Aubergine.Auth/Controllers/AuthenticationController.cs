@@ -18,7 +18,7 @@ namespace Aubergine.Auth
     ///  Authentication Controller, placeholder for 
     ///  all authentication things.
     /// </summary>
-    [PluginController("Aubergine")]
+    [PluginController("AubergineAuth")]
     public partial class AuthenticationController : SurfaceController
     {
 

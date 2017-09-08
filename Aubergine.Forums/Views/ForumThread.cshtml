@@ -8,16 +8,16 @@
 @{ 
     var key = HttpContext.Current.Items["postKey"];
 
-    @Html.Action("ShowThread", "Forum", new { area = "Aubergine",
+    @Html.Action("ShowThread", "Forums", new { area = "AubergineForums",
         postKey = key })
 }
 
 
 @if (Members.IsLoggedIn())
 {
-    @Html.Action("AddPost", "Forum",
+    @Html.Action("AddPost", "Forums",
         new {
-            area = "Aubergine",
+            area = "AubergineForums",
             contentKey = Model.Content.GetKey(),
             parentKey = key,
             ShowTitle = false 

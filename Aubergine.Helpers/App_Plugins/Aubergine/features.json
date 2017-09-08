@@ -1,0 +1,64 @@
+﻿[
+  {
+    "Id": "{22310F65-948B-45AC-A2C3-4CA645F17B33}",
+    "Name": "Blogs",
+    "Description": "Add mutiple blogs, anywhere on your site",
+    "Depends": "{0E13068D-5972-48AE-AAC1-FAF20378B842},{A7632D11-CA46-43CC-99FC-D02D4259E414}",
+    "Nuget": "Aubergine.Blogs",
+    "Package": "http://localhost:56381/app_data/test/blogs.zip",
+    "Enabled": true,
+    "Link": "http://jumoo.co.uk/aubergine/blogs"
+  },
+  {
+    "Id": "{BD379DAA-B78A-4A04-909B-91DFA791B83B}",
+    "Name": "Forums",
+    "Description": "Let people have a discussion about things",
+    "Nuget": "Aubergine.Forums --pre",
+    "Depends": "{A7632D11-CA46-43CC-99FC-D02D4259E414}",
+    "Enabled": false,
+    "Installed": true,
+    "Link": "http://jumoo.co.uk/aubergine/forums"
+  },
+  {
+    "Id": "{0E13068D-5972-48AE-AAC1-FAF20378B842}",
+    "Name": "Comments",
+    "Description": "Let people comment on pages, or pictures or anything",
+    "Nuget": "Aubergine.Comments",
+    "Depends": "{A7632D11-CA46-43CC-99FC-D02D4259E414}",
+    "Enabled": true,
+    "Link": "http://jumoo.co.uk/aubergine/comments"
+  },
+  {
+    "Id": "{7CD40983-07FC-48BE-B6F9-B9CF3C85DBAB}",
+    "Name": "Authentication",
+    "Description": "Basic Authentication using Umbraco's membership database",
+    "Nuget": "Aubergine.Auth",
+    "Enabled": true,
+    "Link": "http://jumoo.co.uk/aubergine/auth"
+  },
+  {
+    "Id": "{349F9962-3AE4-4C2B-8DFD-BE56D78C6793}",
+    "Name": "Complete",
+    "Description": "<p>Install all the aubergine features in one big hit</p><p>you will get all the features of aubergine plus some standard content",
+    "Nuget": "Aubergine.Complete",
+    "Depends": "{22310F65-948B-45AC-A2C3-4CA645F17B33}, {197635A4-EB21-47F6-893E-6DD7BD57724A},{7CD40983-07FC-48BE-B6F9-B9CF3C85DBAB},{BFAE4E4B-864F-474F-9AC6-6F910310C2D0}, {BA785FF0-28C3-4BA0-A5D2-68D5D91C7CF1}",
+    "Enabled": true,
+    "Link": "http://jumoo.co.uk/aubergine/complete"
+  },
+  {
+    "Id": "{A7632D11-CA46-43CC-99FC-D02D4259E414}",
+    "Name": "User Generated Content",
+    "Description": "Manage user content in it's own tables, and away from the core umbraco content.<p>This feature is used by all the aubergine features that let your users enter content</p>",
+    "Nuget": "Aubergine.UserContent",
+    "Enabled": true,
+    "Link": "http://jumoo.co.uk/aubergine/usercontent"
+  },
+  {
+    "Id": "{8CE3E027-9D80-42B2-8CAF-892AA8FCCDE1}",
+    "Name": "Test Feature",
+    "Description": "A test feature, to check that the feature install dialog is behaving...",
+    "Nuget": "Aubergine.Test --pre",
+    "Enabled": false,
+    "Link": "http://jumoo.co.uk/aubergine/test"
+  }
+]

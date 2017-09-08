@@ -1,71 +1,95 @@
-﻿using Aubergine.UserContent.Cache;
-using Aubergine.UserContent.Config;
-using Aubergine.UserContent.Persistance;
-using Aubergine.UserContent.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Aubergine.UserContent.Cache;
+using Aubergine.UserContent.Persistance;
+using Aubergine.UserContent.Services;
 using umbraco.interfaces;
 using Umbraco.Core;
-using Umbraco.Core.Cache;
 using Umbraco.Core.Logging;
+using Umbraco.Core.Cache;
+using Umbraco.Core.Persistence;
+using Aubergine.UserContent.Persistance.Models;
+using Aubergine.UserContent.Models;
 
 namespace Aubergine.UserContent
 {
-    public class UserContentInstance
+
+    public class UserContentInstance<TUserContent, TUserContentDTO> : IUserContentInstance
+        where TUserContentDTO : UserContentDTO
+        where TUserContent : IUserContent
     {
         public IUserContentService Service { get; internal set; }
         public IUserContentRepository Repository { get; internal set; }
         public IRuntimeCacheProvider Cache { get; internal set; }
 
-        public UserContentInstance(IUserContentRepository repo, IUserContentService service, IRuntimeCacheProvider cache)
+        internal UserContentInstance(DatabaseContext databaseContext,
+            string tableName,
+            ICacheRefresher refresher,
+            IRuntimeCacheProvider cacheProvider)
         {
-            Service = service;
-            Repository = repo;
-            Cache = cache;
+            Repository = new UserContentRepository<TUserContent, TUserContentDTO>(databaseContext, tableName);
+            Service = new UserContentService<TUserContent, TUserContentDTO>(
+                (UserContentRepository<TUserContent, TUserContentDTO>)Repository, refresher);
+            Cache = cacheProvider;
         }
     }
 
-
     public class UserContentContext
     {
-        public static UserContentCacheRefresher Refresher { get; internal set; }
-
         public static UserContentContext Current { get; internal set; }
+        public Dictionary<string, IUserContentInstance> Instances { get; internal set; }
+        internal readonly ICacheRefresher refresher;
 
-        public Dictionary<string, UserContentInstance> Instances { get; internal set; }
+        private ILogger _logger;
 
-        private readonly ILogger _logger;
-
-        public UserContentContext(ILogger logger)
+        public static void EnsureContext(
+            ILogger logger,
+            IRuntimeCacheProvider runtimeCacheProvider
+            )
         {
-            _logger = logger; 
-            Instances = new Dictionary<string, UserContentInstance>();
-            Refresher = new UserContentCacheRefresher();
-        }
-        
-        public static UserContentContext EnsureContext(ILogger logger)
-        {
-            var ctx = new UserContentContext(logger);
-            Current = ctx;
-            return Current;
+            Current = new UserContentContext(logger, runtimeCacheProvider);
         }
 
-        public UserContentInstance LoadInstance(string name, string table, 
-            DatabaseContext dbContext,
-            IRuntimeCacheProvider cache)
+        private UserContentContext(
+            ILogger logger,
+            IRuntimeCacheProvider runtimeCacheProvider)
+        {
+            _logger = logger;
+
+            Instances = new Dictionary<string, IUserContentInstance>();
+            refresher = new UserContentCacheRefresher(runtimeCacheProvider);
+        }
+
+        public void LoadInstance<TUserContent, TUserContentDTO>(
+            string name, string table,
+            DatabaseContext databaseContext,
+            IRuntimeCacheProvider cacheProvider
+            )
+            where TUserContentDTO : UserContentDTO
+            where TUserContent : IUserContent
         {
             if (Instances.ContainsKey(name))
                 throw new Exception("Instance already exists with name " + name);
 
-            var repo = new UserContentRepository(dbContext, table);
-            var service = new UserContentService(repo, Refresher);
-            var instance = new UserContentInstance(repo, service, cache);
-            this.Instances.Add(name, instance);
+            Instances.Add(name, 
+                new UserContentInstance<TUserContent, TUserContentDTO>(databaseContext, table, refresher, cacheProvider));
 
-            return instance;
         }
+
+        private void EnsureContentTable(DatabaseContext databaseContext, string tableName)
+        {
+            var dbHelper = new DatabaseSchemaHelper(databaseContext.Database, _logger, databaseContext.SqlSyntax);
+
+            if (!dbHelper.TableExist(tableName))
+            {
+                // create the table here... but we need to do it with diffrent table name.
+                // 
+            }
+
+        }
+
     }
 }

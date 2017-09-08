@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Umbraco.Core;
-using Umbraco.Core.Logging;
 using Umbraco.Web;
 using Umbraco.Web.Routing;
 
@@ -20,45 +19,55 @@ namespace Aubergine.Blog
         public string GetUrl(UmbracoContext umbracoContext, int id, Uri current, UrlProviderMode mode)
         {
             var content = umbracoContext.ContentCache.GetById(id);
-            if (content != null && content.DocumentTypeAlias == DocTypes.BlogPost)
+            if (content != null && content.DocumentTypeAlias == BlogPresets.DocTypes.BlogPost)
             {
-                var format = content.GetPropertyValue<string>(Properties.Permalinks, true,
-                     "%year%/%month%/%day%/%postname%/").Trim(new char[] { '-' });
+                var format = content.GetPropertyValue<string>
+                    (BlogPresets.Properties.Permalinks, true, "%year%/%monthnum%/%day%/%postname%/")
+                    .Trim(new char[] { '-' });
 
-                var date = content.GetPropertyValue<DateTime>(Properties.PublishDate, content.CreateDate);
-                if (date != null)
+                var date = content.GetPropertyValue<DateTime>(BlogPresets.Properties.PublishDate, content.CreateDate);
+                if (date != null && date > DateTime.MinValue)
                 {
-                    var baseUrl = content.Parent.Url;
-                    if (content.Parent.DocumentTypeAlias == DocTypes.BlogPosts)
-                        baseUrl = content.Parent.Parent.Url;
+                    var baseUrl = "";
+                    var blogRoot = content.AncestorOrSelf(BlogPresets.DocTypes.Blog);
+                    if (blogRoot != null)
+                    {
+                        baseUrl = blogRoot.Url;
+                    }
+                    else
+                    {
+                        baseUrl = content.Parent.Url;
+                    }
 
                     if (!baseUrl.EndsWith("/"))
                         baseUrl += "/";
 
-                    var subs = new Dictionary<string, string>();
-                    subs.Add("%postname%", content.UrlName);
-                    subs.Add("%post_id%", content.Id.ToString());
+                    var replacements = new Dictionary<string, string>();
+                    replacements.Add("%postname%", content.UrlName);
+                    replacements.Add("%post_id", content.Id.ToString());
 
-                    return baseUrl + FormatBlogUrl(format, date, subs);
+                    return baseUrl + FormatBlogUrl(format, date, replacements);
                 }
             }
             return null;
         }
 
-        private string FormatBlogUrl(string format, DateTime publishDate, Dictionary<string, string> subs)
+        private string FormatBlogUrl(string format, DateTime publishDate, Dictionary<string, string> replacements)
         {
-            if (subs == null)
-                subs = new Dictionary<string, string>();
+            if (replacements == null)
+                replacements = new Dictionary<string, string>();
 
-            subs.Add("%year%", publishDate.ToString("yyyy"));
-            subs.Add("%monthnum%", publishDate.ToString("MM"));
-            subs.Add("%monthname%", publishDate.ToString("MMMM"));
-            subs.Add("%day%", publishDate.ToString("dd"));
-            subs.Add("%hour%", publishDate.ToString("hh"));
-            subs.Add("%minute%", publishDate.ToString("mm"));
-            subs.Add("%second%", publishDate.ToString("ss"));
 
-            return format.ReplaceMany(subs);
+            replacements.Add("%year%", publishDate.ToString("yyyy"));
+            replacements.Add("%monthnum%", publishDate.ToString("MM"));
+            replacements.Add("%monthname%", publishDate.ToString("MMMM"));
+            replacements.Add("%day%", publishDate.ToString("dd"));
+            replacements.Add("%hour%", publishDate.ToString("hh"));
+            replacements.Add("%minute%", publishDate.ToString("mm"));
+            replacements.Add("%second%", publishDate.ToString("ss"));
+
+            return format.ReplaceMany(replacements);
         }
+
     }
 }
