@@ -37,9 +37,6 @@ namespace Aubergine.UserContent
             UmbracoApplicationBase umbracoApplication, 
             ApplicationContext applicationContext)
         {
-            var migrationHelper = new Aubergine.Core.MigrationManager(applicationContext);
-            migrationHelper.ApplyMigration(UserContent.Name, SemVersion.Parse(UserContent.Version));
-
             var mappings = new InitializeMappers();
             mappings.CreateMappings();
         }

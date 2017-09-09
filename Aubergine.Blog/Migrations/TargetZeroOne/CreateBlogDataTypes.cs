@@ -3,35 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Aubergine.Core.Migrations;
 using Aubergine.Core.Migrations.Helpers;
 using Umbraco.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Core.Models;
 using Umbraco.Core.Persistence.Migrations;
 using Umbraco.Core.Persistence.SqlSyntax;
+using Umbraco.Core.Services;
 
 namespace Aubergine.Blog.Migrations.TargetZeroOne
 {
-    [Migration("1.0.0", 2, AubergineBlog.ProductName)]
-    public class CreateBlogDataTypes : MigrationBase
+    [AubergineMigration("Create Blog DataTypes", 
+        Priorities.Standard + Priorities.DataType, "{8B0562A9-53FC-4DA8-8B31-515CF8CF0F6C}")]
+    public class AubergineCreateBlogDataTypes : AubergineMigrationBase
     {
-        protected CreateBlogDataTypes(ISqlSyntaxProvider sqlSyntax, ILogger logger) : base(sqlSyntax, logger)
+        public AubergineCreateBlogDataTypes(ServiceContext serviceContext, ILogger logger) 
+            : base(serviceContext, logger)
         {
         }
 
-        public override void Down()
+        public override void Add()
         {
-
+            var folderId = DataTypes.CreateFolder("Aub.Blogs");
+            DataTypes.CreateFromFolder("~/App_Data/Aubergine/Blog/DataTypes/", folderId);
         }
 
-        public override void Up()
+        public override void Remove()
         {
-            var dataTypeService = ApplicationContext.Current.Services.DataTypeService;
-            var dataTypeHelper = new DatatypeManagementHelper(dataTypeService);
-
-            var folderId = dataTypeHelper.CreateFolder("Aub.Blogs");
-
-            dataTypeHelper.CreateFromFolder("~App_Data/Aubergine/Blog/DataTypes/", folderId);
+            throw new NotImplementedException();
         }
     }
 }

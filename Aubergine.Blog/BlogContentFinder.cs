@@ -42,7 +42,7 @@ namespace Aubergine.Blog
             var parts = path.ToDelimitedList("/");
 
             // get the content by the post-name or the id. 
-            var content = rootNodes.DescendantsOrSelf(BlogPresets.DocTypes.BlogPost)
+            var content = rootNodes.DescendantsOrSelf(Blog.Presets.DocTypes.BlogPost)
                     .Where(x => x.UrlName.InvariantEquals(parts.Last()) || x.Id.ToString() == parts.Last())
                     .FirstOrDefault();
 
@@ -64,7 +64,7 @@ namespace Aubergine.Blog
             {
                 // the slower way - we need to work out by blog root what the post
                 // is (using the post settings)
-                var blogRoot = rootNodes.DescendantsOrSelf(BlogPresets.DocTypes.BlogPosts)
+                var blogRoot = rootNodes.DescendantsOrSelf(Blog.Presets.DocTypes.BlogPosts)
                     .Where(x => parts.InvariantContains(x.UrlName))
                     .FirstOrDefault();
 

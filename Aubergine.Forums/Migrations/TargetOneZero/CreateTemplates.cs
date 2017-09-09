@@ -3,33 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Aubergine.Core.Migrations;
 using Aubergine.Core.Migrations.Helpers;
 using Umbraco.Core.Logging;
 using Umbraco.Core.Persistence.Migrations;
 using Umbraco.Core.Persistence.SqlSyntax;
+using Umbraco.Core.Services;
 
 namespace Aubergine.Forums.Migrations.TargetOneZero
 {
-    [Migration("1.0.0", 3, AubergineForums.ProductName)]
-    public class CreateTemplates : MigrationBase
+    [AubergineMigrationAttribute(Forums.ProductName, Priorities.Standard + Priorities.Template, 
+        "{055D32EA-FA62-4566-8CBB-5CAC163ECFBB}")]
+    public class AubergineCreateTemplates : AubergineMigrationBase
     {
-        public CreateTemplates(ISqlSyntaxProvider sqlSyntax, ILogger logger) 
-            : base(sqlSyntax, logger)
+        public AubergineCreateTemplates(ServiceContext serviceContext, ILogger logger) 
+            : base(serviceContext, logger)
         {
         }
 
-        public override void Down()
+        public override void Add()
         {
-            // throw new NotImplementedException();
+            Templates.Create("Forums", "Forums", "design");
+            Templates.Create("ForumPage", "ForumPage", "Forums");
+            Templates.Create("ForumThread", "ForumThread", "Forums");
         }
 
-        public override void Up()
+        public override void Remove()
         {
-            var templateHelper = new TemplateManagementHelper();
-
-            templateHelper.AddTemplate("Forums", "Forums", "design");
-            templateHelper.AddTemplate("ForumPage", "ForumPage", "Forums");
-            templateHelper.AddTemplate("ForumThread", "ForumThread", "Forums");
+            throw new NotImplementedException();
         }
     }
+
 }

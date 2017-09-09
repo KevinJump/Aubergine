@@ -19,17 +19,17 @@ namespace Aubergine.Blog
         public string GetUrl(UmbracoContext umbracoContext, int id, Uri current, UrlProviderMode mode)
         {
             var content = umbracoContext.ContentCache.GetById(id);
-            if (content != null && content.DocumentTypeAlias == BlogPresets.DocTypes.BlogPost)
+            if (content != null && content.DocumentTypeAlias == Blog.Presets.DocTypes.BlogPost)
             {
                 var format = content.GetPropertyValue<string>
-                    (BlogPresets.Properties.Permalinks, true, "%year%/%monthnum%/%day%/%postname%/")
+                    (Blog.Presets.Properties.Permalinks, true, "%year%/%monthnum%/%day%/%postname%/")
                     .Trim(new char[] { '-' });
 
-                var date = content.GetPropertyValue<DateTime>(BlogPresets.Properties.PublishDate, content.CreateDate);
+                var date = content.GetPropertyValue<DateTime>(Blog.Presets.Properties.PublishDate, content.CreateDate);
                 if (date != null && date > DateTime.MinValue)
                 {
                     var baseUrl = "";
-                    var blogRoot = content.AncestorOrSelf(BlogPresets.DocTypes.Blog);
+                    var blogRoot = content.AncestorOrSelf(Blog.Presets.DocTypes.Blog);
                     if (blogRoot != null)
                     {
                         baseUrl = blogRoot.Url;

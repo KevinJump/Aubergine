@@ -21,7 +21,7 @@ namespace Aubergine.Forums.Controllers
         public ForumApiController()
         {
             userContentService = UserContentContext.Current
-                .Instances[AubergineForums.Instance].Service;
+                .Instances[Forums.Instance].Service;
         }
 
         [HttpPut]

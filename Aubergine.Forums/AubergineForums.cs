@@ -18,18 +18,10 @@ namespace Aubergine.Forums
 {
     public class AubergineForums : IAubergineExtension
     {
-        public const string ProductName = "AubergineForums";
-        public const string ProductVersion = "1.0.0";
-        public const string Table = "Aubergine_Forums";
-        public const string Instance = "Forums";
-        public const string UserContentTypeAlias = "Post";
-        
-
-        // //////
-        public string Name => ProductName;
-        public string Version => ProductVersion;
+        public string Name => Forums.ProductName;
+        public string Version => Forums.ProductVersion;
         public string ExtensionId => "{BD379DAA-B78A-4A04-909B-91DFA791B83B}";
-       
+        public string ProductName => Forums.ProductName;
     }
 
     public class AubergineForumsEventHandler : ApplicationEventHandler
@@ -44,10 +36,6 @@ namespace Aubergine.Forums
             UmbracoApplicationBase umbracoApplication, 
             ApplicationContext applicationContext)
         {
-
-            var migrationHelper = new Aubergine.Core.MigrationManager(applicationContext);
-            migrationHelper.ApplyMigration(AubergineForums.ProductName, SemVersion.Parse(AubergineForums.ProductVersion));
-
             // currently not sure why the IncludeBase calls are not working
             // so we are explitly adding the ForMember (but it should be inherited?)
 
@@ -71,10 +59,18 @@ namespace Aubergine.Forums
             /// 
             // for this to work it needs the 
             UserContentContext.Current.LoadInstance<ForumPost, ForumPostsDTO>(
-                AubergineForums.Instance,
-                AubergineForums.Table,
+                Forums.Instance, Forums.Table,
                 applicationContext.DatabaseContext, 
                 applicationContext.ApplicationCache.RuntimeCache);
         }
+    }
+
+    internal class Forums
+    {
+        public const string ProductName = "AubergineForums";
+        public const string ProductVersion = "1.0.0";
+        public const string Table = "Aubergine_Forums";
+        public const string Instance = "Forums";
+        public const string UserContentTypeAlias = "Post";
     }
 }

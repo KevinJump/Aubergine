@@ -48,7 +48,7 @@ namespace Aubergine.Forums
                         var postId = postParts.First();
                         if (int.TryParse(postId, out int id))
                         {
-                            var service = UserContentContext.Current.Instances[AubergineForums.Instance]
+                            var service = UserContentContext.Current.Instances[Forums.Instance]
                                 .Service;
 
                             var post = service.Get(id);

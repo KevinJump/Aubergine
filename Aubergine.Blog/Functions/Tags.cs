@@ -22,8 +22,8 @@ namespace Aubergine.Blog
 
             if (tags.Any())
             {
-                var blogRoot = post.AncestorOrSelf(BlogPresets.DocTypes.Blog);
-                var tagBase = blogRoot.GetPropertyValue<string>(BlogPresets.Properties.TagBase, "tags");
+                var blogRoot = post.AncestorOrSelf(Blog.Presets.DocTypes.Blog);
+                var tagBase = blogRoot.GetPropertyValue<string>(Blog.Presets.Properties.TagBase, "tags");
 
                 var links = new List<string>();
 

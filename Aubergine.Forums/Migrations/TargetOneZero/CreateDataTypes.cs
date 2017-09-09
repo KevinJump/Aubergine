@@ -11,7 +11,7 @@ using Umbraco.Core.Persistence.SqlSyntax;
 
 namespace Aubergine.Forums.Migrations
 {
-    [Migration("1.0.0", 2, AubergineForums.ProductName)]
+    [Migration("1.0.0", 2, Forums.ProductName)]
     public class CreateDataTypes : MigrationBase
     {
         public CreateDataTypes(ISqlSyntaxProvider sqlSyntax, ILogger logger) : base(sqlSyntax, logger)
@@ -26,7 +26,7 @@ namespace Aubergine.Forums.Migrations
         public override void Up()
         {
             var dataTypeService = ApplicationContext.Current.Services.DataTypeService;
-            var dataTypeHelper = new Core.Migrations.Helpers.DatatypeManagementHelper(dataTypeService);
+            var dataTypeHelper = new Core.Migrations.Helpers.DataTypeBuilder(dataTypeService);
 
             dataTypeHelper.CreateFromFolder("~/App_Data/Aubergine/Forums/DataType/", -1);
         }

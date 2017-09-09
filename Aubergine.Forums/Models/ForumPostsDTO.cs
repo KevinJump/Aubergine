@@ -8,7 +8,7 @@ using Umbraco.Core.Persistence.DatabaseAnnotations;
 
 namespace Aubergine.Forums.Models
 {
-    [TableName(AubergineForums.Table)]
+    [TableName(Forums.Table)]
     [PrimaryKey("id")]
     public class ForumPostsDTO
         : Aubergine.UserContent.Persistance.Models.UserContentDTO

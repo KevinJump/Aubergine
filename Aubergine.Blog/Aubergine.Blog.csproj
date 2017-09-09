@@ -212,6 +212,7 @@
     <Compile Include="AubergineBlog.cs" />
     <Compile Include="BlogContentFinder.cs" />
     <Compile Include="BlogUrlProvider.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Functions\Tags.cs" />
     <Compile Include="Migrations\TargetZeroOne\CreateBlogContentTypes.cs" />
     <Compile Include="Migrations\TargetZeroOne\CreateBlogDataTypes.cs" />

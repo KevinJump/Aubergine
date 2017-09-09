@@ -17,20 +17,15 @@ namespace Aubergine.Auth
         public string Name => "Authentication";
         public string ExtensionId => "{7CD40983-07FC-48BE-B6F9-B9CF3C85DBAB}";
         public string Version => targetVersion.ToString();
+        public string ProductName => Authentication.Name;
 
         protected override void ApplicationStarting(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
             ContentFinderResolver.Current.InsertTypeBefore<ContentFinderByNotFoundHandlers, AuthContentFinder>();
         }
-
-        protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
-        { 
-            var migrationManager = new Aubergine.Core.MigrationManager(applicationContext);
-            migrationManager.ApplyMigration(Product.Name, targetVersion);
-        }
     }
 
-    public static class Product
+    public static class Authentication
     {
         public const string Name = "Aubergine.Auth";
     }

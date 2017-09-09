@@ -9,9 +9,9 @@ using Umbraco.Core.Persistence.Migrations;
 using Umbraco.Core.Logging;
 using Umbraco.Core.Services;
 
-namespace Aubergine.Core
+namespace Aubergine.Core.Migrations
 {
-    public class MigrationManager
+    internal class MigrationManager
     {
         IMigrationEntryService _migrationService;
         ILogger _logger;
@@ -51,6 +51,24 @@ namespace Aubergine.Core
             catch (Exception ex)
             {
                 _logger.Error<MigrationManager>(string.Format("Error running {0} version: {1}", productName, targetVersion), ex);
+            }
+        }
+
+        /// <summary>
+        ///  will run migrations on anything with an IAubergineExtension
+        /// </summary>
+        public void MigrateAubergineExtensions()
+        {
+            var types = TypeFinder.FindClassesOfType<IAubergineExtension>();
+            foreach (var t in types)
+            {
+                var instance = Activator.CreateInstance(t) as IAubergineExtension;
+                if (instance != null)
+                {
+                    var targetVersion = SemVersion.Parse(instance.Version);
+                    var productName = instance.Name;
+                    ApplyMigration(productName, targetVersion);
+                }
             }
         }
 

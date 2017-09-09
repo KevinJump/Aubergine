@@ -13,6 +13,7 @@ using Umbraco.Core.Cache;
 using Umbraco.Core.Persistence;
 using Aubergine.UserContent.Persistance.Models;
 using Aubergine.UserContent.Models;
+using Umbraco.Core.Events;
 
 namespace Aubergine.UserContent
 {
@@ -45,7 +46,7 @@ namespace Aubergine.UserContent
 
         private ILogger _logger;
 
-        public static void EnsureContext(
+        internal static void EnsureContext(
             ILogger logger,
             IRuntimeCacheProvider runtimeCacheProvider
             )
@@ -90,6 +91,5 @@ namespace Aubergine.UserContent
             }
 
         }
-
     }
 }

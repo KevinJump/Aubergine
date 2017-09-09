@@ -11,12 +11,12 @@ using System.Xml.Linq;
 
 namespace Aubergine.Core.Migrations.Helpers
 {
-    public class ContentTypeManagementHelper : UmbracoManagementHelperBase<IContentType>
+    public class ContentTypeBuilder : UmbracoItemBuilder<IContentType>
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IDataTypeService _dataTypeService;
 
-        public ContentTypeManagementHelper(
+        public ContentTypeBuilder(
             IContentTypeService contentTypeService,
             IDataTypeService dataTypeService)
         {
@@ -40,16 +40,16 @@ namespace Aubergine.Core.Migrations.Helpers
                 var attempt = _contentTypeService.CreateContentTypeContainer(-1, name);
                 if (attempt.Success)
                 {
-                    LogHelper.Info<ContentTypeManagementHelper>("Created Folder: {0} [{1}]", () => name, () => attempt.Result.Entity.Id);
+                    LogHelper.Info<ContentTypeBuilder>("Created Folder: {0} [{1}]", () => name, () => attempt.Result.Entity.Id);
                     return attempt.Result.Entity.Id;
                 }
                 else
                 {
-                    LogHelper.Warn<ContentTypeManagementHelper>("Failed Created Folder: {0}", () => name);
+                    LogHelper.Warn<ContentTypeBuilder>("Failed Created Folder: {0}", () => name);
                     return -1;
                 }
             }
-            LogHelper.Info<ContentTypeManagementHelper>("Found Existing: [{0}] {1}", () => folder.Id, () => folder.Name);
+            LogHelper.Info<ContentTypeBuilder>("Found Existing: [{0}] {1}", () => folder.Id, () => folder.Name);
             return folder.Id;
         }
 
@@ -74,7 +74,7 @@ namespace Aubergine.Core.Migrations.Helpers
                 }
             }
 
-            LogHelper.Info<ContentTypeManagementHelper>
+            LogHelper.Info<ContentTypeBuilder>
                 ("Creating Content Type: {0} [{1}]", () => alias, () => parentId);
 
             var contentType = new ContentType(parentId)
@@ -117,7 +117,7 @@ namespace Aubergine.Core.Migrations.Helpers
             {
                 foreach (var property in tab.Properties)
                 {
-                    LogHelper.Info<ContentTypeManagementHelper>("Looking for DocType: {0}", () => property.DataType);
+                    LogHelper.Info<ContentTypeBuilder>("Looking for DocType: {0}", () => property.DataType);
 
                     var dataType = _dataTypeService.GetDataTypeDefinitionByName(property.DataType);
 

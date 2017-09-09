@@ -10,7 +10,7 @@ using Umbraco.Core.Persistence.SqlSyntax;
 
 namespace Aubergine.Forums.Migrations
 {
-    [Migration("1.0.0", 3, AubergineForums.ProductName)]
+    [Migration("1.0.0", 3, Forums.ProductName)]
     public class CreateContentType : MigrationBase
     {
         public CreateContentType(ISqlSyntaxProvider sqlSyntax, ILogger logger) : base(sqlSyntax, logger)
@@ -27,7 +27,7 @@ namespace Aubergine.Forums.Migrations
             var contentTypeService = ApplicationContext.Current.Services.ContentTypeService;
             var dataTypeService = ApplicationContext.Current.Services.DataTypeService;
 
-            var contentTypeHelper = new Aubergine.Core.Migrations.Helpers.ContentTypeManagementHelper(
+            var contentTypeHelper = new Aubergine.Core.Migrations.Helpers.ContentTypeBuilder(
                 contentTypeService, dataTypeService);
 
             var folderId = contentTypeHelper.CreateFolder("Aubergine.Forums");

@@ -24,14 +24,14 @@ namespace Aubergine.Forums
         public ForumsController()
         {
             userContentService = UserContentContext.Current
-                .Instances[AubergineForums.Instance].Service;
+                .Instances[Forums.Instance].Service;
         }
 
         [ChildActionOnly]
         public ActionResult ListPosts(Guid contentKey)
         {
             // use the cache - this will be quicker
-            var items = Umbraco.GetUserContent(contentKey, AubergineForums.UserContentTypeAlias, AubergineForums.Instance);
+            var items = Umbraco.GetUserContent(contentKey, Forums.UserContentTypeAlias, Forums.Instance);
 
             var forumSummary = new ForumSummaryInfo();
 
@@ -117,7 +117,7 @@ namespace Aubergine.Forums
                 Body = model.Body.SanitizeHtml(),
                 Name = model.Name ?? "",
                 Status = UserContentStatus.Approved,
-                UserContentType = AubergineForums.UserContentTypeAlias,
+                UserContentType = Forums.UserContentTypeAlias,
                 Level = 1,
                 AuthorId = member.GetKey().ToString(),
                 Author = member.Name,

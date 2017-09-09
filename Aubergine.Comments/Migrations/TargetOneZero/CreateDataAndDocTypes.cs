@@ -1,50 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Aubergine.Core.Migrations;
 using Aubergine.Core.Migrations.Helpers;
-using Umbraco.Core;
 using Umbraco.Core.Logging;
-using Umbraco.Core.Persistence.Migrations;
-using Umbraco.Core.Persistence.SqlSyntax;
+using Umbraco.Core.Services;
 
 namespace Aubergine.Comments.Migrations
 {
-    [Migration("1.0.0", 2, Comments.ProductName)]
-    public class CreateDataAndDocTypes : MigrationBase
+    [AubergineMigration("Comments DataTypes", Priorities.Primary + Priorities.DataType, "{C7AA8E6B-ACDD-4716-B6EC-9902FCBBFB0C}")]
+    public class AubergineCreateDataTypes : AubergineMigrationBase
     {
-        public CreateDataAndDocTypes(ISqlSyntaxProvider sqlSyntax, ILogger logger) 
-            : base(sqlSyntax, logger)
+        public AubergineCreateDataTypes(ServiceContext serviceContext, ILogger logger) 
+            : base(serviceContext, logger)
+        { }
+
+        public override void Add()
         {
-        }
+            var folderId = DataTypes.CreateFolder("Aub.Comments");
 
-        public override void Down()
-        {
-            // 
-        }
-
-        public override void Up()
-        {
-            var dataTypeService = ApplicationContext.Current.Services.DataTypeService;
-            var contentTypeService = ApplicationContext.Current.Services.ContentTypeService;
-
-            //
-            // Create the Datatypes (Allow Comments) and (Comments Moderator)
-            // -- we can then use these for the comments doctype. 
-            //
-            var dataTypeHelper = new DatatypeManagementHelper(dataTypeService);
-
-            var folderId = dataTypeHelper.CreateFolder("Aub.Comments");
-
-            dataTypeHelper.Create(
+            DataTypes.Create(
                 "CommentsEditor",
                 "aubergine.CommentEditor",
                 folderId,
                 Umbraco.Core.Models.DataTypeDatabaseType.Integer,
                 new Dictionary<string, string>());
 
-            dataTypeHelper.Create("CommentsSwitch",
+            DataTypes.Create("CommentsSwitch",
                 "Our.Umbraco.Switcher",
                 folderId,
                 Umbraco.Core.Models.DataTypeDatabaseType.Integer,
@@ -58,20 +39,27 @@ namespace Aubergine.Comments.Migrations
                     { "offLabelText", "No Comments" },
                     { "switchClass", "blue" },
                 });
+        }
 
+        public override void Remove()
+        {
+            // 
+        }
+    }
 
-            //
-            // Create the Content Type (pageComments) this is the 
-            // content type that you can then add to any page to 
-            // turn comments on (assuming the template has the action)
-            //
+    [AubergineMigration("Comments Content Types", Priorities.Primary + Priorities.ContentType, "{C29E00F5-D7B7-45D5-8FC1-112702181B41}")]
+    public class AubergineCreateDocTypes : AubergineMigrationBase
+    {
+        public AubergineCreateDocTypes(ServiceContext serviceContext, ILogger logger) 
+            : base(serviceContext, logger)
+        {
+        }
 
-            var contentTypeHelper = new ContentTypeManagementHelper(
-                contentTypeService, dataTypeService);
+        public override void Add()
+        {
+            var contentFolderId = ContentTypes.CreateFolder("Aub.Comments");
 
-            var contentFolderId = contentTypeHelper.CreateFolder("Aub.Comments");
-
-            contentTypeHelper.Create("pageComments_test", new ContentTypeInfo()
+            ContentTypes.Create("pageComments_test", new ContentTypeInfo()
             {
                 MasterId = contentFolderId,
                 Name = "Page Comments_test",
@@ -108,7 +96,12 @@ namespace Aubergine.Comments.Migrations
                 }
             });
 
-            
+
+        }
+
+        public override void Remove()
+        {
+            throw new NotImplementedException();
         }
     }
 }

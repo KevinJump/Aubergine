@@ -11,5 +11,6 @@ namespace Aubergine.Core
         string Name { get; }
         string ExtensionId { get; }
         string Version { get; }
+        string ProductName { get; }
     }
 }

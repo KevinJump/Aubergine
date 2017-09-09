@@ -9,19 +9,15 @@ using Umbraco.Core;
 
 namespace Aubergine.Complete
 {
-    public class AubergineComplete : 
-        ApplicationEventHandler, IAubergineExtension
+    public class AubergineComplete : IAubergineExtension
     {
-        public const string ProductName = "Aubergine.Complete";
+        public const string InternalName = "Aubergine.Complete";
 
-        public string Name => ProductName;
+        public string Name => InternalName;
         public string ExtensionId => "{349F9962-3AE4-4C2B-8DFD-BE56D78C6793}";
         public string Version => "1.0.0";
-
-        protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
-        {
-            var migrationManager = new MigrationManager(applicationContext);
-            migrationManager.ApplyMigration(ProductName, SemVersion.Parse(Version));
-        }
+        public string ProductName => InternalName;
     }
+
+
 }

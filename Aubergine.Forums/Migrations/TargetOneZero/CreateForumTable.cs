@@ -11,7 +11,7 @@ using Umbraco.Core.Persistence.SqlSyntax;
 
 namespace Aubergine.Forums.Migrations
 {
-    [Migration("1.0.0", 1, AubergineForums.ProductName)]
+    [Migration("1.0.0", 1, Forums.ProductName)]
     public class CreateForumTable : MigrationBase
     {
         public CreateForumTable(ISqlSyntaxProvider sqlSyntax, ILogger logger) 
@@ -27,7 +27,7 @@ namespace Aubergine.Forums.Migrations
         public override void Up()
         {
             var tables = SqlSyntax.GetTablesInSchema(Context.Database);
-            if (!tables.InvariantContains(AubergineForums.Table))
+            if (!tables.InvariantContains(Forums.Table))
                 Create.Table<ForumPostsDTO>();
         }
     }

@@ -14,13 +14,13 @@ namespace Aubergine.Core.Migrations.Helpers
     /// <summary>
     ///  adds a template into umbraco, based on the assumption that it exsits on disk.
     /// </summary>
-    public class TemplateManagementHelper
+    public class TemplateBuilder
     {
         private readonly IFileService _fileService;
 
-        public TemplateManagementHelper()            
+        public TemplateBuilder(IFileService fileService)            
         {
-            _fileService = ApplicationContext.Current.Services.FileService;
+            _fileService = fileService;
         }
 
         public bool TemplateExists(string alias)
@@ -28,7 +28,7 @@ namespace Aubergine.Core.Migrations.Helpers
             return _fileService.GetTemplate(alias) != null;
         }
 
-        public bool AddTemplate(string name, string alias, string parent)
+        public ITemplate Create(string name, string alias, string parent)
         {
             if (_fileService.GetTemplate(alias) == null)
             {
@@ -41,8 +41,8 @@ namespace Aubergine.Core.Migrations.Helpers
                     {
                         // cannot find the master for this..
                         templatePath = string.Empty;
-                        LogHelper.Warn<TemplateManagementHelper>("Cannot find underling template file, so we cannot create the template");
-                        return false;
+                        LogHelper.Warn<TemplateBuilder>("Cannot find underling template file, so we cannot create the template");
+                        return null;
                     }
                 }
                 var template = new Template(name, alias);
@@ -56,8 +56,10 @@ namespace Aubergine.Core.Migrations.Helpers
                 }
 
                 _fileService.SaveTemplate(template);
+                return template;
             }
-            return true;
+
+            return null;
         }
     }
 }

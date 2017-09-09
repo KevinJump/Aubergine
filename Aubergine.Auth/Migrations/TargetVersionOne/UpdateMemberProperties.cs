@@ -8,36 +8,39 @@ using Umbraco.Core.Persistence.SqlSyntax;
 using Umbraco.Core.Logging;
 using Umbraco.Core;
 using Umbraco.Core.Models;
+using Aubergine.Core.Migrations;
+using Umbraco.Core.Services;
 
 namespace Aubergine.Auth.Migrations.TargetVersionOne
 {
-
-    [Migration("1.0.0", 0, Product.Name)]
-    public class UpdateMemberProperties : MigrationBase
+    [AubergineMigration(Authentication.Name, 
+        Priorities.Primary + Priorities.ContentType, 
+        "{85B5246C-9DB2-4A93-82A0-648A0F22D2BF}")]
+    public class AubergineUpdateMemberProperties : AubergineMigrationBase
     {
-        public UpdateMemberProperties(ISqlSyntaxProvider sqlSyntax, ILogger logger)
-            : base(sqlSyntax, logger)
+        public AubergineUpdateMemberProperties(ServiceContext serviceContext, ILogger logger) 
+            : base(serviceContext, logger)
         {
         }
 
-        public override void Up()
+        public override void Add()
         {
-            var memberTypeService = ApplicationContext.Current.Services.MemberTypeService;
+            var memberTypeService = Services.MemberTypeService;
             var defaultMemberType = memberTypeService.Get("Member");
-            
+
             var propertyHelper = new Aubergine.Core.Migrations.Helpers.ContentTypeMigrationHelper();
 
-            propertyHelper.AddProperty(defaultMemberType, 
+            propertyHelper.AddProperty(defaultMemberType,
                 Properties.ResetGuid, "Reset", "Membership",
                 "Umbraco.NoEdit",
                 "Reset Guid used for account verification and password reset");
 
-            propertyHelper.AddProperty(defaultMemberType, 
+            propertyHelper.AddProperty(defaultMemberType,
                 Properties.Verified, "Verifed", "Membership",
                 "Umbraco.TrueFalse",
                 "Has the user verified this account (via email)");
 
-            propertyHelper.AddProperty(defaultMemberType, 
+            propertyHelper.AddProperty(defaultMemberType,
                 Properties.ExpiryDate, "Expiry", "Membership",
                 "Umbraco.DateTime",
                 "time at which latest verify or reset request expires");
@@ -45,8 +48,9 @@ namespace Aubergine.Auth.Migrations.TargetVersionOne
             memberTypeService.Save(defaultMemberType);
         }
 
-        public override void Down()
-        { }
-
+        public override void Remove()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

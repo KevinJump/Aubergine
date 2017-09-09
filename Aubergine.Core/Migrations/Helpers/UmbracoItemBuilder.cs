@@ -9,7 +9,7 @@ using Umbraco.Core.Services;
 
 namespace Aubergine.Core.Migrations.Helpers
 {
-    public abstract class UmbracoManagementHelperBase<TEntity>
+    public abstract class UmbracoItemBuilder<TEntity>
     {
 
         public abstract TEntity Create(string filename, int parentId);

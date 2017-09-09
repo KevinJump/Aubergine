@@ -16,11 +16,11 @@ namespace Aubergine.Core.Migrations.Helpers
     /// <summary>
     ///  programatically check / create datatypes 
     /// </summary>
-    public class DatatypeManagementHelper : UmbracoManagementHelperBase<IDataTypeDefinition>
+    public class DataTypeBuilder : UmbracoItemBuilder<IDataTypeDefinition>
     {
         private readonly IDataTypeService _dataTypeService;
 
-        public DatatypeManagementHelper(IDataTypeService dataTypeService)
+        public DataTypeBuilder(IDataTypeService dataTypeService)
         {
             _dataTypeService = dataTypeService;
         }
@@ -41,16 +41,16 @@ namespace Aubergine.Core.Migrations.Helpers
                 var attempt = _dataTypeService.CreateContainer(-1, name);
                 if (attempt.Success)
                 {
-                    LogHelper.Info<DatatypeManagementHelper>("Created Folder: {0}", () => name);
+                    LogHelper.Info<DataTypeBuilder>("Created Folder: {0}", () => name);
                     return attempt.Result.Entity.Id;
                 }
                 else
                 {
-                    LogHelper.Warn<DatatypeManagementHelper>("Failed to create folder: {0}", ()=> name);
+                    LogHelper.Warn<DataTypeBuilder>("Failed to create folder: {0}", ()=> name);
                     return -1;
                 }
             }
-            LogHelper.Info<DatatypeManagementHelper>("Found Existing Folder: {0} {1}", () => folder.Id, () => folder.Name);
+            LogHelper.Info<DataTypeBuilder>("Found Existing Folder: {0} {1}", () => folder.Id, () => folder.Name);
             return folder.Id;
         }
 
@@ -85,16 +85,16 @@ namespace Aubergine.Core.Migrations.Helpers
 
             foreach(var preValue in preValues)
             {
-                LogHelper.Info<DatatypeManagementHelper>("PreValue: {0} [{1}]", () => preValue.Key, ()=> preValue.Value);
+                LogHelper.Info<DataTypeBuilder>("PreValue: {0} [{1}]", () => preValue.Key, ()=> preValue.Value);
 
                 if (itemPreValues.ContainsKey(preValue.Key))
                 {
-                    LogHelper.Info<DatatypeManagementHelper>("Update");
+                    LogHelper.Info<DataTypeBuilder>("Update");
                     itemPreValues[preValue.Key].Value = preValue.Value;
                 }
                 else
                 {
-                    LogHelper.Info<DatatypeManagementHelper>("Add");
+                    LogHelper.Info<DataTypeBuilder>("Add");
                     itemPreValues.Add(preValue.Key, new PreValue(preValue.Value));
                 }
             }

@@ -243,9 +243,6 @@
     <Content Include="App_Plugins\AubergineForums\Views\Forums\thread.cshtml" />
     <None Include="Aubergine.Forums.nuspec" />
     <None Include="packages.config" />
-    <Content Include="Views\ForumPage.cshtml" />
-    <Content Include="Views\Forums.cshtml" />
-    <Content Include="Views\ForumThread.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />

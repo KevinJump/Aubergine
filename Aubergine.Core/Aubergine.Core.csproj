@@ -149,6 +149,7 @@
     <Reference Include="System.Threading.Tasks.Dataflow, Version=4.6.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Dataflow.4.7.0\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -209,13 +210,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aubergine.cs" />
-    <Compile Include="Migrations\Helpers\DatatypeManagmentHelper.cs" />
-    <Compile Include="Migrations\Helpers\ContentTypeManagementHelper.cs" />
+    <Compile Include="Migrations\AubergineMigrationAttribute.cs" />
+    <Compile Include="Migrations\AubergineMigrationBase.cs" />
+    <Compile Include="Migrations\AubergineInstallManager.cs" />
+    <Compile Include="Migrations\AubergineMigrationService.cs" />
+    <Compile Include="Migrations\AuergineMigrationResolver.cs" />
+    <Compile Include="Migrations\CreateConfigTable.cs" />
+    <Compile Include="Migrations\Helpers\DataTypeBuilder.cs" />
+    <Compile Include="Migrations\Helpers\ContentTypeBuilder.cs" />
     <Compile Include="Interfaces\IAubergineExtension.cs" />
-    <Compile Include="Migrations\Helpers\UmbracoManagementHelperBase.cs" />
+    <Compile Include="Migrations\Helpers\UmbracoItemBuilder.cs" />
+    <Compile Include="Migrations\IAubergineMigration.cs" />
     <Compile Include="Migrations\MigrationManager.cs" />
     <Compile Include="Migrations\Helpers\ContentTypeMigrationHelper.cs" />
-    <Compile Include="Migrations\Helpers\TemplateMigrationHelper.cs" />
+    <Compile Include="Migrations\Helpers\TemplateBuilder.cs" />
+    <Compile Include="Migrations\Priorities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
