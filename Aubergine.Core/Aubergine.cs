@@ -4,12 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Aubergine.Core.Migrations;
+using Semver;
 using Umbraco.Core;
 
 namespace Aubergine.Core
 {
     public class Aubergine : ApplicationEventHandler
     {
+        public const string CoreVersion = "1.0.0";
+        public const string CoreName = "Aubergine.Core";
+
         protected override void ApplicationInitialized(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
             var serviceProvider = new AubergineServiceProvider(applicationContext);
@@ -20,9 +24,13 @@ namespace Aubergine.Core
 
         protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
-            // run any umbraco Migrations in any IAubergineExtension assemblies
             var umbracoMigrations = new MigrationManager(applicationContext);
-            umbracoMigrations.MigrateAubergineExtensions();
+
+            // create the config table
+            umbracoMigrations.ApplyMigration(CoreName, SemVersion.Parse(CoreVersion));
+
+            // run any Aubergine Migrations in any IAubergineExtension assemblies
+            umbracoMigrations.ApplyExtensionMigrations();
 
             // run all the aubergine configurations
             var aubergineMigrator = new AubergineInstallManager(

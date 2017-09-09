@@ -57,7 +57,7 @@ namespace Aubergine.Core.Migrations
         /// <summary>
         ///  will run migrations on anything with an IAubergineExtension
         /// </summary>
-        public void MigrateAubergineExtensions()
+        public void ApplyExtensionMigrations()
         {
             var types = TypeFinder.FindClassesOfType<IAubergineExtension>();
             foreach (var t in types)

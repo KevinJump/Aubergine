@@ -47,7 +47,7 @@ namespace Aubergine.Core.Migrations
                     _logger.Info<AubergineInstallManager>("Running Config: {0} {1}",
                         () => item.Name, () => item.SortOrder);
 
-                    item.Configuration.Add();
+                     item.Configuration.Add();
                     _configService.Add(item.Name, item.Key);
                 }
                 catch (Exception ex)
@@ -92,7 +92,7 @@ namespace Aubergine.Core.Migrations
                 }
             }
 
-            return configs.OrderByDescending(x => x.SortOrder);
+            return configs.OrderBy(x => x.SortOrder);
         }
 
         internal class AubergineConfigInfo

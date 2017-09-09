@@ -10,7 +10,7 @@ using Umbraco.Core.Persistence.SqlSyntax;
 
 namespace Aubergine.Core.Migrations
 {
-    [Migration("1.0.0", 0, "Aubergine.Core")]
+    [Migration("1.0.0", 0, Aubergine.CoreName)]
     public class CreateConfigTable : MigrationBase
     {
         public CreateConfigTable(ISqlSyntaxProvider sqlSyntax, ILogger logger) 

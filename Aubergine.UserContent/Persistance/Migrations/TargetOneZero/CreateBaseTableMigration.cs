@@ -30,6 +30,13 @@ namespace Aubergine.UserContent.Persistance.Migrations.TargetOneZero
             if (!tables.InvariantContains(UserContent.TableName))
             {
                 Create.Table<UserContentDTO>();
+
+                /*
+                Create.Index("IX_UserContentKeyIndex")
+                    .OnTable(UserContent.TableName)
+                    .OnColumn("Key")
+                    .Unique().WithOptions().NonClustered(); */
+
             }
         }
     }

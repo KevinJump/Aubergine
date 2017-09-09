@@ -15,8 +15,11 @@ namespace Aubergine.UserContent.Persistance.Models
         [PrimaryKeyColumn(AutoIncrement = true)]
         public int Id { get; set; }
 
+        // [Index(IndexTypes.UniqueNonClustered, Name = "IX_UserContentKeys")]
         public Guid Key { get; set; }
+
         public string UserContentType { get; set; }
+
         public string Name { get; set; }
 
         [NullSetting(NullSetting = NullSettings.Null)]

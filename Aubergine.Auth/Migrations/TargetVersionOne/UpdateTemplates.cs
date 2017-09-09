@@ -11,7 +11,7 @@ using Umbraco.Core.Services;
 
 namespace Aubergine.Auth.Migrations.TargetVersionOne
 {
-    [AubergineMigration(Authentication.Name, 1, "{70EF1630-1A4F-4B6E-AC82-9521CAE96530}")]
+    [AubergineMigration(Authentication.Name, Priorities.Primary + Priorities.Template, "{70EF1630-1A4F-4B6E-AC82-9521CAE96530}")]
     public class AubergineUpdateTemplates : AubergineMigrationBase
     {
         public AubergineUpdateTemplates(ServiceContext serviceContext, ILogger logger) 
